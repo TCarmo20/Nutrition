@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	
+	
+	<!-- <persistence-unit name="nutrition" transaction-type="RESOURCE_LOCAL"> -->
+	<!-- 	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
+	<!-- 	<class>carmo.tiago.persistence.UserEntity</class> -->
+	<!-- 	<class>carmo.tiago.persistence.NutPlanEntity</class> -->
+	<!-- 	<properties> -->
+	<!-- 		<property name="javax.persistence.jdbc.user" value="root" /> -->
+	<!-- 		<property name="javax.persistence.jdbc.password" value="7705686_Ab" /> -->
+	<!-- 		<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" /> -->
+	<!-- 		<property name="javax.persistence.jdbc.url"value="jdbc:mysql://localhost:3306/test_database?autoReconnect=true&amp;useSSL=false" /> -->
+	<!-- 		<property name="javax.persistence.schema-generation.database.action" value="drop-and-create" /> -->
+	<!-- 		<property name="javax.persistence.schema-generation.create-source" value="metadata" /> -->
+	<!-- 		<property name="javax.persistence.sql-load-script-source" value="META-INF/sql/add.sql" /> -->
+	<!-- 		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" /> -->
+	<!-- 		<property name="hibernate.show_sql" value="true" /> -->
+	<!-- 		<property name="hibernate.hbm2ddl.auto" value="create" /> -->
+	<!-- 	</properties> -->
+	<!-- </persistence-unit> -->
+	
+	
+	<!-- <persistence-unit name="nutrition" transaction-type="RESOURCE_LOCAL"> -->
+	<!-- 	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
+	<!-- 	<class>carmo.tiago.persistence.UserEntity</class> -->
+	<!-- 	<class>carmo.tiago.persistence.NutPlanEntity</class> -->
+	<!-- 	<exclude-unlisted-classes>false</exclude-unlisted-classes> -->
+	<!-- 	<properties> -->
+	<!-- 		<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" /> -->
+	<!-- 		<property name="javax.persistence.jdbc.url" value="jdbc:derby:target/derbydb2;create=true" /> -->
+	<!-- 		<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> -->
+	<!-- 		<property name="eclipselink.ddl-generation.output-mode" value="database" /> -->
+	<!-- 	</properties> -->
+	<!-- </persistence-unit> -->
+
+
+	<persistence-unit name="nutrition" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>carmo.tiago.persistence.UserEntity</class>
+		<class>carmo.tiago.persistence.NutPlanEntity</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:nutritionDB;create=true" />
+			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+		</properties>
+	</persistence-unit>
+
+
+</persistence>

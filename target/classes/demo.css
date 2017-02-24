@@ -1,0 +1,15 @@
+#Login{
+	-fx-background-color: dimgray 
+}
+
+#Profile{
+	-fx-background-color: dimgray 
+}
+
+#AddUser{
+	-fx-background-color: dimgray 
+}
+
+#userId{
+	-fx-border-radius: 20.0px;
+}
