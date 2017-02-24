@@ -3,9 +3,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>Nutrition</groupId>
+	<groupId>carmo.tiago</groupId>
 	<artifactId>Nutrition</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 
 	<organization>
 		<name>Tiago Carmo</name>
