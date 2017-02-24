@@ -68,7 +68,7 @@
 	
 	<scm>
 		<connection>scm:git:git@github.com:TCarmo20/Nutrition.git</connection>
-		<url>scm:git:git@github.com:TCarmo20/Nutrition.git</url>
+		<url>scm:git:git@github.com:TCarmo20/TCarmo20.git</url>
 		<developerConnection>scm:git:git@github.com:TCarmo20/Nutrition.git</developerConnection>
 	</scm>
 
