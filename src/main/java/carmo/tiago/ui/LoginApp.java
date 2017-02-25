@@ -1,20 +1,24 @@
 package carmo.tiago.ui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 import carmo.tiago.persistence.UserEntity;
 import carmo.tiago.services.UserServices;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * Main Application. This class handles navigation and user session.
@@ -24,21 +28,21 @@ import javafx.stage.Stage;
 public class LoginApp extends Application {
 
 	private static final String PERSISTENCE_UNIT_NAME = "nutrition";
-	private static EntityManagerFactory emf;
-	private static EntityManager em;
+	private EntityManagerFactory emf;
+	private EntityManager em;
 	private Stage stage;
 	private UserEntity loggedUser;
 
 	private static LoginApp instance;
 
-	public LoginApp() {
-		emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		setEm(emf.createEntityManager());
-		instance = this;
+	@Override
+	public void init() throws Exception {
+		setEmf(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
+		setEm(getEmf().createEntityManager());
 	}
 
-	public static LoginApp getInstance() {
-		return instance;
+	public LoginApp() {
+		instance = this;
 	}
 
 	/**
@@ -52,8 +56,10 @@ public class LoginApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Nutrition App");
+		primaryStage.getIcons().add(new Image("/icon.png"));
 		try {
 			stage = primaryStage;
+			stage.setFullScreen(true);
 			gotoLogin();
 			primaryStage.show();
 		} catch (Exception ex) {
@@ -61,14 +67,10 @@ public class LoginApp extends Application {
 		}
 	}
 
-	public UserEntity getLoggedUser() {
-		return loggedUser;
-	}
-
 	public boolean userLogging(String email, String password) throws Exception {
-		UserEntity user = UserServices.getUser(email);
+		UserEntity user = UserServices.getUserByEmail(email);
 		if (user.getPassword().equals(password)) {
-			loggedUser = user;
+			setLoggedUser(user);
 			gotoProfile();
 			return true;
 		} else {
@@ -77,13 +79,13 @@ public class LoginApp extends Application {
 	}
 
 	public void userLogout() {
-		loggedUser = null;
+		setLoggedUser(null);
 		gotoLogin();
 	}
 
 	public void goToAddUser() {
 		try {
-			replaceSceneContent("/addUser.fxml");
+			replaceSceneContent("/AddUser.fxml");
 		} catch (Exception ex) {
 			Logger.getLogger(LoginApp.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -91,7 +93,7 @@ public class LoginApp extends Application {
 
 	private void gotoProfile() {
 		try {
-			replaceSceneContent("/profile.fxml");
+			replaceSceneContent("/Profile.fxml");
 		} catch (Exception ex) {
 			Logger.getLogger(LoginApp.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -99,17 +101,22 @@ public class LoginApp extends Application {
 
 	public void gotoLogin() {
 		try {
-			replaceSceneContent("/login.fxml");
+			replaceSceneContent("/Login.fxml");
 		} catch (Exception ex) {
 			Logger.getLogger(LoginApp.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
 	private Parent replaceSceneContent(String fxml) throws Exception {
-		Parent page = (Parent) FXMLLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
+		Parent page = FXMLLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
 		Scene scene = stage.getScene();
+		final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		if (scene == null) {
-			scene = new Scene(page, 600, 500);
+			FadeTransition ft = new FadeTransition(new Duration(3000), page);
+			ft.setFromValue(0.0);
+			ft.setToValue(1);
+			ft.play();
+			scene = new Scene(page, dim.getWidth(), dim.getHeight());
 			scene.getStylesheets().add(getClass().getResource("/demo.css").toExternalForm());
 			stage.setScene(scene);
 		} else {
@@ -119,11 +126,36 @@ public class LoginApp extends Application {
 		return page;
 	}
 
-	public static EntityManager getEm() {
+	public void setLoggedUser(UserEntity loggedUser) {
+		this.loggedUser = loggedUser;
+	}
+
+	public UserEntity getLoggedUser() {
+		return loggedUser;
+	}
+
+	public EntityManager getEm() {
 		return em;
 	}
 
-	public static void setEm(EntityManager em) {
-		LoginApp.em = em;
+	public void setEm(EntityManager em) {
+		this.em = em;
 	}
+
+	public EntityManagerFactory getEmf() {
+		return emf;
+	}
+
+	public void setEmf(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+
+	public static LoginApp getInstance() {
+		return instance;
+	}
+
+	public void exitApp() {
+		Platform.exit();
+	}
+
 }

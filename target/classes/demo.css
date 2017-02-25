@@ -1,15 +1,90 @@
 #Login{
-	-fx-background-color: dimgray 
+	-fx-background-image: url("exerciseWall.jpg");
+	-fx-background-repeat: stretch; 
+	-fx-background-position: center center;
+	
+}
+
+#Preloader{
+	-fx-background-image: url("preloaderWall.jpg");
+	-fx-background-repeat: stretch; 
+	-fx-background-position: center center;
+	-fx-background-size: 800.0 500.0;
 }
 
 #Profile{
-	-fx-background-color: dimgray 
+	-fx-background-color: lightslategray 
 }
 
 #AddUser{
-	-fx-background-color: dimgray 
+	-fx-background-image: url("exerciseWall.jpg");
+	-fx-background-repeat: stretch; 
+	-fx-background-position: center center;
 }
 
 #userId{
 	-fx-border-radius: 20.0px;
+}
+
+#Preloader{
+	-fx-background-color: lightslategray
+}
+
+#login {
+	-fx-background-color: -fx-inner-border, -fx-outer-border, turquoise;
+	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0 0.0 0.0 0.0, 0.0;
+	-fx-border-width: 0.0;
+	-fx-background-radius: 0.0;
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+	-fx-border-radius: 20.0px;
+	-fx-background-radius:8.0px;
+	-fx-font-weight: bold;
+}
+
+#addUser {
+	-fx-background-color: -fx-inner-border, -fx-outer-border, turquoise;
+	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0 0.0 0.0 0.0, 0.0;
+	-fx-border-width: 0.0;
+	-fx-background-radius: 0.0;
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+	-fx-border-radius: 20.0px;
+	-fx-background-radius:8.0px;
+	-fx-font-weight: bold;
+}
+
+#confirmAddUser {
+	-fx-background-color: -fx-inner-border, -fx-outer-border, turquoise;
+	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0 0.0 0.0 0.0, 0.0;
+	-fx-border-width: 0.0;
+	-fx-background-radius: 0.0;
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+	-fx-border-radius: 20.0px;
+	-fx-background-radius:8.0px;
+	-fx-font-weight: bold;
+}
+
+#backAddUser {
+	-fx-background-color: -fx-inner-border, -fx-outer-border, turquoise;
+	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0 0.0 0.0 0.0, 0.0;
+	-fx-border-width: 0.0;
+	-fx-background-radius: 0.0;
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+	-fx-border-radius: 20.0px;
+	-fx-background-radius:8.0px;
+	-fx-font-weight: bold;
+}
+
+#exit{
+	-fx-background-image: url("exit.png");
+    -fx-background-size: 30.0px;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
 }

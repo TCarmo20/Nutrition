@@ -20,6 +20,16 @@ public class AddUserController implements Initializable {
 	@FXML
 	private TextField password;
 	@FXML
+	private TextField age;
+	@FXML
+	private TextField weight;
+	@FXML
+	private TextField height;
+	@FXML
+	private TextField activityLevel;
+	@FXML
+	private TextField sex;
+	@FXML
 	private Label success;
 	@FXML
 	private Label error;
@@ -41,20 +51,21 @@ public class AddUserController implements Initializable {
 	@FXML
 	protected void processAddUser() {
 		try {
-			UserServices.addUser(name.getText(), email.getText(), password.getText());
+			UserServices.addUser(name.getText(), email.getText(), password.getText(), age.getText(),
+					activityLevel.getText(), sex.getText(), height.getText(), weight.getText());
 			animateMessage();
 		} catch (Exception e) {
 			animateErrorMessage();
 		}
 	}
-	
+
 	private void animateMessage() {
 		FadeTransition ft = new FadeTransition(new Duration(3000), success);
 		ft.setFromValue(0.0);
 		ft.setToValue(1);
 		ft.play();
 	}
-	
+
 	private void animateErrorMessage() {
 		FadeTransition ft = new FadeTransition(new Duration(3000), error);
 		ft.setFromValue(0.0);

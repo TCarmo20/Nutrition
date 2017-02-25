@@ -23,30 +23,30 @@ public class UserEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
-	@Column
+	@Column(nullable = false)
 	private String name;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
-	@Column
+	@Column(nullable = false)
 	private String password;
 	@Column
-	private int age;
+	private String age;
 	@Column
-	private double height;
+	private String height;
 	@Column
-	private int weight;
+	private String weight;
 	@Column
 	private String sex;
 	@Column
-	private int activityLevel;
+	private String activityLevel;
 	@OneToMany
 	private Set<NutPlanEntity> plans;
 
 	public static final String FIND_ALL = "User.findAll";
 	public static final String FIND_SPECIFIC_EMAIL = "User.findSpecificEmail";
 
-	public UserEntity(String name, String email, String password, int age, double height, int weight, String sex,
-			int activityLevel, Set<NutPlanEntity> plans) {
+	public UserEntity(String name, String email, String password, String age, String height, String weight, String sex,
+			String activityLevel, Set<NutPlanEntity> plans) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -101,27 +101,27 @@ public class UserEntity implements Serializable {
 		this.plans = plans;
 	}
 
-	public int getAge() {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 
-	public double getHeight() {
+	public String getHeight() {
 		return height;
 	}
 
-	public void setHeight(double height) {
+	public void setHeight(String height) {
 		this.height = height;
 	}
 
-	public int getWeight() {
+	public String getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 
@@ -133,11 +133,11 @@ public class UserEntity implements Serializable {
 		this.sex = sex;
 	}
 
-	public int getActivityLevel() {
+	public String getActivityLevel() {
 		return activityLevel;
 	}
 
-	public void setActivityLevel(int activityLevel) {
+	public void setActivityLevel(String activityLevel) {
 		this.activityLevel = activityLevel;
 	}
 

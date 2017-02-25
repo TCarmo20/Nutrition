@@ -25,7 +25,23 @@ public class ProfileController implements Initializable {
 	@FXML
 	private TextField email;
 	@FXML
+	private TextField sex;
+	@FXML
+	private TextField age;
+	@FXML
+	private TextField password;
+	@FXML
+	private TextField password2;
+	@FXML
+	private TextField height;
+	@FXML
+	private TextField weight;
+	@FXML
+	private TextField activityLevel;
+	@FXML
 	private Label success;
+	@FXML
+	private Label error;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -47,18 +63,30 @@ public class ProfileController implements Initializable {
 
 	@FXML
 	protected void processUpdate() {
-		System.out.println("Entrou");
 		UserEntity loggedUser = LoginApp.getInstance().getLoggedUser();
-		try {
-			UserServices.updateUser(loggedUser, email.getText(), name.getText());
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (password.equals(password2)) {
+			try {
+				UserServices.updateUser(loggedUser, name.getText(), email.getText(), password.getText(), age.getText(),
+						activityLevel.getText(), sex.getText(), height.getText(), weight.getText());
+				animateMessage();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			animateErrorMessage();
 		}
-		animateMessage();
+		
 	}
 
 	private void animateMessage() {
 		FadeTransition ft = new FadeTransition(new Duration(3000), success);
+		ft.setFromValue(0.0);
+		ft.setToValue(1);
+		ft.play();
+	}
+	
+	private void animateErrorMessage() {
+		FadeTransition ft = new FadeTransition(new Duration(3000), error);
 		ft.setFromValue(0.0);
 		ft.setToValue(1);
 		ft.play();

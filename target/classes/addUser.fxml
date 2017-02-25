@@ -10,13 +10,16 @@
 
 <StackPane id="AddUser" styleClass="addUser" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.AddUserController">
 	<AnchorPane prefHeight="500.0" prefWidth="600.0">
-		<TextField fx:id="name" layoutX="200.0" layoutY="170.0" prefHeight="25.0" prefWidth="200.0" promptText="name" />
-		<TextField fx:id="email" layoutX="200.0" layoutY="220.0" prefHeight="25.0" prefWidth="200.0" promptText="email" />
-		<PasswordField fx:id="password" layoutX="200.0" layoutY="270.0" prefHeight="25.0" prefWidth="200.0" promptText="password" />
+		<TextField id="nameAddUser" fx:id="name" layoutX="200.0" layoutY="170.0" prefHeight="25.0" prefWidth="200.0" promptText="name" stylesheets="@demo.css" />
+		<TextField id="emailAddUser" fx:id="email" layoutX="200.0" layoutY="220.0" prefHeight="25.0" prefWidth="200.0" promptText="email" stylesheets="@demo.css" />
+		<PasswordField id="passwordAddUser" fx:id="password" layoutX="200.0" layoutY="270.0" prefHeight="25.0" prefWidth="200.0" promptText="password" stylesheets="@demo.css" />
 		<Label fx:id="success" layoutX="150.0" layoutY="450.0" opacity="0.0" text="User added!" />
 		<Label fx:id="error" layoutX="150.0" layoutY="450.0" opacity="0.0" text="Error adding user!" />
-		<Button fx:id="back" cancelButton="true" layoutX="200.0" layoutY="370.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" text="Back" AnchorPane.bottomAnchor="86.0" AnchorPane.leftAnchor="200.0" />
-		<Button defaultButton="true" layoutX="200.0" layoutY="320.0" mnemonicParsing="false" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" text="Confirm" AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="200.0" />
+		<Button fx:id="backAddUser" cancelButton="true" layoutX="200.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" text="Back" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="200.0" />
+		<Button fx:id="confirmAddUser" defaultButton="true" layoutX="200.0" layoutY="398.0" mnemonicParsing="false" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" text="Confirm" AnchorPane.bottomAnchor="71.0" AnchorPane.rightAnchor="200.0" />
+      <TextField id="ageAddUser" fx:id="age" layoutX="200.0" layoutY="124.0" prefHeight="25.0" prefWidth="44.0" promptText="age" stylesheets="@demo.css" />
+      <TextField id="weightAddUser" layoutX="251.0" layoutY="124.0" prefHeight="25.0" prefWidth="57.0" promptText="weight" stylesheets="@demo.css" />
+      <TextField id="heightAddUser" layoutX="314.0" layoutY="124.0" prefHeight="25.0" prefWidth="86.0" promptText="height" stylesheets="@demo.css" />
 	</AnchorPane>
 	<stylesheets>
 		<URL value="@demo.css" />

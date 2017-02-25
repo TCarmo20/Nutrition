@@ -5,18 +5,29 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane id="Login" prefHeight="500.0" prefWidth="600.0" styleClass="login" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.LoginController">
-	<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="600.0">
+<StackPane id="Login" prefHeight="768.0" prefWidth="1366.0" styleClass="login" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.LoginController">
+	<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0">
 		<!-- Prevent AnchorPane so that it's max = pref. This causes it to center 
 			in StackPane -->
-		<TextField fx:id="userId" layoutX="200.0" layoutY="230.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" promptText="Email" />
-		<PasswordField fx:id="password" layoutX="200.0" layoutY="280.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" promptText="Password" />
-		<Button fx:id="login" defaultButton="true" layoutX="200.0" layoutY="330.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" text="LOG IN" />
-		<Label fx:id="errorMessage" layoutX="80.0" layoutY="200.0" textFill="RED" />
-		<Button fx:id="addUser" defaultButton="true" layoutX="200.0" layoutY="380.0" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" text="NEW USER" />
+		<TextField fx:id="userId" layoutX="583.0" layoutY="450.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" promptText="Email" />
+		<PasswordField fx:id="password" layoutX="583.0" layoutY="500.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" promptText="Password" />
+		<Button fx:id="login" defaultButton="true" layoutX="583.0" layoutY="550.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" stylesheets="@demo.css" text="LOG IN">
+         <effect>
+            <DropShadow />
+         </effect></Button>
+		<Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" layoutY="200.0" prefHeight="25.0" prefWidth="278.0" textAlignment="CENTER" textFill="RED">
+         <effect>
+            <DropShadow />
+         </effect></Label>
+		<Button fx:id="addUser" defaultButton="true" layoutX="583.0" layoutY="600.0" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" stylesheets="@demo.css" text="NEW USER">
+         <effect>
+            <DropShadow />
+         </effect></Button>
+      <Button fx:id="exit" cancelButton="true" layoutX="14.0" layoutY="14.0" onAction="#processExit" prefHeight="31.0" prefWidth="33.0" stylesheets="@demo.css" />
 	</AnchorPane>
 	<stylesheets>
 		<URL value="@demo.css" />
