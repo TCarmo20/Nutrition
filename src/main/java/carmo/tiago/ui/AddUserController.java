@@ -2,11 +2,12 @@ package carmo.tiago.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import java.util.regex.Pattern;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
@@ -20,27 +21,49 @@ public class AddUserController implements Initializable {
 	@FXML
 	private TextField password;
 	@FXML
+	private TextField password2;
+	@FXML
 	private TextField age;
 	@FXML
 	private TextField weight;
 	@FXML
 	private TextField height;
 	@FXML
-	private TextField activityLevel;
+	private ChoiceBox<String> activityLevel;
 	@FXML
-	private TextField sex;
+	private ChoiceBox<String> sex;
 	@FXML
-	private Label success;
+	private Label successMessage;
 	@FXML
-	private Label error;
+	private Label errorMessage;
+	@FXML
+	private Label nameErrorMessage;
+	@FXML
+	private Label emailErrorMessage;
+	@FXML
+	private Label passwordErrorMessage;
+	@FXML
+	private Label password2ErrorMessage;
+
+	Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		name.setPromptText("Name");
 		email.setPromptText("Email");
 		password.setPromptText("Password");
-		success.setOpacity(0);
-		error.setOpacity(0);
+		password2.setPromptText("Retype password");
+		height.setPromptText("Height");
+		weight.setPromptText("Weight");
+		successMessage.setOpacity(0);
+		errorMessage.setOpacity(0);
+		sex.getItems().removeAll(sex.getItems());
+		activityLevel.getItems().removeAll(activityLevel.getItems());
+		sex.getItems().addAll("Male", "Female");
+		activityLevel.getItems().addAll("Sedentário", "Atividade Leve", "Atividade Moderada", "Muito Ativo",
+				"Extremamente Ativo");
+		sex.getSelectionModel().select("Male");
+		activityLevel.getSelectionModel().select("Sedentário");
 	}
 
 	@FXML
@@ -50,27 +73,83 @@ public class AddUserController implements Initializable {
 
 	@FXML
 	protected void processAddUser() {
+		fadeMessages();
 		try {
-			UserServices.addUser(name.getText(), email.getText(), password.getText(), age.getText(),
-					activityLevel.getText(), sex.getText(), height.getText(), weight.getText());
-			animateMessage();
-		} catch (Exception e) {
-			animateErrorMessage();
+			checkMessages();
+			try {
+				UserServices.getUserByEmail(email.getText());
+				emailErrorMessage.setText("Email already in use");
+				animateMessage(emailErrorMessage);
+			} catch (Exception e2) {
+				try {
+					UserServices.addUser(name.getText(), email.getText(), password.getText(), age.getText(),
+							activityLevel.getSelectionModel().getSelectedItem(),
+							sex.getSelectionModel().getSelectedItem(), height.getText(), weight.getText());
+					successMessage.setText("User successfully added!");
+					animateMessage(successMessage);
+				} catch (Exception e) {
+					errorMessage.setText("Error adding user!");
+					animateMessage(errorMessage);
+				}
+			}
+		} catch (Exception e1) {
+			errorMessage.setText("Please review inserted values");
+			animateMessage(errorMessage);
 		}
 	}
 
-	private void animateMessage() {
-		FadeTransition ft = new FadeTransition(new Duration(3000), success);
+	private void animateMessage(Label message) {
+		FadeTransition ft = new FadeTransition(new Duration(3000), message);
 		ft.setFromValue(0.0);
 		ft.setToValue(1);
 		ft.play();
 	}
 
-	private void animateErrorMessage() {
-		FadeTransition ft = new FadeTransition(new Duration(3000), error);
-		ft.setFromValue(0.0);
-		ft.setToValue(1);
-		ft.play();
+	private void fadeMessages() {
+		emailErrorMessage.setText("");
+		nameErrorMessage.setText("");
+		passwordErrorMessage.setText("");
+		password2ErrorMessage.setText("");
+		successMessage.setText("");
+		errorMessage.setText("");
+	}
+
+	private void checkMessages() throws Exception {
+		boolean flag = false;
+		if (email.getText().equals("")) {
+			emailErrorMessage.setText("Email cannot be empty");
+			animateMessage(emailErrorMessage);
+			flag = true;
+		}
+		if (name.getText().equals("")) {
+			nameErrorMessage.setText("Name cannot be empty");
+			animateMessage(emailErrorMessage);
+			flag = true;
+		}
+		if (password.getText().equals("")) {
+			passwordErrorMessage.setText("Password cannot be empty");
+			animateMessage(passwordErrorMessage);
+			flag = true;
+		}
+		if (!password.getText().equals("") && !password2.getText().equals("")
+				&& !password.getText().equals(password2.getText())) {
+			password2ErrorMessage.setText("Passwords do not match");
+			animateMessage(password2ErrorMessage);
+			flag = true;
+		}
+		if (password2.getText().equals("")) {
+			password2ErrorMessage.setText("Password must be rewritten");
+			animateMessage(password2ErrorMessage);
+			flag = true;
+		}
+		if (!email.getText().equals("") && !emailRegex.matcher(email.getText()).find()) {
+			emailErrorMessage.setText("Email is malformed");
+			animateMessage(emailErrorMessage);
+			flag = true;
+		}
+		if (flag) {
+			throw new Exception();
+		}
 	}
 
 }

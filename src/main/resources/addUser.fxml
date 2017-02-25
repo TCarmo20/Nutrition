@@ -2,24 +2,94 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane id="AddUser" styleClass="addUser" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.AddUserController">
-	<AnchorPane prefHeight="500.0" prefWidth="600.0">
-		<TextField id="nameAddUser" fx:id="name" layoutX="200.0" layoutY="170.0" prefHeight="25.0" prefWidth="200.0" promptText="name" stylesheets="@demo.css" />
-		<TextField id="emailAddUser" fx:id="email" layoutX="200.0" layoutY="220.0" prefHeight="25.0" prefWidth="200.0" promptText="email" stylesheets="@demo.css" />
-		<PasswordField id="passwordAddUser" fx:id="password" layoutX="200.0" layoutY="270.0" prefHeight="25.0" prefWidth="200.0" promptText="password" stylesheets="@demo.css" />
-		<Label fx:id="success" layoutX="150.0" layoutY="450.0" opacity="0.0" text="User added!" />
-		<Label fx:id="error" layoutX="150.0" layoutY="450.0" opacity="0.0" text="Error adding user!" />
-		<Button fx:id="backAddUser" cancelButton="true" layoutX="200.0" layoutY="443.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" text="Back" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="200.0" />
-		<Button fx:id="confirmAddUser" defaultButton="true" layoutX="200.0" layoutY="398.0" mnemonicParsing="false" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" text="Confirm" AnchorPane.bottomAnchor="71.0" AnchorPane.rightAnchor="200.0" />
-      <TextField id="ageAddUser" fx:id="age" layoutX="200.0" layoutY="124.0" prefHeight="25.0" prefWidth="44.0" promptText="age" stylesheets="@demo.css" />
-      <TextField id="weightAddUser" layoutX="251.0" layoutY="124.0" prefHeight="25.0" prefWidth="57.0" promptText="weight" stylesheets="@demo.css" />
-      <TextField id="heightAddUser" layoutX="314.0" layoutY="124.0" prefHeight="25.0" prefWidth="86.0" promptText="height" stylesheets="@demo.css" />
+<StackPane id="AddUser" prefHeight="768.0" prefWidth="1366.0"
+	styleClass="addUser" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="carmo.tiago.ui.AddUserController">
+	<AnchorPane prefHeight="768.0" prefWidth="1366.0">
+		<TextField id="nameAddUser" fx:id="name" layoutX="583.0"
+			layoutY="200.0" prefHeight="25.0" prefWidth="200.0" promptText="Name"
+			stylesheets="@demo.css" />
+		<TextField id="emailAddUser" fx:id="email" layoutX="583.0"
+			layoutY="250.0" prefHeight="25.0" prefWidth="200.0" promptText="Email"
+			stylesheets="@demo.css" />
+		<PasswordField id="passwordAddUser" fx:id="password"
+			layoutX="583.0" layoutY="300.0" prefHeight="25.0" prefWidth="200.0"
+			promptText="Password" stylesheets="@demo.css" />
+		<Label fx:id="successMessage" alignment="CENTER" contentDisplay="CENTER"
+			layoutX="150.0" layoutY="450.0" opacity="0.0" prefHeight="25.0"
+			prefWidth="200.0" textAlignment="CENTER" textFill="#0091f8">
+			<effect>
+				<DropShadow />
+			</effect>
+		</Label>
+		<Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER"
+			layoutX="150.0" layoutY="450.0" opacity="0.0" prefHeight="25.0"
+			prefWidth="200.0" textAlignment="CENTER" textFill="RED">
+			<effect>
+				<DropShadow />
+			</effect>
+		</Label>
+		<Button fx:id="backAddUser" cancelButton="true" layoutX="583.0"
+			layoutY="550.0" mnemonicParsing="false" onAction="#goBack"
+			prefHeight="25.0" prefWidth="200.0" text="Back"
+			AnchorPane.bottomAnchor="161.0" AnchorPane.leftAnchor="583.0" />
+		<Button fx:id="confirmAddUser" defaultButton="true" layoutX="583.0"
+			layoutY="500.0" mnemonicParsing="false" onAction="#processAddUser"
+			prefHeight="25.0" prefWidth="200.0" text="Confirm"
+			AnchorPane.bottomAnchor="230.0" AnchorPane.rightAnchor="583.0" />
+		<TextField id="ageAddUser" fx:id="age" layoutX="583.0"
+			layoutY="400.0" prefHeight="25.0" prefWidth="44.0" promptText="Age"
+			stylesheets="@demo.css" />
+		<TextField id="weightAddUser" fx:id="weight" layoutX="633.0"
+			layoutY="400.0" prefHeight="25.0" prefWidth="57.0" promptText="Weight"
+			stylesheets="@demo.css" />
+		<TextField id="heightAddUser" fx:id="height" layoutX="697.0"
+			layoutY="400.0" prefHeight="25.0" prefWidth="86.0" promptText="Height"
+			stylesheets="@demo.css" />
+		<PasswordField id="password2AddUser" fx:id="password2"
+			layoutX="583.0" layoutY="350.0" prefHeight="25.0" prefWidth="200.0"
+			promptText="Retype password" stylesheets="@demo.css" />
+		<ChoiceBox id="sexAddUser" fx:id="sex" layoutX="584.0"
+			layoutY="450.0" prefHeight="25.0" prefWidth="78.0" stylesheets="@demo.css" />
+		<ChoiceBox id="activityLevelAddUser" fx:id="activityLevel"
+			layoutX="672.0" layoutY="450.0" prefHeight="25.0" prefWidth="111.0"
+			stylesheets="@demo.css" />
+		<Label fx:id="nameErrorMessage" alignment="CENTER_RIGHT"
+			contentDisplay="RIGHT" layoutX="414.0" layoutY="204.0" prefHeight="17.0"
+			prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+			<effect>
+				<DropShadow />
+			</effect>
+		</Label>
+		<Label fx:id="emailErrorMessage" alignment="CENTER_RIGHT"
+			contentDisplay="RIGHT" layoutX="414.0" layoutY="254.0" prefHeight="17.0"
+			prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+			<effect>
+				<DropShadow />
+			</effect>
+		</Label>
+		<Label fx:id="passwordErrorMessage" alignment="CENTER_RIGHT"
+			contentDisplay="RIGHT" layoutX="414.0" layoutY="304.0" prefHeight="17.0"
+			prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+			<effect>
+				<DropShadow />
+			</effect>
+		</Label>
+		<Label fx:id="password2ErrorMessage" alignment="CENTER_RIGHT"
+			contentDisplay="RIGHT" layoutX="414.0" layoutY="354.0" prefHeight="17.0"
+			prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+			<effect>
+				<DropShadow />
+			</effect>
+		</Label>
 	</AnchorPane>
 	<stylesheets>
 		<URL value="@demo.css" />
