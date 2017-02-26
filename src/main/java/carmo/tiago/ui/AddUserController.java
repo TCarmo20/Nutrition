@@ -115,6 +115,9 @@ public class AddUserController implements Initializable {
 	}
 
 	private void checkMessages() throws Exception {
+
+		// TODO falta regex para age, weight e height e verificações para os 3
+
 		boolean flag = false;
 		if (email.getText().equals("")) {
 			emailErrorMessage.setText("Email cannot be empty");

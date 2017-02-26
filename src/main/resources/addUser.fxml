@@ -13,54 +13,62 @@
 <StackPane id="AddUser" prefHeight="768.0" prefWidth="1366.0"
 	styleClass="addUser" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="carmo.tiago.ui.AddUserController">
-	<AnchorPane prefHeight="768.0" prefWidth="1366.0">
+	<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+		prefHeight="768.0" prefWidth="1366.0">
 		<TextField id="nameAddUser" fx:id="name" layoutX="583.0"
-			layoutY="200.0" prefHeight="25.0" prefWidth="200.0" promptText="Name"
+			layoutY="250.0" prefHeight="25.0" prefWidth="200.0" promptText="Name"
 			stylesheets="@demo.css" />
 		<TextField id="emailAddUser" fx:id="email" layoutX="583.0"
-			layoutY="250.0" prefHeight="25.0" prefWidth="200.0" promptText="Email"
+			layoutY="300.0" prefHeight="25.0" prefWidth="200.0" promptText="Email"
 			stylesheets="@demo.css" />
 		<PasswordField id="passwordAddUser" fx:id="password"
-			layoutX="583.0" layoutY="300.0" prefHeight="25.0" prefWidth="200.0"
+			layoutX="583.0" layoutY="350.0" prefHeight="25.0" prefWidth="200.0"
 			promptText="Password" stylesheets="@demo.css" />
 		<Label fx:id="successMessage" alignment="CENTER" contentDisplay="CENTER"
-			layoutX="150.0" layoutY="450.0" opacity="0.0" prefHeight="25.0"
+			layoutX="100.0" layoutY="120.0" opacity="0.0" prefHeight="25.0"
 			prefWidth="200.0" textAlignment="CENTER" textFill="#0091f8">
 			<effect>
 				<DropShadow />
 			</effect>
 		</Label>
 		<Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER"
-			layoutX="150.0" layoutY="450.0" opacity="0.0" prefHeight="25.0"
+			layoutX="100.0" layoutY="120.0" opacity="0.0" prefHeight="25.0"
 			prefWidth="200.0" textAlignment="CENTER" textFill="RED">
 			<effect>
 				<DropShadow />
 			</effect>
 		</Label>
-		<Button fx:id="backAddUser" cancelButton="true" layoutX="583.0"
-			layoutY="550.0" mnemonicParsing="false" onAction="#goBack"
-			prefHeight="25.0" prefWidth="200.0" text="Back"
-			AnchorPane.bottomAnchor="161.0" AnchorPane.leftAnchor="583.0" />
-		<Button fx:id="confirmAddUser" defaultButton="true" layoutX="583.0"
-			layoutY="500.0" mnemonicParsing="false" onAction="#processAddUser"
-			prefHeight="25.0" prefWidth="200.0" text="Confirm"
-			AnchorPane.bottomAnchor="230.0" AnchorPane.rightAnchor="583.0" />
+		<Button fx:id="backAddUser" alignment="CENTER" contentDisplay="CENTER"
+			layoutX="583.0" layoutY="600.0" mnemonicParsing="false" onAction="#goBack"
+			prefHeight="25.0" prefWidth="200.0" text="BACK" textAlignment="CENTER">
+			<effect>
+				<DropShadow />
+			</effect>
+		</Button>
+		<Button fx:id="confirmAddUser" alignment="CENTER"
+			contentDisplay="CENTER" defaultButton="true" layoutX="583.0" layoutY="550.0"
+			mnemonicParsing="false" onAction="#processAddUser" prefHeight="25.0"
+			prefWidth="200.0" text="CONFIRM" textAlignment="CENTER">
+			<effect>
+				<DropShadow />
+			</effect>
+		</Button>
 		<TextField id="ageAddUser" fx:id="age" layoutX="583.0"
-			layoutY="400.0" prefHeight="25.0" prefWidth="44.0" promptText="Age"
+			layoutY="450.0" prefHeight="25.0" prefWidth="44.0" promptText="Age"
 			stylesheets="@demo.css" />
 		<TextField id="weightAddUser" fx:id="weight" layoutX="633.0"
-			layoutY="400.0" prefHeight="25.0" prefWidth="57.0" promptText="Weight"
+			layoutY="450.0" prefHeight="25.0" prefWidth="57.0" promptText="Weight"
 			stylesheets="@demo.css" />
 		<TextField id="heightAddUser" fx:id="height" layoutX="697.0"
-			layoutY="400.0" prefHeight="25.0" prefWidth="86.0" promptText="Height"
+			layoutY="450.0" prefHeight="25.0" prefWidth="86.0" promptText="Height"
 			stylesheets="@demo.css" />
 		<PasswordField id="password2AddUser" fx:id="password2"
-			layoutX="583.0" layoutY="350.0" prefHeight="25.0" prefWidth="200.0"
+			layoutX="583.0" layoutY="400.0" prefHeight="25.0" prefWidth="200.0"
 			promptText="Retype password" stylesheets="@demo.css" />
 		<ChoiceBox id="sexAddUser" fx:id="sex" layoutX="584.0"
-			layoutY="450.0" prefHeight="25.0" prefWidth="78.0" stylesheets="@demo.css" />
+			layoutY="500.0" prefHeight="25.0" prefWidth="78.0" stylesheets="@demo.css" />
 		<ChoiceBox id="activityLevelAddUser" fx:id="activityLevel"
-			layoutX="672.0" layoutY="450.0" prefHeight="25.0" prefWidth="111.0"
+			layoutX="672.0" layoutY="500.0" prefHeight="25.0" prefWidth="111.0"
 			stylesheets="@demo.css" />
 		<Label fx:id="nameErrorMessage" alignment="CENTER_RIGHT"
 			contentDisplay="RIGHT" layoutX="414.0" layoutY="204.0" prefHeight="17.0"
