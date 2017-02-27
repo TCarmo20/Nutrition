@@ -24,14 +24,17 @@ public class NutPlanEntity implements Serializable {
 	private double carbs;
 	@Column
 	private double fat;
+	@Column
+	private String objective;
 	@ManyToOne
 	private UserEntity user;
 
-	public NutPlanEntity(double protein, double carbs, double fat, UserEntity user) {
+	public NutPlanEntity(double protein, double carbs, double fat, String objective, UserEntity user) {
 		super();
 		this.protein = protein;
 		this.carbs = carbs;
 		this.fat = fat;
+		this.objective = objective;
 		this.user = user;
 	}
 
@@ -67,6 +70,14 @@ public class NutPlanEntity implements Serializable {
 
 	public void setFat(double fat) {
 		this.fat = fat;
+	}
+
+	public String getObjective() {
+		return objective;
+	}
+
+	public void setObjective(String objective) {
+		this.objective = objective;
 	}
 
 	public UserEntity getUser() {

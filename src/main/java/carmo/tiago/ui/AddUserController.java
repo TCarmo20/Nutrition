@@ -3,11 +3,16 @@ package carmo.tiago.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
+
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
@@ -29,9 +34,9 @@ public class AddUserController implements Initializable {
 	@FXML
 	private TextField height;
 	@FXML
-	private ChoiceBox<String> activityLevel;
+	private JFXComboBox<String> activityLevel;
 	@FXML
-	private ChoiceBox<String> sex;
+	private JFXComboBox<String> sex;
 	@FXML
 	private Label successMessage;
 	@FXML
@@ -44,6 +49,8 @@ public class AddUserController implements Initializable {
 	private Label passwordErrorMessage;
 	@FXML
 	private Label password2ErrorMessage;
+	@FXML
+	private JFXDatePicker agePicker;
 
 	Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -57,13 +64,12 @@ public class AddUserController implements Initializable {
 		weight.setPromptText("Weight");
 		successMessage.setOpacity(0);
 		errorMessage.setOpacity(0);
-		sex.getItems().removeAll(sex.getItems());
-		activityLevel.getItems().removeAll(activityLevel.getItems());
 		sex.getItems().addAll("Male", "Female");
 		activityLevel.getItems().addAll("Sedentário", "Atividade Leve", "Atividade Moderada", "Muito Ativo",
 				"Extremamente Ativo");
-		sex.getSelectionModel().select("Male");
-		activityLevel.getSelectionModel().select("Sedentário");
+		sex.setPromptText("Sex");
+		activityLevel.setPromptText("Activity level");
+		agePicker.setPromptText("Date of birth (YYYY-MM-dd)");
 	}
 
 	@FXML
@@ -82,7 +88,11 @@ public class AddUserController implements Initializable {
 				animateMessage(emailErrorMessage);
 			} catch (Exception e2) {
 				try {
-					UserServices.addUser(name.getText(), email.getText(), password.getText(), age.getText(),
+					LocalDate birth = new LocalDate(agePicker.getValue().getYear(),agePicker.getValue().getMonthValue(),agePicker.getValue().getDayOfMonth());
+					LocalDate now = new LocalDate();
+					Years agejoda = Years.yearsBetween(birth, now);
+					String data = String.valueOf(agejoda.getYears());
+					UserServices.addUser(name.getText(), email.getText(), password.getText(), data,
 							activityLevel.getSelectionModel().getSelectedItem(),
 							sex.getSelectionModel().getSelectedItem(), height.getText(), weight.getText());
 					successMessage.setText("User successfully added!");
@@ -99,7 +109,7 @@ public class AddUserController implements Initializable {
 	}
 
 	private void animateMessage(Label message) {
-		FadeTransition ft = new FadeTransition(new Duration(3000), message);
+		FadeTransition ft = new FadeTransition(new Duration(1000), message);
 		ft.setFromValue(0.0);
 		ft.setToValue(1);
 		ft.play();

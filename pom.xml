@@ -3,9 +3,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>Nutrition</groupId>
+	<groupId>carmo.tiago</groupId>
 	<artifactId>Nutrition</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 
 	<organization>
 		<name>Tiago Carmo</name>
@@ -27,14 +27,19 @@
 			<version>7.0</version>
 		</dependency>
 		<dependency>
+			<groupId>com.jfoenix</groupId>
+			<artifactId>jfoenix</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
 			<version>2.6.4</version>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>6.0.5</version>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.derby</groupId>

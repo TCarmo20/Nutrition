@@ -12,10 +12,6 @@
 	-fx-background-size: 800.0 500.0;
 }
 
-#Profile{
-	-fx-background-color: lightslategray 
-}
-
 #AddUser{
 	-fx-background-image: url("exerciseWall.jpg");
 	-fx-background-repeat: stretch; 
@@ -26,13 +22,8 @@
 	-fx-border-radius: 20.0px;
 }
 
-#Preloader{
-	-fx-background-color: lightslategray
-}
-
 #login {
-	-fx-background-color: -fx-inner-border, -fx-outer-border, turquoise;
-	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0 0.0 0.0 0.0, 0.0;
+	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
 	-fx-background-radius: 0.0;
 	-fx-font-size: 15.0px;
@@ -43,8 +34,7 @@
 }
 
 #addUser {
-	-fx-background-color: -fx-inner-border, -fx-outer-border, turquoise;
-	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0 0.0 0.0 0.0, 0.0;
+	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
 	-fx-background-radius: 0.0;
 	-fx-font-size: 15.0px;
@@ -55,8 +45,7 @@
 }
 
 #confirmAddUser {
-	-fx-background-color: -fx-inner-border, -fx-outer-border, turquoise;
-	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0 0.0 0.0 0.0, 0.0;
+	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
 	-fx-background-radius: 0.0;
 	-fx-font-size: 15.0px;
@@ -67,8 +56,7 @@
 }
 
 #backAddUser {
-	-fx-background-color: -fx-inner-border, -fx-outer-border, turquoise;
-	-fx-background-insets: 0.0 0.0 0.0 0.0, 0.0 0.0 0.0 0.0, 0.0;
+	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
 	-fx-background-radius: 0.0;
 	-fx-font-size: 15.0px;
@@ -78,12 +66,18 @@
 	-fx-font-weight: bold;
 }
 
+#HomePage{
+	-fx-background-image: url("homePage.jpg");
+	-fx-background-repeat: stretch; 
+	-fx-background-position: center center;
+}
+
 #exit{
 	-fx-background-image: url("exit.png");
+	-fx-border-width: 0.0;
+	-fx-background-radius: 0.0;
+	-fx-border-radius: 20.0px;
     -fx-background-size: 30.0px;
-    -fx-border-color: transparent;
-    -fx-border-width: 0;
-    -fx-background-radius: 0;
     -fx-background-color: transparent;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;

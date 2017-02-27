@@ -17,7 +17,7 @@ import javafx.util.Duration;
  * 
  * @author Tarun Tyagi
  */
-public class ProfileController implements Initializable {
+public class HomePageController implements Initializable {
 	@FXML
 	private TextField user;
 	@FXML

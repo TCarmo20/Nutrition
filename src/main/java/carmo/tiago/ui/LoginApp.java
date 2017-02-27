@@ -17,6 +17,7 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -59,7 +60,9 @@ public class LoginApp extends Application {
 		primaryStage.getIcons().add(new Image("/icon.png"));
 		try {
 			stage = primaryStage;
+			stage.setMaximized(true);
 			stage.setFullScreen(true);
+			stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 			gotoLogin();
 			primaryStage.show();
 		} catch (Exception ex) {
@@ -71,7 +74,7 @@ public class LoginApp extends Application {
 		UserEntity user = UserServices.getUserByEmail(email);
 		if (user.getPassword().equals(password)) {
 			setLoggedUser(user);
-			gotoProfile();
+			gotoHomePage();
 			return true;
 		} else {
 			return false;
@@ -91,9 +94,9 @@ public class LoginApp extends Application {
 		}
 	}
 
-	private void gotoProfile() {
+	private void gotoHomePage() {
 		try {
-			replaceSceneContent("/Profile.fxml");
+			replaceSceneContent("/HomePage.fxml");
 		} catch (Exception ex) {
 			Logger.getLogger(LoginApp.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -120,6 +123,10 @@ public class LoginApp extends Application {
 			scene.getStylesheets().add(getClass().getResource("/demo.css").toExternalForm());
 			stage.setScene(scene);
 		} else {
+			FadeTransition ft = new FadeTransition(new Duration(1000), page);
+			ft.setFromValue(0.0);
+			ft.setToValue(1);
+			ft.play();
 			stage.getScene().setRoot(page);
 		}
 		stage.sizeToScene();
