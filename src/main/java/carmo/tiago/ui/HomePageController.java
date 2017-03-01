@@ -2,8 +2,7 @@ package carmo.tiago.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import carmo.tiago.persistence.UserEntity;
+import carmo.tiago.services.UserPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
@@ -45,7 +44,7 @@ public class HomePageController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		UserEntity loggedUser = LoginApp.getInstance().getLoggedUser();
+		UserPOJO loggedUser = LoginApp.getInstance().getLoggedUser();
 		user.setText(loggedUser.getName());
 		if (loggedUser.getEmail() != null) {
 			email.setText(loggedUser.getEmail());
@@ -63,10 +62,9 @@ public class HomePageController implements Initializable {
 
 	@FXML
 	protected void processUpdate() {
-		UserEntity loggedUser = LoginApp.getInstance().getLoggedUser();
 		if (password.equals(password2)) {
 			try {
-				UserServices.updateUser(loggedUser, name.getText(), email.getText(), password.getText(), age.getText(),
+				UserServices.updateUser(name.getText(), email.getText(), password.getText(), age.getText(),
 						activityLevel.getText(), sex.getText(), height.getText(), weight.getText());
 				animateMessage();
 			} catch (Exception e) {

@@ -6,11 +6,12 @@
 <?import java.net.URL?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane id="Login" prefHeight="768.0" prefWidth="1366.0" styleClass="login" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.LoginController">
+<StackPane id="Login" prefHeight="768.0" prefWidth="1366.0" styleClass="login" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.LoginController">
    <Group>
       <children>
       	<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0">
@@ -20,10 +21,16 @@
       			</effect>
       		</Label>
       		<JFXButton id="exit" fx:id="exit" layoutX="14.0" layoutY="14.0" onAction="#processExit" prefHeight="31.0" prefWidth="33.0" stylesheets="@demo.css" textAlignment="CENTER" textFill="TRANSPARENT" />
-      		<JFXTextField fx:id="userId" focusColor="TURQUOISE" layoutX="583.0" layoutY="450.0" prefHeight="25.0" prefWidth="200.0" promptText="Email" />
-      		<JFXPasswordField fx:id="password" focusColor="TURQUOISE" layoutX="583.0" layoutY="500.0" prefHeight="25.0" prefWidth="200.0" promptText="Password" />
-      		<JFXButton fx:id="login" layoutX="583.0" layoutY="550.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="LOG IN" textAlignment="CENTER" />
-      		<JFXButton fx:id="addUser" layoutX="583.0" layoutY="600.0" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="NEW USER" textAlignment="CENTER" />
+      		<JFXTextField fx:id="userId" focusColor="#c900ff" labelFloat="true" layoutX="583.0" layoutY="450.0" prefHeight="25.0" prefWidth="200.0" promptText="Email">
+               <effect>
+                  <ColorAdjust hue="-0.65" saturation="1.0" />
+               </effect></JFXTextField>
+      		<JFXPasswordField fx:id="password" focusColor="#c900ff" labelFloat="true" layoutX="583.0" layoutY="500.0" prefHeight="25.0" prefWidth="200.0" promptText="Password">
+               <effect>
+                  <ColorAdjust hue="-0.65" saturation="1.0" />
+               </effect></JFXPasswordField>
+      		<JFXButton fx:id="login" buttonType="RAISED" layoutX="583.0" layoutY="550.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="LOG IN" textAlignment="CENTER" />
+      		<JFXButton fx:id="addUser" buttonType="RAISED" layoutX="583.0" layoutY="600.0" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="NEW USER" textAlignment="CENTER" />
       	</AnchorPane>
       </children>
    </Group>

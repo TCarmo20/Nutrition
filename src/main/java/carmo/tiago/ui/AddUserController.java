@@ -3,10 +3,8 @@ package carmo.tiago.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
-
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import carmo.tiago.services.UserServices;

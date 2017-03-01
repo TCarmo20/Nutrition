@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import carmo.tiago.persistence.UserEntity;
+import carmo.tiago.services.UserPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
@@ -32,7 +32,7 @@ public class LoginApp extends Application {
 	private EntityManagerFactory emf;
 	private EntityManager em;
 	private Stage stage;
-	private UserEntity loggedUser;
+	private UserPOJO loggedUser;
 
 	private static LoginApp instance;
 
@@ -71,8 +71,8 @@ public class LoginApp extends Application {
 	}
 
 	public boolean userLogging(String email, String password) throws Exception {
-		UserEntity user = UserServices.getUserByEmail(email);
-		if (user.getPassword().equals(password)) {
+		UserPOJO user = UserServices.getUserByEmailPOJO(email);
+		if (user.getPassword().equals(UserServices.encrypt(password))) {
 			setLoggedUser(user);
 			gotoHomePage();
 			return true;
@@ -133,11 +133,11 @@ public class LoginApp extends Application {
 		return page;
 	}
 
-	public void setLoggedUser(UserEntity loggedUser) {
+	public void setLoggedUser(UserPOJO loggedUser) {
 		this.loggedUser = loggedUser;
 	}
 
-	public UserEntity getLoggedUser() {
+	public UserPOJO getLoggedUser() {
 		return loggedUser;
 	}
 

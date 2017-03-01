@@ -30,7 +30,6 @@
 	-fx-text-fill: white;
 	-fx-border-radius: 20.0px;
 	-fx-background-radius:8.0px;
-	-fx-font-weight: bold;
 }
 
 #addUser {
@@ -41,7 +40,6 @@
 	-fx-text-fill: white;
 	-fx-border-radius: 20.0px;
 	-fx-background-radius:8.0px;
-	-fx-font-weight: bold;
 }
 
 #confirmAddUser {
@@ -52,7 +50,6 @@
 	-fx-text-fill: white;
 	-fx-border-radius: 20.0px;
 	-fx-background-radius:8.0px;
-	-fx-font-weight: bold;
 }
 
 #backAddUser {
@@ -63,7 +60,6 @@
 	-fx-text-fill: white;
 	-fx-border-radius: 20.0px;
 	-fx-background-radius:8.0px;
-	-fx-font-weight: bold;
 }
 
 #HomePage{
