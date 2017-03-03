@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBoxMenuBar" alignment="TOP_CENTER" prefWidth="200.0" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
-	<children>
-		<ImageView fx:id="imageViewMenuBar" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-			<image>
-				<Image url="@Pictures/preloaderWall.jpg" />
-			</image>
-		</ImageView>
-		<JFXButton fx:id="CreatePlanMenuBar" buttonType="RAISED" contentDisplay="CENTER" onAction="#processCreatePlan" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="Create Plan" />
-		<JFXButton fx:id="MyPlansMenuBar" buttonType="RAISED" prefHeight="25.0" prefWidth="200.0" text="My Plans" />
-		<JFXButton fx:id="UpdateDetailsMenuBar" buttonType="RAISED" prefHeight="25.0" prefWidth="200.0" text="Update Details" />
-		<JFXButton fx:id="LogoutManuBar" buttonType="RAISED" cancelButton="true" onAction="#processLogout" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="Logout" />
-      <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="200.0" textAlignment="CENTER" wrapText="true">
+
+<AnchorPane prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
+   <children>
+      <VBox fx:id="vBoxMenuBar" alignment="TOP_CENTER" layoutX="16.0" prefWidth="200.0" stylesheets="@demo.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      	<children>
+      		<ImageView fx:id="imageViewMenuBar" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+      			<image>
+      				<Image url="@Pictures/preloaderWall.jpg" />
+      			</image>
+      		</ImageView>
+      		<JFXButton fx:id="CreatePlanMenuBar" buttonType="RAISED" contentDisplay="CENTER" onAction="#processCreatePlan" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="Create Plan" />
+      		<JFXButton fx:id="MyPlansMenuBar" buttonType="RAISED" prefHeight="25.0" prefWidth="200.0" text="My Plans" />
+      		<JFXButton fx:id="UpdateDetailsMenuBar" buttonType="RAISED" prefHeight="25.0" prefWidth="200.0" text="Update Details" />
+      		<JFXButton fx:id="LogoutManuBar" buttonType="RAISED" cancelButton="true" onAction="#processLogout" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="Logout" />
+      	</children>
+      </VBox>
+      <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="200.0" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-	</children>
-   <padding>
-      <Insets bottom="200.0" />
-   </padding>
-</VBox>
+   </children>
+</AnchorPane>

@@ -41,7 +41,7 @@
                         <Insets top="25.0" />
                      </VBox.margin>
                   </JFXPasswordField>
-            		<JFXButton fx:id="login" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="LOG IN" textAlignment="CENTER">
+            		<JFXButton fx:id="login" defaultButton="true" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="LOG IN" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
