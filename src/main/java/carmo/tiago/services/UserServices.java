@@ -89,7 +89,7 @@ public class UserServices {
 		return entityToPOJO(UserFacade.getUserByEmail(email));
 	}
 
-	public static void createPlan(String objective) throws NumberFormatException, Exception {
+	public void createPlan(String objective) throws NumberFormatException, Exception {
 		UserPOJO loggedUser = LoginApp.getInstance().getLoggedUser();
 		double FA = 0;
 		Random random = new Random();

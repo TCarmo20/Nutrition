@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXDialog?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
@@ -20,5 +21,6 @@
             <JFXHamburger fx:id="hamburger" alignment="TOP_RIGHT" prefHeight="86.0" prefWidth="84.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
          </children>
       </AnchorPane>
+      <JFXDialog fx:id="dialog" />
    </children>
 </StackPane>
