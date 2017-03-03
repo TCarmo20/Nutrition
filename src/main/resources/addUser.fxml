@@ -4,97 +4,149 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXPasswordField?>
-<?import com.jfoenix.controls.JFXSpinner?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<StackPane id="AddUser" prefHeight="768.0" prefWidth="1366.0" styleClass="addUser" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.AddUserController">
-	<Group>
-		<children>
-			<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0">
-				<Label fx:id="successMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="120.0" opacity="0.0" prefHeight="25.0" prefWidth="200.0" textAlignment="CENTER" textFill="#0091f8">
-					<effect>
-						<DropShadow />
-					</effect>
-				</Label>
-				<Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="120.0" opacity="0.0" prefHeight="25.0" prefWidth="200.0" textAlignment="CENTER" textFill="RED">
-					<effect>
-						<DropShadow />
-					</effect>
-				</Label>
-				<Label fx:id="nameErrorMessage" layoutX="398.0" layoutY="154.0" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
-					<effect>
-						<DropShadow />
-					</effect>
-				</Label>
-				<Label fx:id="emailErrorMessage" layoutX="398.0" layoutY="204.0" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
-					<effect>
-						<DropShadow />
-					</effect>
-				</Label>
-				<Label fx:id="passwordErrorMessage" layoutX="398.0" layoutY="254.0" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
-					<effect>
-						<DropShadow />
-					</effect>
-				</Label>
-				<Label fx:id="password2ErrorMessage" layoutX="398.0" layoutY="304.0" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
-					<effect>
-						<DropShadow />
-					</effect>
-				</Label>
-				<JFXButton fx:id="confirmAddUser" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" defaultButton="true" layoutX="1152.0" layoutY="650.0" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" text="CONFIRM" textAlignment="CENTER" />
-				<JFXButton fx:id="backAddUser" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="1152.0" layoutY="700.0" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" text="BACK" />
-				<JFXTextField id="nameAddUser" fx:id="name" focusColor="#c900ff" labelFloat="true" layoutX="192.0" layoutY="150.0" prefHeight="25.0" prefWidth="200.0" promptText="Name" stylesheets="@demo.css">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXTextField>
-				<JFXTextField id="emailAddUser" fx:id="email" focusColor="#c900ff" labelFloat="true" layoutX="192.0" layoutY="200.0" prefHeight="25.0" prefWidth="200.0" promptText="Email" stylesheets="@demo.css">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXTextField>
-				<JFXPasswordField id="passwordAddUser" fx:id="password" focusColor="#c900ff" labelFloat="true" layoutX="192.0" layoutY="250.0" prefHeight="25.0" prefWidth="200.0" promptText="Password" stylesheets="@demo.css">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXPasswordField>
-				<JFXPasswordField id="password2AddUser" fx:id="password2" focusColor="#c900ff" labelFloat="true" layoutX="192.0" layoutY="300.0" prefHeight="25.0" prefWidth="200.0" promptText="Retype password" stylesheets="@demo.css">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXPasswordField>
-				<JFXTextField id="weightAddUser" fx:id="weight" focusColor="#c900ff" labelFloat="true" layoutX="193.0" layoutY="400.0" prefHeight="25.0" prefWidth="78.0" promptText="Weight (kg)">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXTextField>
-				<JFXTextField id="heightAddUser" fx:id="height" focusColor="#c900ff" labelFloat="true" layoutX="281.0" layoutY="400.0" prefHeight="25.0" prefWidth="111.0" promptText="Height (cm)">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXTextField>
-				<JFXComboBox id="sexAddUser" fx:id="sex" focusColor="#c900ff" labelFloat="true" layoutX="193.0" layoutY="450.0" prefHeight="25.0" prefWidth="78.0" promptText="Sex" stylesheets="@demo.css">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXComboBox>
-				<JFXComboBox id="activityLevelAddUser" fx:id="activityLevel" focusColor="#c900ff" labelFloat="true" layoutX="281.0" layoutY="450.0" prefHeight="25.0" prefWidth="111.0" promptText="Activity level" stylesheets="@demo.css">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXComboBox>
-				<JFXDatePicker id="AgePickerAddUser" fx:id="agePicker" defaultColor="#c900ff" layoutX="192.0" layoutY="350.0" overLay="true" prefHeight="28.0" prefWidth="200.0" promptText="Date of birth (YYYY-MM-dd)">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXDatePicker>
-				<JFXSpinner id="spinnerAddUser" fx:id="spinner" layoutX="200.0" layoutY="171.0" opacity="0.0" />
-			</AnchorPane>
-		</children>
-	</Group>
-	<stylesheets>
-		<URL value="@demo.css" />
-	</stylesheets>
+<StackPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.AddUserController">
+	<children>
+		<BorderPane id="AddUser" fx:id="AddUser" stylesheets="@demo.css">
+			<center>
+				<Group BorderPane.alignment="TOP_LEFT">
+					<children>
+						<FlowPane hgap="10.0" layoutX="183.0" layoutY="111.0" prefHeight="255.0" prefWidth="400.0" rowValignment="BOTTOM" stylesheets="@demo.css" vgap="20.0">
+							<children>
+								<JFXTextField id="nameAddUser" fx:id="name" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Name" stylesheets="@demo.css">
+									<opaqueInsets>
+										<Insets />
+									</opaqueInsets>
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+								</JFXTextField>
+								<Label fx:id="nameErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+									<effect>
+										<DropShadow />
+									</effect>
+								</Label>
+								<JFXTextField id="emailAddUser" fx:id="email" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Email" stylesheets="@demo.css">
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+								</JFXTextField>
+								<Label fx:id="emailErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+									<effect>
+										<DropShadow />
+									</effect>
+								</Label>
+								<JFXPasswordField id="passwordAddUser" fx:id="password" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Password" stylesheets="@demo.css">
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+								</JFXPasswordField>
+								<Label fx:id="passwordErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+									<effect>
+										<DropShadow />
+									</effect>
+								</Label>
+								<JFXPasswordField id="password2AddUser" fx:id="password2" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Retype password" stylesheets="@demo.css">
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+								</JFXPasswordField>
+								<Label fx:id="password2ErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+									<effect>
+										<DropShadow />
+									</effect>
+								</Label>
+								<JFXDatePicker id="AgePickerAddUser" fx:id="agePicker" defaultColor="#c900ff" editable="false" overLay="true" prefHeight="25.0" prefWidth="200.0" promptText="Date of birth (YYYY-MM-dd)">
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+                           <padding>
+                              <Insets top="-5.0" />
+                           </padding>
+								</JFXDatePicker>
+								<Label fx:id="dateErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+									<effect>
+										<DropShadow />
+									</effect>
+								</Label>
+								<JFXTextField id="weightAddUser" fx:id="weight" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="78.0" promptText="Weight (kg)">
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+								</JFXTextField>
+								<JFXTextField id="heightAddUser" fx:id="height" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="111.0" promptText="Height (cm)">
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+								</JFXTextField>
+								<Label fx:id="weightHeightErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+									<effect>
+										<DropShadow />
+									</effect>
+								</Label>
+								<JFXComboBox id="sexAddUser" fx:id="sex" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="78.0" promptText="Sex" stylesheets="@demo.css">
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+								</JFXComboBox>
+								<JFXComboBox id="activityLevelAddUser" fx:id="activityLevel" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="111.0" promptText="Activity level" stylesheets="@demo.css">
+									<effect>
+										<ColorAdjust hue="-0.65" saturation="1.0" />
+									</effect>
+								</JFXComboBox>
+								<Label fx:id="sexActivityErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
+									<effect>
+										<DropShadow />
+									</effect>
+								</Label>
+							</children>
+							<opaqueInsets>
+								<Insets />
+							</opaqueInsets>
+							<padding>
+								<Insets top="15.0" />
+							</padding>
+						</FlowPane>
+					</children>
+					<BorderPane.margin>
+						<Insets left="100.0" top="90.0" />
+					</BorderPane.margin>
+				</Group>
+			</center>
+			<bottom>
+				<Group BorderPane.alignment="BOTTOM_RIGHT">
+					<children>
+						<VBox alignment="BOTTOM_RIGHT" layoutX="16.0" layoutY="12.0" spacing="20.0">
+							<children>
+										<Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" opacity="0.0" prefHeight="25.0" prefWidth="200.0" textAlignment="CENTER" textFill="RED">
+											<effect>
+												<DropShadow />
+											</effect>
+										</Label>
+								<JFXButton fx:id="confirmAddUser" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" text="CONFIRM" textAlignment="CENTER">
+									<opaqueInsets>
+										<Insets />
+									</opaqueInsets>
+								</JFXButton>
+								<JFXButton fx:id="backAddUser" alignment="CENTER" contentDisplay="CENTER" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" text="BACK" />
+							</children>
+						</VBox>
+					</children>
+					<BorderPane.margin>
+						<Insets bottom="10.0" />
+					</BorderPane.margin>
+				</Group>
+			</bottom>
+		</BorderPane>
+	</children>
 </StackPane>

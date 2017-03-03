@@ -3,38 +3,67 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<StackPane id="Login" prefHeight="768.0" prefWidth="1366.0" styleClass="login" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.LoginController">
-   <Group>
-      <children>
-      	<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0">
-      		<Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="544.0" layoutY="413.0" prefHeight="25.0" prefWidth="278.0" textAlignment="CENTER" textFill="RED">
-      			<effect>
-      				<DropShadow />
-      			</effect>
-      		</Label>
-      		<JFXButton id="exit" fx:id="exit" layoutX="14.0" layoutY="14.0" onAction="#processExit" prefHeight="31.0" prefWidth="33.0" stylesheets="@demo.css" textAlignment="CENTER" textFill="TRANSPARENT" />
-      		<JFXTextField fx:id="userId" focusColor="#c900ff" labelFloat="true" layoutX="583.0" layoutY="450.0" prefHeight="25.0" prefWidth="200.0" promptText="Email">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXTextField>
-      		<JFXPasswordField fx:id="password" focusColor="#c900ff" labelFloat="true" layoutX="583.0" layoutY="500.0" prefHeight="25.0" prefWidth="200.0" promptText="Password">
-               <effect>
-                  <ColorAdjust hue="-0.65" saturation="1.0" />
-               </effect></JFXPasswordField>
-      		<JFXButton fx:id="login" buttonType="RAISED" layoutX="583.0" layoutY="550.0" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="LOG IN" textAlignment="CENTER" />
-      		<JFXButton fx:id="addUser" buttonType="RAISED" layoutX="583.0" layoutY="600.0" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="NEW USER" textAlignment="CENTER" />
-      	</AnchorPane>
-      </children>
-   </Group>
-	<stylesheets>
-		<URL value="@demo.css" />
-	</stylesheets>
-</StackPane>
+<BorderPane id="Login" fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.LoginController">
+   <center>
+      <Group fx:id="groupLogin" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="543.0" prefWidth="200.0">
+               <children>
+            		<Label fx:id="errorMessage" alignment="CENTER" contentDisplay="CENTER" opacity="0.0" prefHeight="36.0" prefWidth="200.0" text="Username/password combination is invalid." textAlignment="CENTER" textFill="RED" wrapText="true">
+            			<effect>
+            				<DropShadow />
+            			</effect>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+            		</Label>
+            		<JFXTextField fx:id="userIdLogin" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Email">
+                     <effect>
+                        <ColorAdjust hue="-0.65" saturation="1.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+               		<JFXPasswordField fx:id="passwordLogin" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Password">
+                     <effect>
+                        <ColorAdjust hue="-0.65" saturation="1.0" />
+                     </effect>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </JFXPasswordField>
+            		<JFXButton fx:id="login" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="LOG IN" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </JFXButton>
+            		<JFXButton fx:id="addUserLogin" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" stylesheets="@demo.css" text="NEW USER" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </JFXButton>
+               </children>
+               <padding>
+                  <Insets top="250.0" />
+               </padding>
+            </VBox>
+         </children>
+      </Group>
+   </center>
+   <top>
+      <Group BorderPane.alignment="TOP_LEFT">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </Group>
+   </top>
+</BorderPane>

@@ -5,50 +5,82 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
+
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
 public class AddUserController implements Initializable {
 
 	@FXML
-	private TextField name;
+	private BorderPane AddUser;
+
 	@FXML
-	private TextField email;
-	@FXML
-	private TextField password;
-	@FXML
-	private TextField password2;
-	@FXML
-	private TextField age;
-	@FXML
-	private TextField weight;
-	@FXML
-	private TextField height;
-	@FXML
-	private JFXComboBox<String> activityLevel;
-	@FXML
-	private JFXComboBox<String> sex;
-	@FXML
-	private Label successMessage;
-	@FXML
-	private Label errorMessage;
+	private JFXTextField name;
+
 	@FXML
 	private Label nameErrorMessage;
+
+	@FXML
+	private JFXTextField email;
+
 	@FXML
 	private Label emailErrorMessage;
+
+	@FXML
+	private JFXPasswordField password;
+
 	@FXML
 	private Label passwordErrorMessage;
+
+	@FXML
+	private JFXPasswordField password2;
+
 	@FXML
 	private Label password2ErrorMessage;
+
 	@FXML
 	private JFXDatePicker agePicker;
+
+	@FXML
+	private Label dateErrorMessage;
+
+	@FXML
+	private JFXTextField weight;
+
+	@FXML
+	private JFXTextField height;
+
+	@FXML
+	private Label weightHeightErrorMessage;
+
+	@FXML
+	private JFXComboBox<String> sex;
+
+	@FXML
+	private JFXComboBox<String> activityLevel;
+
+	@FXML
+	private Label sexActivityErrorMessage;
+
+	@FXML
+	private Label errorMessage;
+
+	@FXML
+	private JFXButton confirmAddUser;
+
+	@FXML
+	private JFXButton backAddUser;
 
 	Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -60,7 +92,6 @@ public class AddUserController implements Initializable {
 		password2.setPromptText("Retype password");
 		height.setPromptText("Height");
 		weight.setPromptText("Weight");
-		successMessage.setOpacity(0);
 		errorMessage.setOpacity(0);
 		sex.getItems().addAll("Male", "Female");
 		activityLevel.getItems().addAll("Sedentário", "Atividade Leve", "Atividade Moderada", "Muito Ativo",
@@ -86,15 +117,15 @@ public class AddUserController implements Initializable {
 				animateMessage(emailErrorMessage);
 			} catch (Exception e2) {
 				try {
-					LocalDate birth = new LocalDate(agePicker.getValue().getYear(),agePicker.getValue().getMonthValue(),agePicker.getValue().getDayOfMonth());
+					LocalDate birth = new LocalDate(agePicker.getValue().getYear(),
+							agePicker.getValue().getMonthValue(), agePicker.getValue().getDayOfMonth());
 					LocalDate now = new LocalDate();
 					Years agejoda = Years.yearsBetween(birth, now);
 					String data = String.valueOf(agejoda.getYears());
 					UserServices.addUser(name.getText(), email.getText(), password.getText(), data,
 							activityLevel.getSelectionModel().getSelectedItem(),
 							sex.getSelectionModel().getSelectedItem(), height.getText(), weight.getText());
-					successMessage.setText("User successfully added!");
-					animateMessage(successMessage);
+					LoginApp.getInstance().gotoLogin();
 				} catch (Exception e) {
 					errorMessage.setText("Error adding user!");
 					animateMessage(errorMessage);
@@ -118,14 +149,13 @@ public class AddUserController implements Initializable {
 		nameErrorMessage.setText("");
 		passwordErrorMessage.setText("");
 		password2ErrorMessage.setText("");
-		successMessage.setText("");
 		errorMessage.setText("");
+		weightHeightErrorMessage.setText("");
+		sexActivityErrorMessage.setText("");
+		dateErrorMessage.setText("");
 	}
 
 	private void checkMessages() throws Exception {
-
-		// TODO falta regex para age, weight e height e verificações para os 3
-
 		boolean flag = false;
 		if (email.getText().equals("")) {
 			emailErrorMessage.setText("Email cannot be empty");
@@ -156,6 +186,45 @@ public class AddUserController implements Initializable {
 		if (!email.getText().equals("") && !emailRegex.matcher(email.getText()).find()) {
 			emailErrorMessage.setText("Email is malformed");
 			animateMessage(emailErrorMessage);
+			flag = true;
+		}
+		if (sex.getSelectionModel().getSelectedItem() == null
+				&& !(activityLevel.getSelectionModel().getSelectedItem() == null)) {
+			sexActivityErrorMessage.setText("Please select a gender");
+			animateMessage(sexActivityErrorMessage);
+			flag = true;
+		} else if (sex.getSelectionModel().getSelectedItem() == null
+				&& activityLevel.getSelectionModel().getSelectedItem() == null) {
+			sexActivityErrorMessage.setText("Please select a gender and activity level");
+			animateMessage(sexActivityErrorMessage);
+			flag = true;
+		} else if (!(sex.getSelectionModel().getSelectedItem() == null)
+				&& activityLevel.getSelectionModel().getSelectedItem() == null) {
+			sexActivityErrorMessage.setText("Please select an activity level");
+			animateMessage(sexActivityErrorMessage);
+			flag = true;
+		}
+		if (height.getText().equals("") && !weight.getText().equals("")) {
+			weightHeightErrorMessage.setText("Height cannot be empty");
+			animateMessage(weightHeightErrorMessage);
+			flag = true;
+		} else if (!height.getText().equals("") && weight.getText().equals("")) {
+			weightHeightErrorMessage.setText("Weight cannot be empty");
+			animateMessage(weightHeightErrorMessage);
+			flag = true;
+		} else if (height.getText().equals("") && weight.getText().equals("")) {
+			weightHeightErrorMessage.setText("Height and weight cannot be empty");
+			animateMessage(weightHeightErrorMessage);
+			flag = true;
+		}
+		if (agePicker.getValue() == null) {
+			dateErrorMessage.setText("Please insert a date");
+			animateMessage(dateErrorMessage);
+			flag = true;
+		} else if (agePicker.getValue().getYear() == new LocalDate().getYear()
+				|| agePicker.getValue().getYear() >= new LocalDate().getYear()) {
+			dateErrorMessage.setText("Please insert a valid date");
+			animateMessage(dateErrorMessage);
 			flag = true;
 		}
 		if (flag) {

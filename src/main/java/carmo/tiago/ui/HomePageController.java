@@ -1,15 +1,18 @@
 package carmo.tiago.ui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import carmo.tiago.services.UserPOJO;
-import carmo.tiago.services.UserServices;
-import javafx.animation.FadeTransition;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.util.Duration;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /**
  * Java FX FXML Controller.
@@ -17,76 +20,37 @@ import javafx.util.Duration;
  * @author Tarun Tyagi
  */
 public class HomePageController implements Initializable {
+
 	@FXML
-	private TextField user;
+	private StackPane HomePage;
+
 	@FXML
-	private TextField name;
+	private JFXDrawer drawer;
+
 	@FXML
-	private TextField email;
-	@FXML
-	private TextField sex;
-	@FXML
-	private TextField age;
-	@FXML
-	private TextField password;
-	@FXML
-	private TextField password2;
-	@FXML
-	private TextField height;
-	@FXML
-	private TextField weight;
-	@FXML
-	private TextField activityLevel;
-	@FXML
-	private Label success;
-	@FXML
-	private Label error;
+	private JFXHamburger hamburger;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		UserPOJO loggedUser = LoginApp.getInstance().getLoggedUser();
-		user.setText(loggedUser.getName());
-		if (loggedUser.getEmail() != null) {
-			email.setText(loggedUser.getEmail());
+		try {
+			VBox vbox = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
+			drawer.setSidePane(vbox);
+			drawer.toFront();
+			HamburgerBackArrowBasicTransition hamTran = new HamburgerBackArrowBasicTransition(hamburger);
+			hamTran.setRate(-1);
+			hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)->{
+				hamTran.setRate(hamTran.getRate()*-1);
+				hamTran.play();
+				if(drawer.isShown()){
+					drawer.close();
+				} else {
+					drawer.open();
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		if (!loggedUser.getName().equals(null)) {
-			name.setText(loggedUser.getName());
-		}
-		success.setOpacity(0);
+
 	}
 
-	@FXML
-	protected void processLogout() {
-		LoginApp.getInstance().userLogout();
-	}
-
-	@FXML
-	protected void processUpdate() {
-		if (password.equals(password2)) {
-			try {
-				UserServices.updateUser(name.getText(), email.getText(), password.getText(), age.getText(),
-						activityLevel.getText(), sex.getText(), height.getText(), weight.getText());
-				animateMessage();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			animateErrorMessage();
-		}
-		
-	}
-
-	private void animateMessage() {
-		FadeTransition ft = new FadeTransition(new Duration(3000), success);
-		ft.setFromValue(0.0);
-		ft.setToValue(1);
-		ft.play();
-	}
-	
-	private void animateErrorMessage() {
-		FadeTransition ft = new FadeTransition(new Duration(3000), error);
-		ft.setFromValue(0.0);
-		ft.setToValue(1);
-		ft.play();
-	}
 }

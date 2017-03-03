@@ -19,6 +19,8 @@ public class NutPlanEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long planId;
 	@Column
+	private double calories;
+	@Column
 	private double protein;
 	@Column
 	private double carbs;
@@ -29,8 +31,9 @@ public class NutPlanEntity implements Serializable {
 	@ManyToOne
 	private UserEntity user;
 
-	public NutPlanEntity(double protein, double carbs, double fat, String objective, UserEntity user) {
+	public NutPlanEntity(double calories, double protein, double carbs, double fat, String objective, UserEntity user) {
 		super();
+		this.calories = calories;
 		this.protein = protein;
 		this.carbs = carbs;
 		this.fat = fat;
@@ -46,6 +49,14 @@ public class NutPlanEntity implements Serializable {
 	@Column(name = "PLAN_ID")
 	public long getPlanId() {
 		return planId;
+	}
+	
+	public double getCalories() {
+		return calories;
+	}
+
+	public void setCalories(double calories) {
+		this.calories = calories;
 	}
 
 	public double getProtein() {

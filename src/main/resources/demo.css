@@ -1,25 +1,51 @@
 #Login{
-	-fx-background-image: url("exerciseWall.jpg");
+	-fx-background-image: url("Pictures/exerciseWall.jpg");
 	-fx-background-repeat: stretch; 
 	-fx-background-position: center center;
 	
 }
 
+.button:hover{
+	-fx-background-color: #005853;
+	-fx-text-fill: #ffffff;
+	-fx-text-alignment: center;
+}
+
+.button{
+	-fx-background-color: turquoise;
+	-fx-border-width: 0.0;
+	-fx-background-radius: 0.0;
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+}
+
+#HomePage{
+	-fx-background-image: url("Pictures/homePage.jpg");
+	-fx-background-repeat: stretch; 
+	-fx-background-position: center center;
+}
+
 #Preloader{
-	-fx-background-image: url("preloaderWall.jpg");
+	-fx-background-image: url("Pictures/preloaderWall.jpg");
 	-fx-background-repeat: stretch; 
 	-fx-background-position: center center;
 	-fx-background-size: 800.0 500.0;
 }
 
 #AddUser{
-	-fx-background-image: url("exerciseWall.jpg");
+	-fx-background-image: url("Pictures/exerciseWall.jpg");
 	-fx-background-repeat: stretch; 
 	-fx-background-position: center center;
 }
 
-#userId{
+#userIdLogin{
 	-fx-border-radius: 20.0px;
+}
+
+#login:hover{
+	-fx-background-color: #005853;
+	-fx-text-fill: #ffffff;
+	-fx-text-alignment: center;
 }
 
 #login {
@@ -32,7 +58,13 @@
 	-fx-background-radius:8.0px;
 }
 
-#addUser {
+#addUserLogin:hover{
+	-fx-background-color: #005853;
+	-fx-text-fill: #ffffff;
+	-fx-text-alignment: center;
+}
+
+#addUserLogin {
 	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
 	-fx-background-radius: 0.0;
@@ -40,6 +72,12 @@
 	-fx-text-fill: white;
 	-fx-border-radius: 20.0px;
 	-fx-background-radius:8.0px;
+}
+
+#confirmAddUser:hover{
+	-fx-background-color: #005853;
+	-fx-text-fill: #ffffff;
+	-fx-text-alignment: center;
 }
 
 #confirmAddUser {
@@ -52,6 +90,12 @@
 	-fx-background-radius:8.0px;
 }
 
+#backAddUser:hover{
+	-fx-background-color: #005853;
+	-fx-text-fill: #ffffff;
+	-fx-text-alignment: center;
+}
+
 #backAddUser {
 	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
@@ -60,21 +104,4 @@
 	-fx-text-fill: white;
 	-fx-border-radius: 20.0px;
 	-fx-background-radius:8.0px;
-}
-
-#HomePage{
-	-fx-background-image: url("homePage.jpg");
-	-fx-background-repeat: stretch; 
-	-fx-background-position: center center;
-}
-
-#exit{
-	-fx-background-image: url("exit.png");
-	-fx-border-width: 0.0;
-	-fx-background-radius: 0.0;
-	-fx-border-radius: 20.0px;
-    -fx-background-size: 30.0px;
-    -fx-background-color: transparent;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
 }

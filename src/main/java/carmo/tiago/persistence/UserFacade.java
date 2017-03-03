@@ -29,6 +29,9 @@ public class UserFacade {
 		userOR.setWeight(uEntity.getWeight());
 		userOR.setSex(uEntity.getSex());
 		userOR.setPassword(uEntity.getPassword());
+		LoginApp.getInstance().getEm().getTransaction().begin();
+		LoginApp.getInstance().getEm().persist(userOR);
+		LoginApp.getInstance().getEm().getTransaction().commit();
 	}
 
 }

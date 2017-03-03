@@ -1,7 +1,5 @@
 package carmo.tiago.ui;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -11,13 +9,11 @@ import carmo.tiago.services.UserPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,7 +29,6 @@ public class LoginApp extends Application {
 	private EntityManager em;
 	private Stage stage;
 	private UserPOJO loggedUser;
-
 	private static LoginApp instance;
 
 	@Override
@@ -57,12 +52,12 @@ public class LoginApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Nutrition App");
-		primaryStage.getIcons().add(new Image("/icon.png"));
+		primaryStage.getIcons().add(new Image("Pictures/icon.png"));
 		try {
 			stage = primaryStage;
 			stage.setMaximized(true);
-			stage.setFullScreen(true);
-			stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+			// stage.setFullScreen(true);
+			// stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 			gotoLogin();
 			primaryStage.show();
 		} catch (Exception ex) {
@@ -113,13 +108,12 @@ public class LoginApp extends Application {
 	private Parent replaceSceneContent(String fxml) throws Exception {
 		Parent page = FXMLLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
 		Scene scene = stage.getScene();
-		final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		if (scene == null) {
 			FadeTransition ft = new FadeTransition(new Duration(3000), page);
 			ft.setFromValue(0.0);
 			ft.setToValue(1);
 			ft.play();
-			scene = new Scene(page, dim.getWidth(), dim.getHeight());
+			scene = new Scene(page);
 			scene.getStylesheets().add(getClass().getResource("/demo.css").toExternalForm());
 			stage.setScene(scene);
 		} else {
@@ -129,7 +123,6 @@ public class LoginApp extends Application {
 			ft.play();
 			stage.getScene().setRoot(page);
 		}
-		stage.sizeToScene();
 		return page;
 	}
 
@@ -159,10 +152,6 @@ public class LoginApp extends Application {
 
 	public static LoginApp getInstance() {
 		return instance;
-	}
-
-	public void exitApp() {
-		Platform.exit();
 	}
 
 }

@@ -3,12 +3,16 @@ package carmo.tiago.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
 /**
@@ -17,21 +21,33 @@ import javafx.util.Duration;
  * @author Tarun Tyagi
  */
 public class LoginController implements Initializable {
+
 	@FXML
-	private TextField userId;
-	@FXML
-	private PasswordField password;
-	@FXML
-	private Label errorMessage;
+    private BorderPane Login;
+
+    @FXML
+    private Group groupLogin;
+
+    @FXML
+    private Label errorMessage;
+
+    @FXML
+    private JFXTextField userIdLogin;
+
+    @FXML
+    private JFXPasswordField passwordLogin;
+
+    @FXML
+    private JFXButton login;
+
+    @FXML
+    private JFXButton addUserLogin;
 
 	@FXML
 	protected void processLogin() {
 		fadeMessage();
 		try {
-			if (!LoginApp.getInstance().userLogging(userId.getText(), password.getText())) {
-				errorMessage.setText("Username/password combination is invalid.");
-				animateMessage(errorMessage);
-			}
+			LoginApp.getInstance().userLogging(userIdLogin.getText(), passwordLogin.getText());
 		} catch (Exception e) {
 			errorMessage.setText("Username/password combination is invalid.");
 			animateMessage(errorMessage);
@@ -54,14 +70,10 @@ public class LoginController implements Initializable {
 		LoginApp.getInstance().goToAddUser();
 	}
 
-	@FXML
-	protected void processExit() {
-		LoginApp.getInstance().exitApp();
-	}
-
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		userId.setPromptText("Email");
-		password.setPromptText("Password");
+		userIdLogin.setPromptText("Email");
+		passwordLogin.setPromptText("Password");
+
 	}
 }
