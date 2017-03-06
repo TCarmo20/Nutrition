@@ -20,16 +20,16 @@ public class UserFacade {
 	}
 
 	public static void updateUser(UserEntity uEntity) {
+		LoginApp.getInstance().getEm().getTransaction().begin();
 		UserEntity userOR = LoginApp.getInstance().getEm().find(UserEntity.class, uEntity.getUserId());
 		userOR.setName(uEntity.getName());
 		userOR.setEmail(uEntity.getEmail());
-		userOR.setAge(uEntity.getAge());
+		userOR.setDob(uEntity.getDob());
 		userOR.setActivityLevel(uEntity.getActivityLevel());
 		userOR.setHeight(uEntity.getHeight());
 		userOR.setWeight(uEntity.getWeight());
 		userOR.setSex(uEntity.getSex());
 		userOR.setPassword(uEntity.getPassword());
-		LoginApp.getInstance().getEm().getTransaction().begin();
 		LoginApp.getInstance().getEm().persist(userOR);
 		LoginApp.getInstance().getEm().getTransaction().commit();
 	}

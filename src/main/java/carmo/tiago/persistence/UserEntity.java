@@ -30,7 +30,7 @@ public class UserEntity implements Serializable {
 	@Column(nullable = false)
 	private String password;
 	@Column
-	private String age;
+	private String dob;
 	@Column
 	private String height;
 	@Column
@@ -45,13 +45,13 @@ public class UserEntity implements Serializable {
 	public static final String FIND_ALL = "User.findAll";
 	public static final String FIND_SPECIFIC_EMAIL = "User.findSpecificEmail";
 
-	public UserEntity(String name, String email, String password, String age, String height, String weight, String sex,
+	public UserEntity(String name, String email, String password, String dob, String height, String weight, String sex,
 			String activityLevel, Set<NutPlanEntity> plans) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.age = age;
+		this.dob = dob;
 		this.height = height;
 		this.weight = weight;
 		this.sex = sex;
@@ -101,12 +101,12 @@ public class UserEntity implements Serializable {
 		this.plans = plans;
 	}
 
-	public String getAge() {
-		return age;
+	public String getDob() {
+		return dob;
 	}
 
-	public void setAge(String age) {
-		this.age = age;
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
 
 	public String getHeight() {

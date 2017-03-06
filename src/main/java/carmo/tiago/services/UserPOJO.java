@@ -8,7 +8,7 @@ public class UserPOJO {
 	private String name;
 	private String email;
 	private String password;
-	private String age;
+	private String dob;
 	private String height;
 	private String weight;
 	private String sex;
@@ -50,12 +50,12 @@ public class UserPOJO {
 		this.password = password;
 	}
 	
-	public String getAge() {
-		return age;
+	public String getDob() {
+		return dob;
 	}
 	
-	public void setAge(String age) {
-		this.age = age;
+	public void setDob(String dob) {
+		this.dob = dob;
 	}
 	
 	public String getHeight() {

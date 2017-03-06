@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
    <children>
       <VBox fx:id="vBoxMenuBar" alignment="TOP_CENTER" layoutX="16.0" prefWidth="200.0" stylesheets="@demo.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -18,10 +17,10 @@
       				<Image url="@Pictures/preloaderWall.jpg" />
       			</image>
       		</ImageView>
-      		<JFXButton fx:id="CreatePlanMenuBar" buttonType="RAISED" contentDisplay="CENTER" onAction="#processCreatePlan" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="Create Plan" />
-      		<JFXButton fx:id="MyPlansMenuBar" buttonType="RAISED" prefHeight="25.0" prefWidth="200.0" text="My Plans" />
-      		<JFXButton fx:id="UpdateDetailsMenuBar" buttonType="RAISED" prefHeight="25.0" prefWidth="200.0" text="Update Details" />
-      		<JFXButton fx:id="LogoutManuBar" buttonType="RAISED" cancelButton="true" onAction="#processLogout" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="Logout" />
+      		<JFXButton fx:id="CreatePlanMenuBar" accessibleText="Create Plan" buttonType="RAISED" contentDisplay="CENTER" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="Create Plan" />
+      		<JFXButton fx:id="MyPlansMenuBar" accessibleText="My Plans" buttonType="RAISED" prefHeight="25.0" prefWidth="200.0" text="My Plans" />
+      		<JFXButton fx:id="UpdateDetailsMenuBar" accessibleText="Update Details" buttonType="RAISED" prefHeight="25.0" prefWidth="200.0" text="Update Details" />
+      		<JFXButton fx:id="LogoutManuBar" accessibleText="Logout" buttonType="RAISED" cancelButton="true" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="Logout" />
       	</children>
       </VBox>
       <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="200.0" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

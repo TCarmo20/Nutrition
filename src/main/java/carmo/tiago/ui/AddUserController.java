@@ -82,7 +82,7 @@ public class AddUserController implements Initializable {
 	@FXML
 	private JFXButton backAddUser;
 
-	Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+	private Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -90,12 +90,12 @@ public class AddUserController implements Initializable {
 		email.setPromptText("Email");
 		password.setPromptText("Password");
 		password2.setPromptText("Retype password");
-		height.setPromptText("Height");
-		weight.setPromptText("Weight");
+		height.setPromptText("Height (cm)");
+		weight.setPromptText("Weight (kg)");
 		errorMessage.setOpacity(0);
 		sex.getItems().addAll("Male", "Female");
-		activityLevel.getItems().addAll("Sedentário", "Atividade Leve", "Atividade Moderada", "Muito Ativo",
-				"Extremamente Ativo");
+		activityLevel.getItems().addAll("Sedentary", "Light activity", "Moderate activity", "Very active",
+				"Extremely Active");
 		sex.setPromptText("Sex");
 		activityLevel.setPromptText("Activity level");
 		agePicker.setPromptText("Date of birth (YYYY-MM-dd)");
@@ -117,12 +117,12 @@ public class AddUserController implements Initializable {
 				animateMessage(emailErrorMessage);
 			} catch (Exception e2) {
 				try {
-					LocalDate birth = new LocalDate(agePicker.getValue().getYear(),
-							agePicker.getValue().getMonthValue(), agePicker.getValue().getDayOfMonth());
-					LocalDate now = new LocalDate();
-					Years agejoda = Years.yearsBetween(birth, now);
-					String data = String.valueOf(agejoda.getYears());
-					UserServices.addUser(name.getText(), email.getText(), password.getText(), data,
+//					LocalDate birth = new LocalDate(agePicker.getValue().getYear(),
+//							agePicker.getValue().getMonthValue(), agePicker.getValue().getDayOfMonth());
+//					LocalDate now = new LocalDate();
+//					Years agejoda = Years.yearsBetween(birth, now);
+//					String data = String.valueOf(agejoda.getYears());
+					UserServices.addUser(name.getText(), email.getText(), password.getText(), agePicker.getValue().toString(),
 							activityLevel.getSelectionModel().getSelectedItem(),
 							sex.getSelectionModel().getSelectedItem(), height.getText(), weight.getText());
 					LoginApp.getInstance().gotoLogin();

@@ -3,27 +3,25 @@ package carmo.tiago.services;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+
 import carmo.tiago.persistence.NutPlanFacade;
 import carmo.tiago.persistence.UserEntity;
 import carmo.tiago.persistence.UserFacade;
 import carmo.tiago.ui.LoginApp;
 
 public class UserServices {
-	
-	private static UserServices instance;
 
-	public UserServices() {
-		instance = this;
-	}
-
-	public static void addUser(String name, String email, String password, String age, String activityLevel, String sex,
+	public static void addUser(String name, String email, String password, String dob, String activityLevel, String sex,
 			String height, String weight) throws Exception {
 		UserEntity user = new UserEntity();
 		user.setName(name);
 		user.setPassword(encrypt(password));
 		user.setEmail(email);
 		user.setActivityLevel(activityLevel);
-		user.setAge(age);
+		user.setDob(dob);
 		user.setWeight(weight);
 		user.setHeight(height);
 		user.setSex(sex);
@@ -46,7 +44,7 @@ public class UserServices {
 		UserPOJO user = new UserPOJO();
 		user.setName(userEntity.getName());
 		user.setEmail(userEntity.getEmail());
-		user.setAge(userEntity.getAge());
+		user.setDob(userEntity.getDob());
 		user.setActivityLevel(userEntity.getActivityLevel());
 		user.setHeight(userEntity.getHeight());
 		user.setWeight(userEntity.getWeight());
@@ -55,14 +53,14 @@ public class UserServices {
 		return user;
 	}
 
-	public static void updateUser(String name, String email, String password, String age, String activityLevel,
+	public static void updateUser(String name, String email, String password, String dob, String activityLevel,
 			String sex, String height, String weight) throws Exception {
-		UserEntity uEntity = getUserById(LoginApp.getInstance().getLoggedUser().getUserId());
+		UserEntity uEntity = getUserByEmail(LoginApp.getInstance().getLoggedUser().getEmail());
 		uEntity.setName(name);
 		uEntity.setEmail(email);
 		uEntity.setSex(sex);
 		uEntity.setActivityLevel(activityLevel);
-		uEntity.setAge(age);
+		uEntity.setDob(dob);
 		uEntity.setHeight(height);
 		uEntity.setWeight(weight);
 		uEntity.setPassword(password);
@@ -89,68 +87,83 @@ public class UserServices {
 		return entityToPOJO(UserFacade.getUserByEmail(email));
 	}
 
-	public void createPlan(String objective) throws NumberFormatException, Exception {
+	public static void createPlan(String objective) throws NumberFormatException, Exception {
 		UserPOJO loggedUser = LoginApp.getInstance().getLoggedUser();
 		double FA = 0;
 		Random random = new Random();
+		LocalDate myDate = new LocalDate(loggedUser.getDob());
+		LocalDate now = new LocalDate();
+		Years age = Years.yearsBetween(myDate, now);
+
 		if (loggedUser.getSex().equals("Male")) {
 			double BMR = (10 * Double.parseDouble(loggedUser.getWeight())
-					+ (6.25 * Integer.parseInt(loggedUser.getHeight())
-							- (5 * Integer.parseInt(loggedUser.getAge()) + 5)));
+					+ (6.25 * Integer.parseInt(loggedUser.getHeight()) - (5 * Integer.parseInt(age.toString()) + 5)));
 			switch (loggedUser.getActivityLevel()) {
-			case "Sedentário":
+			case "Sedentary":
 				FA = BMR * 1.2;
 				break;
-			case "Atividade Leve":
+			case "Light activity":
 				FA = BMR * 1.3 + (1.4 - 1.3) * random.nextDouble();
 				break;
-			case "Atividade Moderada":
+			case "Moderate activity":
 				FA = BMR * 1.5 + (1.6 - 1.5) * random.nextDouble();
 				break;
-			case "Muito Ativo":
+			case "Very active":
 				FA = BMR * 1.6 + (1.7 - 1.6) * random.nextDouble();
 				break;
-			case "Extremamente Ativo":
+			case "Extremely Active":
 				FA = BMR * 1.9 + (2.0 - 1.9) * random.nextDouble();
 				break;
 			default:
 				throw new Exception();
 			}
-			NutPlanFacade.createPlan(FA,
-					Double.parseDouble(loggedUser.getWeight()) * 2 + (2.5 - 2) * random.nextDouble(), FA,
-					(FA * 0.3) / 9, objective, getUserByEmail(loggedUser.getEmail()));
+
+			double protein = 0;
+			if (objective.equals("Hypertrophy")) {
+				protein = Double.parseDouble(loggedUser.getWeight()) * 2 + (2.5 - 2) * random.nextDouble();
+			} else if (objective.equals("Maintenance")) {
+
+			} else if (objective.equals("Fat Loss")) {
+
+			}
+			double fat = (FA * 0.3) / 9;
+
+			NutPlanFacade.createPlan(FA, protein, FA, fat, objective, getUserByEmail(loggedUser.getEmail()));
 		} else {
 			double BMR = (10 * Double.parseDouble(loggedUser.getWeight())
-					+ (6.25 * Integer.parseInt(loggedUser.getHeight())
-							- (5 * Integer.parseInt(loggedUser.getAge()) - 161)));
+					+ (6.25 * Integer.parseInt(loggedUser.getHeight()) - (5 * Integer.parseInt(age.toString()) - 161)));
 			switch (loggedUser.getActivityLevel()) {
-			case "Sedentário":
+			case "Sedentary":
 				FA = BMR * 1.2;
 				break;
-			case "Atividade Leve":
+			case "Light activity":
 				FA = BMR * 1.3 + (1.4 - 1.3) * random.nextDouble();
 				break;
-			case "Atividade Moderada":
+			case "Moderate activity":
 				FA = BMR * 1.5 + (1.6 - 1.5) * random.nextDouble();
 				break;
-			case "Muito Ativo":
+			case "Very active":
 				FA = BMR * 1.6 + (1.7 - 1.6) * random.nextDouble();
 				break;
-			case "Extremamente Ativo":
+			case "Extremely Active":
 				FA = BMR * 1.9 + (2.0 - 1.9) * random.nextDouble();
 				break;
 			default:
 				throw new Exception();
 			}
 
-			NutPlanFacade.createPlan(FA,
-					Double.parseDouble(loggedUser.getWeight()) * 2 + (2.5 - 2) * random.nextDouble(), FA,
-					(FA * 0.3) / 9, objective, getUserByEmail(loggedUser.getEmail()));
-		}
-	}
+			double protein = 0;
+			if (objective.equals("Hypertrophy")) {
+				protein = Double.parseDouble(loggedUser.getWeight()) * 2 + (2.5 - 2) * random.nextDouble();
+			} else if (objective.equals("Maintenance")) {
 
-	public static UserServices getInstance() {
-		return instance;
+			} else if (objective.equals("Fat Loss")) {
+
+			}
+			double fat = (FA * 0.3) / 9;
+
+			NutPlanFacade.createPlan(FA, protein, FA, fat, objective, getUserByEmail(loggedUser.getEmail()));
+		}
 	}
 
 }
