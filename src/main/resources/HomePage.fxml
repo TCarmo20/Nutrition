@@ -11,7 +11,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -19,7 +18,7 @@
 
 <StackPane id="HomePage" fx:id="HomePage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.HomePageController">
    <children>
-      <Group fx:id="myPlansGroup">
+      <Group fx:id="myPlansGroup" opacity="0.0">
          <children>
             <JFXTreeTableView fx:id="myPlansTable" layoutY="68.9775390625" prefHeight="400.0" prefWidth="570.0" />
          </children>
@@ -30,106 +29,67 @@
             <JFXHamburger fx:id="hamburger" alignment="TOP_RIGHT" prefHeight="86.0" prefWidth="84.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
          </children>
       </AnchorPane>
-      <Group fx:id="updateUserGroup">
+      <Group id="updateUserGroup" fx:id="updateUserGroup" stylesheets="@demo.css">
          <children>
-            <AnchorPane layoutX="-1.0">
+            <AnchorPane id="anchorPaneUpdateUser" layoutX="-1.0" prefHeight="405.0" prefWidth="430.0" stylesheets="@demo.css">
                <children>
-                  <FlowPane hgap="10.0" layoutX="1.0" prefHeight="255.0" prefWidth="400.0" rowValignment="BOTTOM" stylesheets="@demo.css" vgap="20.0">
+                  <FlowPane alignment="CENTER_RIGHT" columnHalignment="CENTER" hgap="10.0" layoutX="1.0" layoutY="11.0" prefHeight="364.0" prefWidth="400.0" stylesheets="@demo.css" vgap="20.0">
                      <children>
-                        <JFXTextField fx:id="updateName" focusColor="#c900ff" prefHeight="25.0" prefWidth="200.0" promptText="Name">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXTextField>
+                        <JFXTextField fx:id="updateName" focusColor="TURQUOISE" prefHeight="25.0" prefWidth="200.0" promptText="Name" />
                         <Label fx:id="updateNameLabel" prefHeight="17.0" prefWidth="160.0" textFill="RED">
                            <effect>
                               <DropShadow />
                            </effect>
                         </Label>
-                        <JFXTextField fx:id="updateEmail" focusColor="#c900ff" prefWidth="200.0" promptText="Email">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXTextField>
+                        <JFXTextField fx:id="updateEmail" focusColor="TURQUOISE" prefWidth="200.0" promptText="Email" />
                         <Label fx:id="updateEmailLabel" prefWidth="160.0" textFill="RED">
                            <effect>
                               <DropShadow />
                            </effect>
                         </Label>
-                        <JFXPasswordField fx:id="updatePassword" focusColor="#c900ff" labelFloat="true" prefWidth="200.0" promptText="Password">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXPasswordField>
+                        <JFXPasswordField fx:id="updatePassword" focusColor="TURQUOISE" labelFloat="true" prefWidth="200.0" promptText="Password" />
                         <Label fx:id="updatePasswordLabel" prefWidth="160.0" textFill="RED">
                            <effect>
                               <DropShadow />
                            </effect>
                         </Label>
-                        <JFXPasswordField fx:id="updatePassword2" focusColor="#c900ff" labelFloat="true" prefWidth="200.0" promptText="Retype Password">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXPasswordField>
+                        <JFXPasswordField fx:id="updatePassword2" focusColor="TURQUOISE" labelFloat="true" prefWidth="200.0" promptText="Retype Password" />
                         <Label fx:id="updatePassword2Label" prefWidth="160.0" textFill="RED">
                            <effect>
                               <DropShadow />
                            </effect>
                         </Label>
-                        <JFXDatePicker fx:id="updateAge" defaultColor="#c900ff" editable="false" overLay="true" prefWidth="200.0" promptText="Date of Birth (YYYY-MM-dd)">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXDatePicker>
+                        <JFXDatePicker fx:id="updateAge" defaultColor="TURQUOISE" editable="false" overLay="true" prefWidth="200.0" promptText="Date of Birth (YYYY-MM-dd)" />
                         <Label fx:id="updateAgeLabel" prefWidth="160.0" textFill="RED" wrapText="true">
                            <effect>
                               <DropShadow />
                            </effect>
                         </Label>
-                        <JFXTextField fx:id="updateWeight" focusColor="#c900ff" prefWidth="78.0" promptText="Weight (kg)">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXTextField>
-                        <JFXTextField fx:id="updateHeight" focusColor="#c900ff" prefWidth="111.0" promptText="Height (cm)">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXTextField>
+                        <JFXTextField fx:id="updateWeight" focusColor="TURQUOISE" prefWidth="78.0" promptText="Weight (kg)" />
+                        <JFXTextField fx:id="updateHeight" focusColor="TURQUOISE" prefWidth="111.0" promptText="Height (cm)" />
                         <Label fx:id="updateHeightWeightLabel" prefWidth="160.0" textFill="RED" wrapText="true">
                            <effect>
                               <DropShadow />
                            </effect>
                         </Label>
-                        <JFXComboBox fx:id="updateSex" focusColor="#c900ff" labelFloat="true" prefWidth="78.0" promptText="Sex">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXComboBox>
-                        <JFXComboBox fx:id="updateActivity" focusColor="#c900ff" labelFloat="true" prefWidth="111.0" promptText="Activity Level">
-                           <effect>
-                              <ColorAdjust hue="-0.65" saturation="1.0" />
-                           </effect>
-                        </JFXComboBox>
+                        <JFXComboBox fx:id="updateSex" focusColor="TURQUOISE" prefWidth="78.0" />
+                        <JFXComboBox fx:id="updateActivity" focusColor="TURQUOISE" prefWidth="111.0" />
                         <Label fx:id="updateSexActivityLevel" prefHeight="17.0" prefWidth="160.0" textFill="RED" wrapText="true">
                            <effect>
                               <DropShadow />
                            </effect>
                         </Label>
+                        <JFXButton id="updateUserBtn" fx:id="updateUserBtn" alignment="CENTER" buttonType="RAISED" onAction="#processUpdateUser" prefHeight="25.0" prefWidth="100.0" stylesheets="@demo.css" text="UPDATE" textAlignment="CENTER" wrapText="true" />
                      </children>
                      <padding>
                         <Insets top="15.0" />
                      </padding>
                   </FlowPane>
-                  <JFXButton fx:id="updateUserBtn" alignment="CENTER" onAction="#processUpdateUser" text="Update" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="-45.0" AnchorPane.rightAnchor="0.0" />
                </children>
-            </AnchorPane>
-            <Label fx:id="updateSuccessMessage" contentDisplay="CENTER" layoutX="120.0" layoutY="341.0" prefWidth="160.0" textAlignment="CENTER" textFill="#0044ff" />
-            <Label fx:id="updateErrorMessage" contentDisplay="CENTER" layoutX="120.0" layoutY="341.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
                <effect>
                   <DropShadow />
                </effect>
-            </Label>
+            </AnchorPane>
          </children>
       </Group>
    </children>

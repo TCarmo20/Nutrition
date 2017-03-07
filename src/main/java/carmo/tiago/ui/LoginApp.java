@@ -55,7 +55,7 @@ public class LoginApp extends Application {
 		primaryStage.getIcons().add(new Image("Pictures/icon.png"));
 		try {
 			stage = primaryStage;
-			stage.setMaximized(true);
+			//stage.setMaximized(true);
 			// stage.setFullScreen(true);
 			// stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 			gotoLogin();
@@ -65,14 +65,13 @@ public class LoginApp extends Application {
 		}
 	}
 
-	public boolean userLogging(String email, String password) throws Exception {
+	public void userLogging(String email, String password) throws Exception {
 		UserPOJO user = UserServices.getUserByEmailPOJO(email);
 		if (user.getPassword().equals(UserServices.encrypt(password))) {
 			setLoggedUser(user);
 			gotoHomePage();
-			return true;
 		} else {
-			return false;
+			throw new Exception();
 		}
 	}
 

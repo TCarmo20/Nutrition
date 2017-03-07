@@ -2,11 +2,12 @@ package carmo.tiago.ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import org.joda.time.LocalDate;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -115,12 +116,6 @@ public class HomePageController implements Initializable {
 	@FXML
 	private JFXButton updateUserBtn;
 
-	@FXML
-	private Label updateSuccessMessage;
-
-	@FXML
-	private Label updateErrorMessage;
-
 	private HamburgerBackArrowBasicTransition hamTran;
 
 	private Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -140,6 +135,9 @@ public class HomePageController implements Initializable {
 				"Extremely Active");
 		updateSex.setValue(LoginApp.getInstance().getLoggedUser().getSex());
 		updateActivity.setValue(LoginApp.getInstance().getLoggedUser().getActivityLevel());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate localDate = LocalDate.parse(LoginApp.getInstance().getLoggedUser().getDob(), formatter);
+		updateAge.setValue(localDate);
 		try {
 			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
 			drawer.setSidePane(anchor);
@@ -210,11 +208,25 @@ public class HomePageController implements Initializable {
 			UserServices.updateUser(updateName.getText(), updateEmail.getText(), updatePassword.getText(),
 					updateAge.getValue().toString(), updateActivity.getSelectionModel().getSelectedItem(),
 					updateSex.getSelectionModel().getSelectedItem(), updateHeight.getText(), updateWeight.getText());
-			updateSuccessMessage.setText("User updated!");
-			animateMessage(updateSuccessMessage);
+			JFXDialogLayout content = new JFXDialogLayout();
+			content.setHeading(new Text("User Successfully Updated!"));
+			JFXDialog dialog = new JFXDialog(HomePage, content, JFXDialog.DialogTransition.CENTER);
+			JFXButton create = new JFXButton("Ok");
+			create.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					try {
+						dialog.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+			});
+			content.setActions(create);
+			dialog.show();
 		} catch (Exception e) {
-			updateErrorMessage.setText("Error adding user!");
-			animateMessage(updateErrorMessage);
+
 		}
 	}
 
@@ -237,8 +249,31 @@ public class HomePageController implements Initializable {
 				try {
 					UserServices.createPlan(objectives.getSelectionModel().getSelectedItem());
 					dialog.close();
+					JFXDialogLayout content2 = new JFXDialogLayout();
+					content2.setHeading(new Text("Plan created!"));
+					JFXDialog dialog2 = new JFXDialog(HomePage, content2, JFXDialog.DialogTransition.CENTER);
+					JFXButton create2 = new JFXButton("Ok");
+					create2.setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent event2) {
+							dialog2.close();
+						}
+					});
+					content2.setActions(create2);
+					dialog2.show();
 				} catch (Exception e) {
-					e.printStackTrace();
+					JFXDialogLayout content3 = new JFXDialogLayout();
+					content3.setHeading(new Text("Error creating plan! Exception: " + e));
+					JFXDialog dialog3 = new JFXDialog(HomePage, content3, JFXDialog.DialogTransition.CENTER);
+					JFXButton create3 = new JFXButton("Ok");
+					create.setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent event3) {
+							dialog3.close();
+						}
+					});
+					content3.setActions(create3);
+					dialog3.show();
 				}
 
 			}
@@ -255,11 +290,10 @@ public class HomePageController implements Initializable {
 		updateHeightWeightLabel.setText("");
 		updateSexActivityLevel.setText("");
 		updateAgeLabel.setText("");
-		updateErrorMessage.setText("");
-		updateSuccessMessage.setText("");
 	}
 
 	private void checkMessages() throws Exception {
+		Calendar date = new GregorianCalendar();
 		boolean flag = false;
 		if (updateEmail.getText().equals("")) {
 			updateEmailLabel.setText("Email cannot be empty");
@@ -325,8 +359,8 @@ public class HomePageController implements Initializable {
 			updateAgeLabel.setText("Please insert a date");
 			animateMessage(updateAgeLabel);
 			flag = true;
-		} else if (updateAge.getValue().getYear() == new LocalDate().getYear()
-				|| updateAge.getValue().getYear() >= new LocalDate().getYear()) {
+		} else if (updateAge.getValue().getYear() == date.get(Calendar.YEAR)
+				|| updateAge.getValue().getYear() >= date.get(Calendar.YEAR)) {
 			updateAgeLabel.setText("Please insert a valid date");
 			animateMessage(updateAgeLabel);
 			flag = true;

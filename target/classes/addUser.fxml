@@ -133,12 +133,12 @@
 												<DropShadow />
 											</effect>
 										</Label>
-								<JFXButton fx:id="confirmAddUser" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" text="CONFIRM" textAlignment="CENTER">
+								<JFXButton fx:id="confirmAddUser" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" stylesheets="@demo.css" text="CONFIRM" textAlignment="CENTER">
 									<opaqueInsets>
 										<Insets />
 									</opaqueInsets>
 								</JFXButton>
-								<JFXButton fx:id="backAddUser" alignment="CENTER" contentDisplay="CENTER" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" ripplerFill="BLACK" text="BACK" />
+								<JFXButton fx:id="backAddUser" alignment="CENTER" contentDisplay="CENTER" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="BACK" />
 							</children>
 						</VBox>
 					</children>

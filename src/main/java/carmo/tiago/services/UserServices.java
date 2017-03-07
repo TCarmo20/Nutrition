@@ -94,10 +94,10 @@ public class UserServices {
 		LocalDate myDate = new LocalDate(loggedUser.getDob());
 		LocalDate now = new LocalDate();
 		Years age = Years.yearsBetween(myDate, now);
-
+		String ageString = String.valueOf(age.getYears());
 		if (loggedUser.getSex().equals("Male")) {
 			double BMR = (10 * Double.parseDouble(loggedUser.getWeight())
-					+ (6.25 * Integer.parseInt(loggedUser.getHeight()) - (5 * Integer.parseInt(age.toString()) + 5)));
+					+ (6.25 * Integer.parseInt(loggedUser.getHeight()) - (5 * Integer.parseInt(ageString) + 5)));
 			switch (loggedUser.getActivityLevel()) {
 			case "Sedentary":
 				FA = BMR * 1.2;
@@ -117,7 +117,6 @@ public class UserServices {
 			default:
 				throw new Exception();
 			}
-
 			double protein = 0;
 			if (objective.equals("Hypertrophy")) {
 				protein = Double.parseDouble(loggedUser.getWeight()) * 2 + (2.5 - 2) * random.nextDouble();
@@ -127,11 +126,10 @@ public class UserServices {
 
 			}
 			double fat = (FA * 0.3) / 9;
-
 			NutPlanFacade.createPlan(FA, protein, FA, fat, objective, getUserByEmail(loggedUser.getEmail()));
 		} else {
 			double BMR = (10 * Double.parseDouble(loggedUser.getWeight())
-					+ (6.25 * Integer.parseInt(loggedUser.getHeight()) - (5 * Integer.parseInt(age.toString()) - 161)));
+					+ (6.25 * Integer.parseInt(loggedUser.getHeight()) - (5 * Integer.parseInt(ageString) - 161)));
 			switch (loggedUser.getActivityLevel()) {
 			case "Sedentary":
 				FA = BMR * 1.2;
@@ -151,7 +149,6 @@ public class UserServices {
 			default:
 				throw new Exception();
 			}
-
 			double protein = 0;
 			if (objective.equals("Hypertrophy")) {
 				protein = Double.parseDouble(loggedUser.getWeight()) * 2 + (2.5 - 2) * random.nextDouble();
@@ -161,7 +158,6 @@ public class UserServices {
 
 			}
 			double fat = (FA * 0.3) / 9;
-
 			NutPlanFacade.createPlan(FA, protein, FA, fat, objective, getUserByEmail(loggedUser.getEmail()));
 		}
 	}

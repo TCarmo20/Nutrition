@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import org.joda.time.LocalDate;
-import org.joda.time.Years;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -117,11 +116,6 @@ public class AddUserController implements Initializable {
 				animateMessage(emailErrorMessage);
 			} catch (Exception e2) {
 				try {
-//					LocalDate birth = new LocalDate(agePicker.getValue().getYear(),
-//							agePicker.getValue().getMonthValue(), agePicker.getValue().getDayOfMonth());
-//					LocalDate now = new LocalDate();
-//					Years agejoda = Years.yearsBetween(birth, now);
-//					String data = String.valueOf(agejoda.getYears());
 					UserServices.addUser(name.getText(), email.getText(), password.getText(), agePicker.getValue().toString(),
 							activityLevel.getSelectionModel().getSelectedItem(),
 							sex.getSelectionModel().getSelectedItem(), height.getText(), weight.getText());
