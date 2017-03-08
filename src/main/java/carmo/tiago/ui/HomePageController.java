@@ -223,6 +223,7 @@ public class HomePageController implements Initializable {
 	}
 
 	public void processCreatePlan() {
+		drawer.close();
 		JFXDialogLayout content = new JFXDialogLayout();
 		Label errorLabel = new Label();
 		content.setHeading(new Text("Choose your objective: \n\n"),errorLabel);
@@ -233,7 +234,6 @@ public class HomePageController implements Initializable {
 		JFXButton create = new JFXButton("CREATE");
 		create.setButtonType(ButtonType.RAISED);
 		create.setOnAction(new EventHandler<ActionEvent>() {
-			
 			@Override
 			public void handle(ActionEvent event) {
 				if (objectives.getSelectionModel().isEmpty()) {
@@ -258,9 +258,7 @@ public class HomePageController implements Initializable {
 							}
 						});
 						content2.setActions(create2);
-						dialog2.toFront();
 						dialog2.show();
-
 					} catch (Exception e) {
 						JFXDialogLayout content3 = new JFXDialogLayout();
 						content3.setHeading(new Text("Error creating plan!"));
@@ -274,7 +272,6 @@ public class HomePageController implements Initializable {
 							}
 						});
 						content3.setActions(create3);
-						dialog3.toFront();
 						dialog3.show();
 					}
 				}

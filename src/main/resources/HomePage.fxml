@@ -9,13 +9,13 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
-
 
 <StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.HomePageController">
    <children>
@@ -34,51 +34,81 @@
                            <children>
                               <FlowPane alignment="CENTER_RIGHT" columnHalignment="CENTER" hgap="10.0" layoutX="1.0" layoutY="11.0" prefHeight="364.0" prefWidth="400.0" stylesheets="@demo.css" vgap="20.0">
                                  <children>
-                                    <JFXTextField fx:id="updateName" focusColor="TURQUOISE" prefHeight="25.0" prefWidth="200.0" promptText="Name" />
+                                    <JFXTextField fx:id="updateName" focusColor="TURQUOISE" prefHeight="25.0" prefWidth="200.0" promptText="Name">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXTextField>
                                     <Label fx:id="updateNameLabel" prefHeight="17.0" prefWidth="160.0" textFill="RED">
                                        <effect>
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <JFXTextField fx:id="updateEmail" focusColor="TURQUOISE" prefWidth="200.0" promptText="Email" />
+                                    <JFXTextField fx:id="updateEmail" focusColor="TURQUOISE" prefWidth="200.0" promptText="Email">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXTextField>
                                     <Label fx:id="updateEmailLabel" prefWidth="160.0" textFill="RED">
                                        <effect>
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <JFXPasswordField fx:id="updatePassword" focusColor="TURQUOISE" labelFloat="true" prefWidth="200.0" promptText="Password" />
+                                    <JFXPasswordField fx:id="updatePassword" focusColor="TURQUOISE" labelFloat="true" prefWidth="200.0" promptText="Password">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXPasswordField>
                                     <Label fx:id="updatePasswordLabel" prefWidth="160.0" textFill="RED">
                                        <effect>
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <JFXPasswordField fx:id="updatePassword2" focusColor="TURQUOISE" labelFloat="true" prefWidth="200.0" promptText="Retype Password" />
+                                    <JFXPasswordField fx:id="updatePassword2" focusColor="TURQUOISE" labelFloat="true" prefWidth="200.0" promptText="Retype Password">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXPasswordField>
                                     <Label fx:id="updatePassword2Label" prefWidth="160.0" textFill="RED">
                                        <effect>
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <JFXDatePicker fx:id="updateAge" defaultColor="TURQUOISE" editable="false" overLay="true" prefWidth="200.0" promptText="Date of Birth (YYYY-MM-dd)" />
+                                    <JFXDatePicker fx:id="updateAge" defaultColor="TURQUOISE" editable="false" overLay="true" prefWidth="200.0" promptText="Date of Birth (YYYY-MM-dd)">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXDatePicker>
                                     <Label fx:id="updateAgeLabel" prefWidth="160.0" textFill="RED" wrapText="true">
                                        <effect>
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <JFXTextField fx:id="updateWeight" focusColor="TURQUOISE" prefWidth="78.0" promptText="Weight (kg)" />
-                                    <JFXTextField fx:id="updateHeight" focusColor="TURQUOISE" prefWidth="111.0" promptText="Height (cm)" />
+                                    <JFXTextField fx:id="updateWeight" focusColor="TURQUOISE" prefWidth="78.0" promptText="Weight (kg)">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXTextField>
+                                    <JFXTextField fx:id="updateHeight" focusColor="TURQUOISE" prefWidth="111.0" promptText="Height (cm)">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXTextField>
                                     <Label fx:id="updateHeightWeightLabel" prefWidth="160.0" textFill="RED" wrapText="true">
                                        <effect>
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <JFXComboBox fx:id="updateSex" focusColor="TURQUOISE" prefWidth="78.0" />
-                                    <JFXComboBox fx:id="updateActivity" focusColor="TURQUOISE" prefWidth="111.0" />
+                                    <JFXComboBox fx:id="updateSex" focusColor="TURQUOISE" prefWidth="78.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXComboBox>
+                                    <JFXComboBox fx:id="updateActivity" focusColor="TURQUOISE" prefWidth="111.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXComboBox>
                                     <Label fx:id="updateSexActivityLevel" prefHeight="17.0" prefWidth="160.0" textFill="RED" wrapText="true">
                                        <effect>
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <JFXButton id="updateUserBtn" fx:id="updateUserBtn" alignment="CENTER" buttonType="RAISED" onAction="#processUpdateUser" prefHeight="25.0" prefWidth="100.0" stylesheets="@demo.css" text="UPDATE" textAlignment="CENTER" wrapText="true" />
+                                    <JFXButton id="updateUserBtn" fx:id="updateUserBtn" alignment="CENTER" buttonType="RAISED" onAction="#processUpdateUser" prefHeight="25.0" prefWidth="100.0" stylesheets="@demo.css" text="UPDATE" textAlignment="CENTER" wrapText="true">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></JFXButton>
                                  </children>
                                  <padding>
                                     <Insets top="15.0" />
@@ -98,6 +128,9 @@
                <padding>
                   <Insets right="10.0" top="10.0" />
                </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXHamburger>
          </children>
       </AnchorPane>

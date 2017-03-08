@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.ColorAdjust?>
@@ -32,6 +33,9 @@
                      <VBox.margin>
                         <Insets top="25.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXTextField>
                		<JFXPasswordField fx:id="passwordLogin" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="200.0" promptText="Password">
                      <effect>
@@ -40,16 +44,25 @@
                      <VBox.margin>
                         <Insets top="25.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXPasswordField>
             		<JFXButton id="login" fx:id="login" buttonType="RAISED" defaultButton="true" onAction="#processLogin" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" stylesheets="@demo.css" text="LOG IN" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
             		<JFXButton fx:id="addUserLogin" onAction="#processAddUser" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" stylesheets="@demo.css" text="NEW USER" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
                </children>
                <padding>

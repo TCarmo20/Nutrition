@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.ColorAdjust?>
@@ -30,6 +31,9 @@
 									<effect>
 										<ColorAdjust hue="-0.65" saturation="1.0" />
 									</effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXTextField>
 								<Label fx:id="nameErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
 									<effect>
@@ -40,6 +44,9 @@
 									<effect>
 										<ColorAdjust hue="-0.65" saturation="1.0" />
 									</effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXTextField>
 								<Label fx:id="emailErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
 									<effect>
@@ -50,6 +57,9 @@
 									<effect>
 										<ColorAdjust hue="-0.65" saturation="1.0" />
 									</effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXPasswordField>
 								<Label fx:id="passwordErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
 									<effect>
@@ -60,6 +70,9 @@
 									<effect>
 										<ColorAdjust hue="-0.65" saturation="1.0" />
 									</effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXPasswordField>
 								<Label fx:id="password2ErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
 									<effect>
@@ -73,6 +86,9 @@
                            <padding>
                               <Insets top="-5.0" />
                            </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXDatePicker>
 								<Label fx:id="dateErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
 									<effect>
@@ -83,11 +99,17 @@
 									<effect>
 										<ColorAdjust hue="-0.65" saturation="1.0" />
 									</effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXTextField>
 								<JFXTextField id="heightAddUser" fx:id="height" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="111.0" promptText="Height (cm)">
 									<effect>
 										<ColorAdjust hue="-0.65" saturation="1.0" />
 									</effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXTextField>
 								<Label fx:id="weightHeightErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
 									<effect>
@@ -98,11 +120,17 @@
 									<effect>
 										<ColorAdjust hue="-0.65" saturation="1.0" />
 									</effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXComboBox>
 								<JFXComboBox id="activityLevelAddUser" fx:id="activityLevel" focusColor="#c900ff" labelFloat="true" prefHeight="25.0" prefWidth="111.0" promptText="Activity level" stylesheets="@demo.css">
 									<effect>
 										<ColorAdjust hue="-0.65" saturation="1.0" />
 									</effect>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXComboBox>
 								<Label fx:id="sexActivityErrorMessage" prefHeight="17.0" prefWidth="160.0" textAlignment="CENTER" textFill="RED">
 									<effect>
@@ -137,8 +165,14 @@
 									<opaqueInsets>
 										<Insets />
 									</opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
 								</JFXButton>
-								<JFXButton fx:id="backAddUser" alignment="CENTER" contentDisplay="CENTER" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="BACK" />
+								<JFXButton fx:id="backAddUser" alignment="CENTER" contentDisplay="CENTER" onAction="#goBack" prefHeight="25.0" prefWidth="200.0" ripplerFill="WHITE" text="BACK">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></JFXButton>
 							</children>
 						</VBox>
 					</children>
