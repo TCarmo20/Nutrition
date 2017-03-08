@@ -18,9 +18,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * Main Application. This class handles navigation and user session.
- * 
- * @author Tarun Tyagi
+ *
+ * @author Tiago Carmo
+ *
  */
 public class LoginApp extends Application {
 

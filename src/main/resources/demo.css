@@ -2,7 +2,6 @@
 	-fx-background-image: url("Pictures/exerciseWall.jpg");
 	-fx-background-repeat: stretch; 
 	-fx-background-position: center center;
-	
 }
 
 .button:hover{
@@ -26,10 +25,19 @@
 	-fx-background-color: turquoise;
 }
 
+#createPlanBtn{
+	-fx-background-color: turquoise;
+	-fx-border-width: 0.0;
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+	-fx-background-radius:3.0px;
+	-fx-font-weight: bold;
+}
+
 .button{
 	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
-	-fx-background-radius: 0.0;
+	-fx-background-radius: 3.0;
 	-fx-font-size: 15.0px;
 	-fx-text-fill: white;
 	-fx-font-weight: bold;
@@ -67,11 +75,9 @@
 #login {
 	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
-	-fx-background-radius: 0.0;
 	-fx-font-size: 15.0px;
 	-fx-text-fill: white;
 	-fx-background-radius:3.0px;
-	-fx-font-weight: bold;
 }
 
 #addUserLogin:hover{
@@ -83,20 +89,10 @@
 #addUserLogin {
 	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
-	-fx-background-radius: 0.0;
 	-fx-font-size: 15.0px;
 	-fx-text-fill: white;
 	-fx-font-weight: bold;
 	-fx-background-radius:3.0px;
-}
-
-@font-face {
-    font-family: Roboto-Regular;
-    src: url('Font/Roboto-Light.ttf');
-}
-
-#myPlansTitle{
-	-fx-font-family: Roboto-Regular;
 }
 
 #confirmAddUser:hover{
@@ -108,7 +104,6 @@
 #confirmAddUser {
 	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
-	-fx-background-radius: 0.0;
 	-fx-font-size: 15.0px;
 	-fx-text-fill: white;
 	-fx-font-weight: bold;
@@ -124,7 +119,6 @@
 #backAddUser {
 	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;
-	-fx-background-radius: 0.0;
 	-fx-font-size: 15.0px;
 	-fx-text-fill: white;
 	-fx-font-weight: bold;

@@ -14,6 +14,11 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ *
+ * @author Tiago Carmo
+ *
+ */
 public class LoginAppPreloader extends Preloader {
 	
 	@FXML

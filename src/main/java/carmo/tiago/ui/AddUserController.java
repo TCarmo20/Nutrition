@@ -19,6 +19,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
+/**
+ *
+ * @author Tiago Carmo
+ *
+ */
 public class AddUserController implements Initializable {
 
 	@FXML
@@ -116,8 +121,8 @@ public class AddUserController implements Initializable {
 				animateMessage(emailErrorMessage);
 			} catch (Exception e2) {
 				try {
-					UserServices.addUser(name.getText(), email.getText(), password.getText(), agePicker.getValue().toString(),
-							activityLevel.getSelectionModel().getSelectedItem(),
+					UserServices.addUser(name.getText(), email.getText(), password.getText(),
+							agePicker.getValue().toString(), activityLevel.getSelectionModel().getSelectedItem(),
 							sex.getSelectionModel().getSelectedItem(), height.getText(), weight.getText());
 					LoginApp.getInstance().gotoLogin();
 				} catch (Exception e) {

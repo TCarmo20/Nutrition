@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXDialog;
@@ -18,7 +19,6 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
@@ -30,37 +30,33 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
- * Java FX FXML Controller.
- * 
- * @author Tarun Tyagi
+ *
+ * @author Tiago Carmo
+ *
  */
 public class HomePageController implements Initializable {
 
 	@FXML
-	private StackPane HomePage;
+	private AnchorPane HomePage;
+
+	@FXML
+	private StackPane stackPane;
 
 	@FXML
 	private Group myPlansGroup;
 
 	@FXML
 	private JFXTreeTableView<?> myPlansTable;
-
-	@FXML
-	private AnchorPane anchorPane;
-
-	@FXML
-	private JFXDrawer drawer;
-
-	@FXML
-	private JFXHamburger hamburger;
 
 	@FXML
 	private Group updateUserGroup;
@@ -116,14 +112,17 @@ public class HomePageController implements Initializable {
 	@FXML
 	private JFXButton updateUserBtn;
 
-	private HamburgerBackArrowBasicTransition hamTran;
+	@FXML
+	private JFXDrawer drawer;
+
+	@FXML
+	private JFXHamburger hamburger;
 
 	private Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		drawer.open();
-		anchorPane.toFront();
 		myPlansGroup.setOpacity(0);
 		updateUserGroup.setOpacity(0);
 		updateName.setText(LoginApp.getInstance().getLoggedUser().getName());
@@ -141,7 +140,6 @@ public class HomePageController implements Initializable {
 		try {
 			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
 			drawer.setSidePane(anchor);
-			drawer.setResizableOnDrag(false);
 			VBox vbox = (VBox) anchor.getChildren().get(0);
 			for (Node node : vbox.getChildren()) {
 				if (node.getAccessibleText() != null) {
@@ -163,17 +161,10 @@ public class HomePageController implements Initializable {
 					});
 				}
 			}
-			hamTran = new HamburgerBackArrowBasicTransition(hamburger);
-			hamTran.setRate(-1);
-			hamTran.play();
 			hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
-				hamTran.setRate(hamTran.getRate() * -1);
-				hamTran.play();
 				if (drawer.isShown()) {
-					anchorPane.toBack();
 					drawer.close();
 				} else {
-					anchorPane.toFront();
 					drawer.open();
 				}
 			});
@@ -183,19 +174,13 @@ public class HomePageController implements Initializable {
 	}
 
 	private void processMyPlans() {
-		hamTran.setRate(hamTran.getRate() * -1);
-		hamTran.play();
 		drawer.close();
-		myPlansGroup.toFront();
 		myPlansGroup.setOpacity(1);
 		updateUserGroup.setOpacity(0);
 	}
 
 	private void processUpdateUserScreen() {
-		hamTran.setRate(hamTran.getRate() * -1);
-		hamTran.play();
 		drawer.close();
-		updateUserGroup.toFront();
 		myPlansGroup.setOpacity(0);
 		updateUserGroup.setOpacity(1);
 	}
@@ -210,8 +195,9 @@ public class HomePageController implements Initializable {
 					updateSex.getSelectionModel().getSelectedItem(), updateHeight.getText(), updateWeight.getText());
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("User Successfully Updated!"));
-			JFXDialog dialog = new JFXDialog(HomePage, content, JFXDialog.DialogTransition.CENTER);
-			JFXButton create = new JFXButton("Ok");
+			JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+			JFXButton create = new JFXButton("OK");
+			create.setButtonType(ButtonType.RAISED);
 			create.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -224,6 +210,7 @@ public class HomePageController implements Initializable {
 				}
 			});
 			content.setActions(create);
+			dialog.toFront();
 			dialog.show();
 		} catch (Exception e) {
 
@@ -237,45 +224,60 @@ public class HomePageController implements Initializable {
 
 	public void processCreatePlan() {
 		JFXDialogLayout content = new JFXDialogLayout();
-		content.setHeading(new Text("Choose your objective"));
+		Label errorLabel = new Label();
+		content.setHeading(new Text("Choose your objective: \n\n"),errorLabel);
 		JFXComboBox<String> objectives = new JFXComboBox<String>();
 		objectives.getItems().addAll("Hypertrophy", "Maintenance", "Fat Loss");
 		content.setBody(objectives);
-		JFXDialog dialog = new JFXDialog(HomePage, content, JFXDialog.DialogTransition.CENTER);
-		JFXButton create = new JFXButton("Create");
+		JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+		JFXButton create = new JFXButton("CREATE");
+		create.setButtonType(ButtonType.RAISED);
 		create.setOnAction(new EventHandler<ActionEvent>() {
+			
 			@Override
 			public void handle(ActionEvent event) {
-				try {
-					UserServices.createPlan(objectives.getSelectionModel().getSelectedItem());
-					dialog.close();
-					JFXDialogLayout content2 = new JFXDialogLayout();
-					content2.setHeading(new Text("Plan created!"));
-					JFXDialog dialog2 = new JFXDialog(HomePage, content2, JFXDialog.DialogTransition.CENTER);
-					JFXButton create2 = new JFXButton("Ok");
-					create2.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent event2) {
-							dialog2.close();
-						}
-					});
-					content2.setActions(create2);
-					dialog2.show();
-				} catch (Exception e) {
-					JFXDialogLayout content3 = new JFXDialogLayout();
-					content3.setHeading(new Text("Error creating plan! Exception: " + e));
-					JFXDialog dialog3 = new JFXDialog(HomePage, content3, JFXDialog.DialogTransition.CENTER);
-					JFXButton create3 = new JFXButton("Ok");
-					create.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent event3) {
-							dialog3.close();
-						}
-					});
-					content3.setActions(create3);
-					dialog3.show();
-				}
+				if (objectives.getSelectionModel().isEmpty()) {
+					errorLabel.setTextFill(Color.RED);
+					DropShadow ds = new DropShadow();
+					ds.setOffsetY(3.0f);
+					errorLabel.setEffect(ds);
+					errorLabel.setText("Please select an objective");
+					animateMessage(errorLabel);
+				} else {
+					try {
+						UserServices.createPlan(objectives.getSelectionModel().getSelectedItem());
+						dialog.close();
+						JFXDialogLayout content2 = new JFXDialogLayout();
+						content2.setHeading(new Text("Plan created!"));
+						JFXDialog dialog2 = new JFXDialog(stackPane, content2, JFXDialog.DialogTransition.CENTER);
+						JFXButton create2 = new JFXButton("OK");
+						create2.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event2) {
+								dialog2.close();
+							}
+						});
+						content2.setActions(create2);
+						dialog2.toFront();
+						dialog2.show();
 
+					} catch (Exception e) {
+						JFXDialogLayout content3 = new JFXDialogLayout();
+						content3.setHeading(new Text("Error creating plan!"));
+						JFXDialog dialog3 = new JFXDialog(stackPane, content3, JFXDialog.DialogTransition.CENTER);
+						JFXButton create3 = new JFXButton("OK");
+						create3.setButtonType(ButtonType.RAISED);
+						create3.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event3) {
+								dialog3.close();
+							}
+						});
+						content3.setActions(create3);
+						dialog3.toFront();
+						dialog3.show();
+					}
+				}
 			}
 		});
 		content.setActions(create);

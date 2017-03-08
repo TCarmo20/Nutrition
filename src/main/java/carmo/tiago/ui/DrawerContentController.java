@@ -10,6 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+/**
+ *
+ * @author Tiago Carmo
+ *
+ */
 public class DrawerContentController implements Initializable {
 
 	@FXML
