@@ -39,7 +39,7 @@ public class UserEntity implements Serializable {
 	private String sex;
 	@Column
 	private String activityLevel;
-	@OneToMany
+	@OneToMany(mappedBy="user")
 	private Set<NutPlanEntity> plans;
 
 	public static final String FIND_ALL = "User.findAll";

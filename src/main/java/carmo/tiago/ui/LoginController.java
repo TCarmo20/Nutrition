@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
@@ -23,25 +25,28 @@ import javafx.util.Duration;
 public class LoginController implements Initializable {
 
 	@FXML
-	private BorderPane Login;
+    private BorderPane Login;
 
-	@FXML
-	private Group groupLogin;
+    @FXML
+    private Group groupLogin;
 
-	@FXML
-	private Label errorMessage;
+    @FXML
+    private Label errorMessage;
 
-	@FXML
-	private JFXTextField userIdLogin;
+    @FXML
+    private JFXTextField userIdLogin;
 
-	@FXML
-	private JFXPasswordField passwordLogin;
+    @FXML
+    private JFXPasswordField passwordLogin;
 
-	@FXML
-	private JFXButton login;
+    @FXML
+    private JFXButton login;
 
-	@FXML
-	private JFXButton addUserLogin;
+    @FXML
+    private JFXButton addUserLogin;
+
+    @FXML
+    private JFXButton facebookBtn;
 
 	@FXML
 	protected void processLogin() {
@@ -74,6 +79,5 @@ public class LoginController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		userIdLogin.setPromptText("Email");
 		passwordLogin.setPromptText("Password");
-
 	}
 }

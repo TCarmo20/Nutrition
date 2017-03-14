@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import com.jfoenix.controls.JFXButton;
@@ -18,10 +19,12 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
 
+import carmo.tiago.services.NutPlanPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,6 +33,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -51,12 +57,6 @@ public class HomePageController implements Initializable {
 
 	@FXML
 	private StackPane stackPane;
-
-	@FXML
-	private Group myPlansGroup;
-
-	@FXML
-	private JFXTreeTableView<?> myPlansTable;
 
 	@FXML
 	private Group updateUserGroup;
@@ -113,11 +113,18 @@ public class HomePageController implements Initializable {
 	private JFXButton updateUserBtn;
 
 	@FXML
+	private Group myPlansGroup;
+
+	@FXML
+	private TableView<NutPlanPOJO> myPlansTable;
+
+	@FXML
 	private JFXDrawer drawer;
 
 	@FXML
 	private JFXHamburger hamburger;
 
+	private List<NutPlanPOJO> planList;
 	private Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
 	@Override
@@ -173,16 +180,56 @@ public class HomePageController implements Initializable {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void processMyPlans() {
 		drawer.close();
+		myPlansTable.getColumns().clear();
+
+		try {
+			planList = UserServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
+			ObservableList<NutPlanPOJO> plans = FXCollections.observableArrayList(planList);
+
+			TableColumn<NutPlanPOJO, String> nameCol = new TableColumn<NutPlanPOJO, String>("Name");
+			nameCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, String>("name"));
+			nameCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
+					
+			TableColumn<NutPlanPOJO, String> objectiveCol = new TableColumn<NutPlanPOJO, String>("Objective");
+			objectiveCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, String>("objective"));
+			objectiveCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
+
+			TableColumn<NutPlanPOJO, Double> caloriesCol = new TableColumn<NutPlanPOJO, Double>("Calories");
+			caloriesCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, Double>("calories"));
+			caloriesCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
+
+			TableColumn<NutPlanPOJO, Double> proteinCol = new TableColumn<NutPlanPOJO, Double>("Protein");
+			proteinCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, Double>("protein"));
+			proteinCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
+
+			TableColumn<NutPlanPOJO, Double> carbsCol = new TableColumn<NutPlanPOJO, Double>("Carbs");
+			carbsCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, Double>("carbs"));
+			carbsCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
+
+			TableColumn<NutPlanPOJO, Double> fatCol = new TableColumn<NutPlanPOJO, Double>("Fat");
+			fatCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, Double>("fat"));
+			fatCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
+
+			myPlansTable.getColumns().addAll(nameCol, objectiveCol, caloriesCol, proteinCol, carbsCol, fatCol);
+			myPlansTable.setItems(plans);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		myPlansGroup.setOpacity(1);
 		updateUserGroup.setOpacity(0);
+		myPlansGroup.toFront();
+		updateUserGroup.toBack();
 	}
 
 	private void processUpdateUserScreen() {
 		drawer.close();
 		myPlansGroup.setOpacity(0);
 		updateUserGroup.setOpacity(1);
+		myPlansGroup.toBack();
+		updateUserGroup.toFront();
 	}
 
 	@FXML
@@ -226,10 +273,11 @@ public class HomePageController implements Initializable {
 		drawer.close();
 		JFXDialogLayout content = new JFXDialogLayout();
 		Label errorLabel = new Label();
-		content.setHeading(new Text("Choose your objective: \n\n"),errorLabel);
+		content.setHeading(new Text("Choose your plan name and objective: \n\n"), errorLabel);
 		JFXComboBox<String> objectives = new JFXComboBox<String>();
 		objectives.getItems().addAll("Hypertrophy", "Maintenance", "Fat Loss");
-		content.setBody(objectives);
+		JFXTextField nameField = new JFXTextField();
+		content.setBody(nameField, objectives);
 		JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
 		JFXButton create = new JFXButton("CREATE");
 		create.setButtonType(ButtonType.RAISED);
@@ -245,7 +293,7 @@ public class HomePageController implements Initializable {
 					animateMessage(errorLabel);
 				} else {
 					try {
-						UserServices.createPlan(objectives.getSelectionModel().getSelectedItem());
+						UserServices.createPlan(nameField.getText(), objectives.getSelectionModel().getSelectedItem());
 						dialog.close();
 						JFXDialogLayout content2 = new JFXDialogLayout();
 						content2.setHeading(new Text("Plan created!"));
@@ -260,6 +308,7 @@ public class HomePageController implements Initializable {
 						content2.setActions(create2);
 						dialog2.show();
 					} catch (Exception e) {
+						e.printStackTrace();
 						JFXDialogLayout content3 = new JFXDialogLayout();
 						content3.setHeading(new Text("Error creating plan!"));
 						JFXDialog dialog3 = new JFXDialog(stackPane, content3, JFXDialog.DialogTransition.CENTER);

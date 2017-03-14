@@ -7,6 +7,8 @@ public class NutPlanPOJO {
 	private double carbs;
 	private double fat;
 	private String objective;
+	private double calories;
+	private String name;
 	private UserPOJO user;
 	
 	public NutPlanPOJO(){
@@ -55,6 +57,22 @@ public class NutPlanPOJO {
 	
 	public void setUser(UserPOJO user) {
 		this.user = user;
+	}
+
+	public double getCalories() {
+		return calories;
+	}
+
+	public void setCalories(double calories) {
+		this.calories = calories;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

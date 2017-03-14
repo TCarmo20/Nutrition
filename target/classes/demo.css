@@ -21,7 +21,6 @@
 	-fx-font-weight: bold;
 }
 
-
 #anchorPaneBar{
 	-fx-background-color: turquoise;
 }
@@ -115,6 +114,11 @@
 	-fx-background-color: #005853;
 	-fx-text-fill: #ffffff;
 	-fx-text-alignment: center;
+}
+
+#facebookBtn{
+	-fx-background-color: #3B5998;
+	-fx-graphic: url("Pictures/fb-logo.png")
 }
 
 #backAddUser {

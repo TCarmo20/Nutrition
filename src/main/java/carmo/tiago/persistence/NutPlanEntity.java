@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "PLAN")
 public class NutPlanEntity implements Serializable {
@@ -18,6 +19,8 @@ public class NutPlanEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long planId;
+	@Column(nullable = false, unique = true)
+	private String name;
 	@Column
 	private double calories;
 	@Column
@@ -26,13 +29,14 @@ public class NutPlanEntity implements Serializable {
 	private double carbs;
 	@Column
 	private double fat;
-	@Column
+	@Column(nullable = false)
 	private String objective;
 	@ManyToOne
 	private UserEntity user;
 
-	public NutPlanEntity(double calories, double protein, double carbs, double fat, String objective, UserEntity user) {
+	public NutPlanEntity(String name, double calories, double protein, double carbs, double fat, String objective, UserEntity user) {
 		super();
+		this.name = name;
 		this.calories = calories;
 		this.protein = protein;
 		this.carbs = carbs;
@@ -98,5 +102,14 @@ public class NutPlanEntity implements Serializable {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 }

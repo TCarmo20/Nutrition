@@ -1,5 +1,7 @@
 package carmo.tiago.persistence;
 
+import java.util.Set;
+
 import carmo.tiago.ui.LoginApp;
 
 public class UserFacade {
@@ -32,6 +34,11 @@ public class UserFacade {
 		userOR.setPassword(uEntity.getPassword());
 		LoginApp.getInstance().getEm().persist(userOR);
 		LoginApp.getInstance().getEm().getTransaction().commit();
+	}
+	
+	public static Set<NutPlanEntity> getUserPlans(long userId){
+		UserEntity user = LoginApp.getInstance().getEm().find(UserEntity.class, userId);
+		return user.getPlans();
 	}
 
 }

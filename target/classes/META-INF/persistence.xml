@@ -54,9 +54,9 @@
 		<class>carmo.tiago.persistence.NutPlanEntity</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby:nutritionDB" />
-<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:derby:nutritionDB;create=true" /> -->
-<!-- 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> -->
+<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:derby:nutritionDB" /> -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:nutritionDB;create=true" />
+			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
 			<property name="eclipselink.ddl-generation.output-mode"	value="database" />
 <!-- 			<property name="javax.persistence.sql-load-script-source" value="META-INF/add.sql" /> -->
 		</properties>

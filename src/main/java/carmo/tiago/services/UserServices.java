@@ -2,11 +2,15 @@ package carmo.tiago.services;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 
+import carmo.tiago.persistence.NutPlanEntity;
 import carmo.tiago.persistence.NutPlanFacade;
 import carmo.tiago.persistence.UserEntity;
 import carmo.tiago.persistence.UserFacade;
@@ -50,6 +54,7 @@ public class UserServices {
 		user.setWeight(userEntity.getWeight());
 		user.setSex(userEntity.getSex());
 		user.setPassword(userEntity.getPassword());
+		user.setUserId(userEntity.getUserId());
 		return user;
 	}
 
@@ -87,7 +92,7 @@ public class UserServices {
 		return entityToPOJO(UserFacade.getUserByEmail(email));
 	}
 
-	public static void createPlan(String objective) throws NumberFormatException, Exception {
+	public static void createPlan(String name, String objective) throws NumberFormatException, Exception {
 		UserPOJO loggedUser = LoginApp.getInstance().getLoggedUser();
 		double FA = 0;
 		Random random = new Random();
@@ -126,7 +131,15 @@ public class UserServices {
 
 			}
 			double fat = (FA * 0.3) / 9;
-			NutPlanFacade.createPlan(FA, protein, FA, fat, objective, getUserByEmail(loggedUser.getEmail()));
+			NutPlanEntity plan = new NutPlanEntity();
+			plan.setCalories(Math.round(FA));
+			plan.setName(name);
+			plan.setCarbs(Math.round(FA));
+			plan.setProtein(Math.round(protein));
+			plan.setFat(Math.round(fat));
+			plan.setObjective(objective);
+			plan.setUser(getUserByEmail(loggedUser.getEmail()));
+			NutPlanFacade.createPlan(plan);
 		} else {
 			double BMR = (10 * Double.parseDouble(loggedUser.getWeight())
 					+ (6.25 * Integer.parseInt(loggedUser.getHeight()) - (5 * Integer.parseInt(ageString) - 161)));
@@ -158,8 +171,37 @@ public class UserServices {
 
 			}
 			double fat = (FA * 0.3) / 9;
-			NutPlanFacade.createPlan(FA, protein, FA, fat, objective, getUserByEmail(loggedUser.getEmail()));
+			NutPlanEntity plan = new NutPlanEntity();
+			plan.setCalories(Math.round(FA));
+			plan.setName(name);
+			plan.setCarbs(Math.round(FA));
+			plan.setProtein(Math.round(protein));
+			plan.setFat(Math.round(fat));
+			plan.setObjective(objective);
+			plan.setUser(getUserByEmail(loggedUser.getEmail()));
+			NutPlanFacade.createPlan(plan);
 		}
+	}
+	
+	private static NutPlanPOJO entityToPOJOPlan(NutPlanEntity plan){
+		NutPlanPOJO planPOJO = new NutPlanPOJO();
+		planPOJO.setCalories(plan.getCalories());
+		planPOJO.setCarbs(plan.getCarbs());
+		planPOJO.setFat(plan.getFat());
+		planPOJO.setObjective(plan.getObjective());
+		planPOJO.setProtein(plan.getProtein());
+		planPOJO.setName(plan.getName());
+		planPOJO.setPlanId(plan.getPlanId());
+		return planPOJO;
+	}
+	
+	public static List<NutPlanPOJO> getUserPlans(long userId) throws Exception{
+		List<NutPlanPOJO> userPlans = new ArrayList<NutPlanPOJO>();
+		Set<NutPlanEntity> planList = UserFacade.getUserPlans(userId);
+		for (NutPlanEntity s : planList) {
+			userPlans.add(entityToPOJOPlan(s));
+		}
+		return userPlans;
 	}
 
 }

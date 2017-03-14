@@ -7,11 +7,11 @@
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -23,12 +23,7 @@
          <children>
             <StackPane fx:id="stackPane" layoutX="200.0" layoutY="69.0" prefHeight="600.0" prefWidth="770.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Group fx:id="myPlansGroup" opacity="0.0">
-                     <children>
-                        <JFXTreeTableView fx:id="myPlansTable" layoutY="68.9775390625" prefHeight="400.0" prefWidth="570.0" />
-                     </children>
-                  </Group>
-                  <Group id="updateUserGroup" fx:id="updateUserGroup" stylesheets="@demo.css">
+                  <Group id="updateUserGroup" fx:id="updateUserGroup" opacity="0.0" stylesheets="@demo.css">
                      <children>
                         <AnchorPane id="anchorPaneUpdateUser" layoutX="-1.0" prefHeight="405.0" prefWidth="430.0" stylesheets="@demo.css">
                            <children>
@@ -119,6 +114,11 @@
                               <DropShadow />
                            </effect>
                         </AnchorPane>
+                     </children>
+                  </Group>
+                  <Group fx:id="myPlansGroup">
+                     <children>
+                        <TableView fx:id="myPlansTable" layoutX="-248.0" layoutY="-108.0" prefHeight="406.0" prefWidth="563.0" />
                      </children>
                   </Group>
                </children>
