@@ -266,6 +266,7 @@ public class HomePageController implements Initializable {
 
 	protected void processLogout() {
 		LoginApp.getInstance().setLoggedUser(null);
+		LoginController.setUser(null);
 		LoginApp.getInstance().gotoLogin();
 	}
 

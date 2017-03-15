@@ -121,6 +121,12 @@
 	-fx-graphic: url("Pictures/fb-logo.png")
 }
 
+#facebookBtn:hover{
+	-fx-background-color: white;
+	-fx-text-fill: #3B5998;
+	-fx-graphic: url("Pictures/fb-logo-b.png")
+}
+
 #backAddUser {
 	-fx-background-color: turquoise;
 	-fx-border-width: 0.0;

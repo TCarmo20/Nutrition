@@ -5,6 +5,9 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import com.restfb.types.User;
+
 import carmo.tiago.services.UserPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
@@ -74,9 +77,16 @@ public class LoginApp extends Application {
 			throw new Exception();
 		}
 	}
+	
+	public void userLoggingFB(User user) throws Exception {
+		UserPOJO user2 = UserServices.getUserByEmailPOJO(user.getEmail());
+		setLoggedUser(user2);	
+		gotoHomePage();	
+	}
 
 	public void userLogout() {
 		setLoggedUser(null);
+		LoginController.setUser(null);
 		gotoLogin();
 	}
 

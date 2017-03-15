@@ -64,7 +64,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton id="facebookBtn" fx:id="facebookBtn" prefHeight="0.0" prefWidth="200.0" ripplerFill="WHITE" stylesheets="@demo.css" text="Login with Facebook" textAlignment="CENTER">
+                  <JFXButton id="facebookBtn" fx:id="facebookBtn" onAction="#processFacebook" prefHeight="0.0" prefWidth="200.0" ripplerFill="#3b5998" stylesheets="@demo.css" text="Login with Facebook" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
