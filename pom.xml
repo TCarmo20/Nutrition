@@ -62,18 +62,6 @@
 			<version>10.13.1.1</version>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 
 	<scm>
