@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -88,6 +90,8 @@ public class AddUserController implements Initializable {
 
 	private Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AddUserController.class);
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		name.setPromptText("Name");
@@ -103,6 +107,7 @@ public class AddUserController implements Initializable {
 		sex.setPromptText("Sex");
 		activityLevel.setPromptText("Activity level");
 		agePicker.setPromptText("Date of birth (YYYY-MM-dd)");
+		LOGGER.info("Add User controller initialized");
 	}
 
 	@FXML
@@ -131,6 +136,7 @@ public class AddUserController implements Initializable {
 				}
 			}
 		} catch (Exception e1) {
+			LOGGER.error("Error adding user");
 			errorMessage.setText("Please review inserted values");
 			animateMessage(errorMessage);
 		}
@@ -152,6 +158,7 @@ public class AddUserController implements Initializable {
 		weightHeightErrorMessage.setText("");
 		sexActivityErrorMessage.setText("");
 		dateErrorMessage.setText("");
+		LOGGER.info("Messages cleared");
 	}
 
 	private void checkMessages() throws Exception {
@@ -227,6 +234,7 @@ public class AddUserController implements Initializable {
 			flag = true;
 		}
 		if (flag) {
+			LOGGER.error("Error adding user");
 			throw new Exception();
 		}
 	}

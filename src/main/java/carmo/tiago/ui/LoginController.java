@@ -3,6 +3,9 @@ package carmo.tiago.ui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -67,12 +70,16 @@ public class LoginController implements Initializable {
 	private WebView webView;
 	public static User user;
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+
 	@FXML
 	protected void processLogin() {
 		fadeMessage();
 		try {
 			LoginApp.getInstance().userLogging(userIdLogin.getText(), passwordLogin.getText());
+			LOGGER.info("User logged in");
 		} catch (Exception e) {
+			LOGGER.error("Error logging in");
 			errorMessage.setText("Username/password combination is invalid.");
 			animateMessage(errorMessage);
 		}
@@ -80,6 +87,7 @@ public class LoginController implements Initializable {
 
 	private void fadeMessage() {
 		errorMessage.setText("");
+		LOGGER.info("Message cleared");
 	}
 
 	private void animateMessage(Label message) {
@@ -91,6 +99,7 @@ public class LoginController implements Initializable {
 
 	@FXML
 	protected void processAddUser() {
+		LOGGER.info("Changing scene");
 		LoginApp.getInstance().goToAddUser();
 	}
 
@@ -98,6 +107,7 @@ public class LoginController implements Initializable {
 	public void initialize(URL url, ResourceBundle rb) {
 		userIdLogin.setPromptText("Email");
 		passwordLogin.setPromptText("Password");
+		LOGGER.info("Login controller initialized");
 	}
 
 	@FXML
@@ -136,7 +146,9 @@ public class LoginController implements Initializable {
 						user = fbClient.fetchObject("me", User.class, Parameter.with("fields", "name,email,picture"));
 						stage.close();
 						LoginApp.getInstance().userLoggingFB(user);
+						LOGGER.info("FB user logged in");
 					} catch (Exception e) {
+						LOGGER.error("FB user not in DB yet");
 						errorMessage.setText("Please add user before using the Facebook login");
 						animateMessage(errorMessage);
 					}
@@ -151,7 +163,6 @@ public class LoginController implements Initializable {
 		stage.show();
 	}
 
-	
 	public static User getUser() {
 		return user;
 	}

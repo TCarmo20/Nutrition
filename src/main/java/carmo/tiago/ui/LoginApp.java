@@ -1,10 +1,11 @@
 package carmo.tiago.ui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.restfb.types.User;
 
@@ -33,11 +34,13 @@ public class LoginApp extends Application {
 	private Stage stage;
 	private UserPOJO loggedUser;
 	private static LoginApp instance;
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginApp.class);
 
 	@Override
 	public void init() throws Exception {
 		setEmf(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
 		setEm(getEmf().createEntityManager());
+		LOGGER.info("Database prepared");
 	}
 
 	public LoginApp() {
@@ -58,13 +61,13 @@ public class LoginApp extends Application {
 		primaryStage.getIcons().add(new Image("Pictures/icon.png"));
 		try {
 			stage = primaryStage;
-			//stage.setMaximized(true);
+			// stage.setMaximized(true);
 			// stage.setFullScreen(true);
 			// stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 			gotoLogin();
 			primaryStage.show();
 		} catch (Exception ex) {
-			Logger.getLogger(LoginApp.class.getName()).log(Level.SEVERE, null, ex);
+			LOGGER.error("Error starting stage: " + ex);
 		}
 	}
 
@@ -74,27 +77,30 @@ public class LoginApp extends Application {
 			setLoggedUser(user);
 			gotoHomePage();
 		} else {
+			LOGGER.error("Passwords do not match");
 			throw new Exception();
 		}
 	}
-	
+
 	public void userLoggingFB(User user) throws Exception {
 		UserPOJO user2 = UserServices.getUserByEmailPOJO(user.getEmail());
-		setLoggedUser(user2);	
-		gotoHomePage();	
+		setLoggedUser(user2);
+		gotoHomePage();
+		LOGGER.info("Logging in with FB");
 	}
 
 	public void userLogout() {
 		setLoggedUser(null);
 		LoginController.setUser(null);
 		gotoLogin();
+		LOGGER.info("Logged out");
 	}
 
 	public void goToAddUser() {
 		try {
 			replaceSceneContent("/AddUser.fxml");
 		} catch (Exception ex) {
-			Logger.getLogger(LoginApp.class.getName()).log(Level.SEVERE, null, ex);
+			LOGGER.error("Error changing scene: " + ex);
 		}
 	}
 
@@ -102,7 +108,7 @@ public class LoginApp extends Application {
 		try {
 			replaceSceneContent("/HomePage.fxml");
 		} catch (Exception ex) {
-			Logger.getLogger(LoginApp.class.getName()).log(Level.SEVERE, null, ex);
+			LOGGER.error("Error changing scene: " + ex);
 		}
 	}
 
@@ -110,7 +116,7 @@ public class LoginApp extends Application {
 		try {
 			replaceSceneContent("/Login.fxml");
 		} catch (Exception ex) {
-			Logger.getLogger(LoginApp.class.getName()).log(Level.SEVERE, null, ex);
+			LOGGER.error("Error changing scene: " + ex);
 		}
 	}
 
@@ -162,7 +168,7 @@ public class LoginApp extends Application {
 	public static LoginApp getInstance() {
 		return instance;
 	}
-	
+
 	public Stage getStage() {
 		return stage;
 	}
@@ -170,6 +176,5 @@ public class LoginApp extends Application {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
-
 
 }

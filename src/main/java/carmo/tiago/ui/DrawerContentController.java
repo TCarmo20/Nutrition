@@ -2,6 +2,10 @@ package carmo.tiago.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jfoenix.controls.JFXButton;
 import com.restfb.types.User;
 
@@ -44,17 +48,22 @@ public class DrawerContentController implements Initializable {
 	@FXML
 	private Label nameLabel;
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DrawerContentController.class);
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		User user = LoginController.getUser();
-		if(user != null){
+		if (user != null) {
+			LOGGER.info("FB User found: " + user.getName());
 			String imageSource = "https://graph.facebook.com/" + user.getId() + "/picture?type=large";
-			imageViewMenuBar.setImage(new Image(imageSource, 200, 150, false,false));
+			imageViewMenuBar.setImage(new Image(imageSource, 200, 150, true, false));
 			nameLabel.setText("Welcome, " + user.getName());
 		} else {
 			nameLabel.setText("Welcome, " + LoginApp.getInstance().getLoggedUser().getName());
-			imageViewMenuBar.setImage(new Image("Pictures/preloaderWall.jpg"));
+			imageViewMenuBar.setImage(new Image("Pictures/preloaderWall.jpg", 200, 150, true, false));
+			LOGGER.info("FB User not found: " + LoginApp.getInstance().getLoggedUser().getName());
 		}
+		LOGGER.info("Drawer initialized");
 	}
 
 	public ImageView getImageViewMenuBar() {

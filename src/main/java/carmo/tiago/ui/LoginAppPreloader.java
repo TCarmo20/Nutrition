@@ -1,5 +1,8 @@
 package carmo.tiago.ui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jfoenix.controls.JFXProgressBar;
 
 import javafx.application.Preloader;
@@ -20,14 +23,16 @@ import javafx.stage.StageStyle;
  *
  */
 public class LoginAppPreloader extends Preloader {
-	
-	@FXML
-    private StackPane stackPane;
 
-    @FXML
-    private JFXProgressBar progressBar;
-    
+	@FXML
+	private StackPane stackPane;
+
+	@FXML
+	private JFXProgressBar progressBar;
+
 	private Stage preloaderStage;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginAppPreloader.class);
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -41,12 +46,14 @@ public class LoginAppPreloader extends Preloader {
 		primaryStage.setTitle("Nutrition App");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		LOGGER.info("Preloader started");
 	}
 
 	@Override
 	public void handleStateChangeNotification(StateChangeNotification stateChangeNotification) {
 		if (stateChangeNotification.getType() == Type.BEFORE_START) {
 			preloaderStage.hide();
+			LOGGER.info("State changed, database initialized");
 		}
 	}
 }

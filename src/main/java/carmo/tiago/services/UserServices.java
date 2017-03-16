@@ -71,6 +71,7 @@ public class UserServices {
 		uEntity.setPassword(password);
 		uEntity.setPassword(encrypt(password));
 		UserFacade.updateUser(uEntity);
+		LoginApp.getInstance().setLoggedUser(entityToPOJO(uEntity));
 	}
 
 	public static String encrypt(String password) throws NoSuchAlgorithmException {

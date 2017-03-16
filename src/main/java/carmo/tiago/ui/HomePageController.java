@@ -9,6 +9,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXComboBox;
@@ -30,6 +34,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Orientation;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -39,6 +46,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -124,8 +132,26 @@ public class HomePageController implements Initializable {
 	@FXML
 	private JFXHamburger hamburger;
 
+	@FXML
+	private Label errorLabelOb;
+
+	@FXML
+	private Label errorLabelName;
+
+	@FXML
+	private JFXTextField nameField;
+
+	@FXML
+	private JFXComboBox<String> objectives;
+
+	@FXML
+	private JFXButton create;
+
 	private List<NutPlanPOJO> planList;
+
 	private Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomePageController.class);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -176,15 +202,15 @@ public class HomePageController implements Initializable {
 				}
 			});
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}
+		LOGGER.info("Home Page initialized");
 	}
 
 	@SuppressWarnings("unchecked")
 	private void processMyPlans() {
 		drawer.close();
 		myPlansTable.getColumns().clear();
-
 		try {
 			planList = UserServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
 			ObservableList<NutPlanPOJO> plans = FXCollections.observableArrayList(planList);
@@ -192,7 +218,7 @@ public class HomePageController implements Initializable {
 			TableColumn<NutPlanPOJO, String> nameCol = new TableColumn<NutPlanPOJO, String>("Name");
 			nameCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, String>("name"));
 			nameCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-					
+
 			TableColumn<NutPlanPOJO, String> objectiveCol = new TableColumn<NutPlanPOJO, String>("Objective");
 			objectiveCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, String>("objective"));
 			objectiveCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
@@ -216,7 +242,7 @@ public class HomePageController implements Initializable {
 			myPlansTable.getColumns().addAll(nameCol, objectiveCol, caloriesCol, proteinCol, carbsCol, fatCol);
 			myPlansTable.setItems(plans);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error building tableview: " + e);
 		}
 		myPlansGroup.setOpacity(1);
 		updateUserGroup.setOpacity(0);
@@ -230,6 +256,7 @@ public class HomePageController implements Initializable {
 		updateUserGroup.setOpacity(1);
 		myPlansGroup.toBack();
 		updateUserGroup.toFront();
+		LOGGER.info("Changed to user update screen");
 	}
 
 	@FXML
@@ -251,16 +278,15 @@ public class HomePageController implements Initializable {
 					try {
 						dialog.close();
 					} catch (Exception e) {
-						e.printStackTrace();
+						LOGGER.error("Error closing dialog: " + e);
 					}
-
 				}
 			});
 			content.setActions(create);
 			dialog.toFront();
 			dialog.show();
 		} catch (Exception e) {
-
+			LOGGER.error("Error updating user: " + e);
 		}
 	}
 
@@ -273,62 +299,68 @@ public class HomePageController implements Initializable {
 	public void processCreatePlan() {
 		drawer.close();
 		JFXDialogLayout content = new JFXDialogLayout();
-		Label errorLabel = new Label();
-		content.setHeading(new Text("Choose your plan name and objective: \n\n"), errorLabel);
-		JFXComboBox<String> objectives = new JFXComboBox<String>();
-		objectives.getItems().addAll("Hypertrophy", "Maintenance", "Fat Loss");
-		JFXTextField nameField = new JFXTextField();
-		content.setBody(nameField, objectives);
 		JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
-		JFXButton create = new JFXButton("CREATE");
+		FlowPane flow = new FlowPane(Orientation.VERTICAL);
+		flow.setRowValignment(VPos.CENTER);
+		flow.setColumnHalignment(HPos.CENTER);
+		flow.setPrefWrapLength(200);
+		flow.setVgap(20);
+		flow.setHgap(10);
+		flow.setPrefWidth(200);
+
+		content.setHeading(new Text("Choose your plan details: \n\n"));
+
+		errorLabelOb = new Label();
+		errorLabelOb.setPrefWidth(150);
+		objectives = new JFXComboBox<String>();
+		objectives.getItems().addAll("Hypertrophy", "Maintenance", "Fat Loss");
+		objectives.setPromptText("Objective");
+		objectives.setPrefWidth(150);
+
+		errorLabelName = new Label();
+		errorLabelName.setPrefWidth(150);
+		nameField = new JFXTextField();
+		nameField.setPromptText("Name");
+		nameField.setPrefWidth(150);
+
+		create = new JFXButton("CREATE");
 		create.setButtonType(ButtonType.RAISED);
 		create.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (objectives.getSelectionModel().isEmpty()) {
-					errorLabel.setTextFill(Color.RED);
-					DropShadow ds = new DropShadow();
-					ds.setOffsetY(3.0f);
-					errorLabel.setEffect(ds);
-					errorLabel.setText("Please select an objective");
-					animateMessage(errorLabel);
-				} else {
-					try {
-						UserServices.createPlan(nameField.getText(), objectives.getSelectionModel().getSelectedItem());
-						dialog.close();
-						JFXDialogLayout content2 = new JFXDialogLayout();
-						content2.setHeading(new Text("Plan created!"));
-						JFXDialog dialog2 = new JFXDialog(stackPane, content2, JFXDialog.DialogTransition.CENTER);
-						JFXButton create2 = new JFXButton("OK");
-						create2.setOnAction(new EventHandler<ActionEvent>() {
-							@Override
-							public void handle(ActionEvent event2) {
-								dialog2.close();
-							}
-						});
-						content2.setActions(create2);
-						dialog2.show();
-					} catch (Exception e) {
-						e.printStackTrace();
-						JFXDialogLayout content3 = new JFXDialogLayout();
-						content3.setHeading(new Text("Error creating plan!"));
-						JFXDialog dialog3 = new JFXDialog(stackPane, content3, JFXDialog.DialogTransition.CENTER);
-						JFXButton create3 = new JFXButton("OK");
-						create3.setButtonType(ButtonType.RAISED);
-						create3.setOnAction(new EventHandler<ActionEvent>() {
-							@Override
-							public void handle(ActionEvent event3) {
-								dialog3.close();
-							}
-						});
-						content3.setActions(create3);
-						dialog3.show();
-					}
+				fadeMessagesPlan();
+				try {
+					checkMessagesPlan();
+					UserServices.createPlan(nameField.getText(), objectives.getSelectionModel().getSelectedItem());
+					dialog.close();
+					JFXDialogLayout content2 = new JFXDialogLayout();
+					content2.setHeading(new Text("Plan created!"));
+					JFXDialog dialog2 = new JFXDialog(stackPane, content2, JFXDialog.DialogTransition.CENTER);
+					JFXButton create2 = new JFXButton("OK");
+					create2.setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent event2) {
+							dialog2.close();
+							processMyPlans();
+						}
+					});
+					content2.setActions(create2);
+					dialog2.show();
+				} catch (Exception e) {
+					LOGGER.error("Error creating plan: " + e);
 				}
 			}
 		});
+		flow.getChildren().addAll(nameField, errorLabelName, objectives, errorLabelOb, create);
+		content.setBody(flow);
 		content.setActions(create);
 		dialog.show();
+	}
+
+	private void fadeMessagesPlan() {
+		errorLabelName.setText("");
+		errorLabelOb.setText("");
+		LOGGER.info("Messages cleared");
 	}
 
 	private void fadeMessages() {
@@ -339,6 +371,34 @@ public class HomePageController implements Initializable {
 		updateHeightWeightLabel.setText("");
 		updateSexActivityLevel.setText("");
 		updateAgeLabel.setText("");
+		LOGGER.info("Messages cleared");
+	}
+
+	private void checkMessagesPlan() throws Exception {
+		boolean flag = false;
+		if (objectives.getSelectionModel().isEmpty()) {
+			errorLabelOb.setTextFill(Color.RED);
+			DropShadow ds = new DropShadow();
+			ds.setOffsetY(3.0f);
+			errorLabelOb.setEffect(ds);
+			errorLabelOb.setText("Please select an objective");
+			animateMessage(errorLabelOb);
+			flag = true;
+		}
+		if (nameField.getText().equals("")) {
+			errorLabelName.setTextFill(Color.RED);
+			DropShadow ds = new DropShadow();
+			ds.setOffsetY(3.0f);
+			errorLabelName.setEffect(ds);
+			errorLabelName.setText("Please add a name");
+			animateMessage(errorLabelName);
+			flag = true;
+		}
+		if (flag) {
+			LOGGER.error("Plan creation fields not properly filled");
+			throw new Exception();
+		}
+
 	}
 
 	private void checkMessages() throws Exception {
@@ -415,6 +475,7 @@ public class HomePageController implements Initializable {
 			flag = true;
 		}
 		if (flag) {
+			LOGGER.error("User update details not properly filled");
 			throw new Exception();
 		}
 	}
