@@ -96,6 +96,9 @@ public class UserServices {
 	public static void createPlan(String name, String objective) throws NumberFormatException, Exception {
 		UserPOJO loggedUser = LoginApp.getInstance().getLoggedUser();
 		double FA = 0;
+		double protein = 0;
+		double fat = 0;
+		double carbs = 0;
 		Random random = new Random();
 		LocalDate myDate = new LocalDate(loggedUser.getDob());
 		LocalDate now = new LocalDate();
@@ -123,19 +126,21 @@ public class UserServices {
 			default:
 				throw new Exception();
 			}
-			double protein = 0;
 			if (objective.equals("Hypertrophy")) {
 				protein = Double.parseDouble(loggedUser.getWeight()) * 2 + (2.5 - 2) * random.nextDouble();
+				FA = FA + 500;
 			} else if (objective.equals("Maintenance")) {
-
+				protein = Double.parseDouble(loggedUser.getWeight()) * 1.2;
 			} else if (objective.equals("Fat Loss")) {
-
+				FA = FA - 500;
+				protein = Double.parseDouble(loggedUser.getWeight()) * 1.4 + (1.6 - 1.4) * random.nextDouble();
 			}
-			double fat = (FA * 0.3) / 9;
+			fat = (FA * 0.3) / 9;
+			carbs = (FA - (protein * 4 + fat * 9)) / 4;
 			NutPlanEntity plan = new NutPlanEntity();
 			plan.setCalories(Math.round(FA));
 			plan.setName(name);
-			plan.setCarbs(Math.round(FA));
+			plan.setCarbs(Math.round(carbs));
 			plan.setProtein(Math.round(protein));
 			plan.setFat(Math.round(fat));
 			plan.setObjective(objective);
@@ -163,19 +168,21 @@ public class UserServices {
 			default:
 				throw new Exception();
 			}
-			double protein = 0;
 			if (objective.equals("Hypertrophy")) {
-				protein = Double.parseDouble(loggedUser.getWeight()) * 2 + (2.5 - 2) * random.nextDouble();
+				protein = Double.parseDouble(loggedUser.getWeight()) * 1.8 + (2 - 1.8) * random.nextDouble();
+				FA = FA + 250;
 			} else if (objective.equals("Maintenance")) {
-
+				protein = Double.parseDouble(loggedUser.getWeight());
 			} else if (objective.equals("Fat Loss")) {
-
+				protein = Double.parseDouble(loggedUser.getWeight()) * 1.2 + (1.4 - 1.2) * random.nextDouble();
+				FA = FA - 500;
 			}
-			double fat = (FA * 0.3) / 9;
+			fat = (FA * 0.3) / 9;
+			carbs = (FA - (protein * 4 + fat * 9)) / 4;
 			NutPlanEntity plan = new NutPlanEntity();
 			plan.setCalories(Math.round(FA));
 			plan.setName(name);
-			plan.setCarbs(Math.round(FA));
+			plan.setCarbs(Math.round(carbs));
 			plan.setProtein(Math.round(protein));
 			plan.setFat(Math.round(fat));
 			plan.setObjective(objective);
@@ -183,8 +190,8 @@ public class UserServices {
 			NutPlanFacade.createPlan(plan);
 		}
 	}
-	
-	private static NutPlanPOJO entityToPOJOPlan(NutPlanEntity plan){
+
+	private static NutPlanPOJO entityToPOJOPlan(NutPlanEntity plan) {
 		NutPlanPOJO planPOJO = new NutPlanPOJO();
 		planPOJO.setCalories(plan.getCalories());
 		planPOJO.setCarbs(plan.getCarbs());
@@ -195,8 +202,8 @@ public class UserServices {
 		planPOJO.setPlanId(plan.getPlanId());
 		return planPOJO;
 	}
-	
-	public static List<NutPlanPOJO> getUserPlans(long userId) throws Exception{
+
+	public static List<NutPlanPOJO> getUserPlans(long userId) throws Exception {
 		List<NutPlanPOJO> userPlans = new ArrayList<NutPlanPOJO>();
 		Set<NutPlanEntity> planList = UserFacade.getUserPlans(userId);
 		for (NutPlanEntity s : planList) {

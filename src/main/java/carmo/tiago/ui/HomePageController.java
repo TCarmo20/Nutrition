@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
@@ -23,10 +24,17 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 import carmo.tiago.services.NutPlanPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,9 +48,8 @@ import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -51,6 +58,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 /**
@@ -124,19 +132,16 @@ public class HomePageController implements Initializable {
 	private Group myPlansGroup;
 
 	@FXML
-	private TableView<NutPlanPOJO> myPlansTable;
+	private JFXTreeTableView<NutPlanPOJO> myPlansTable;
+
+	@FXML
+	private JFXTextField filter;
 
 	@FXML
 	private JFXDrawer drawer;
 
 	@FXML
 	private JFXHamburger hamburger;
-
-	@FXML
-	private Label errorLabelOb;
-
-	@FXML
-	private Label errorLabelName;
 
 	@FXML
 	private JFXTextField nameField;
@@ -146,6 +151,12 @@ public class HomePageController implements Initializable {
 
 	@FXML
 	private JFXButton create;
+
+	@FXML
+	private Label errorLabelOb;
+
+	@FXML
+	private Label errorLabelName;
 
 	private List<NutPlanPOJO> planList;
 
@@ -201,6 +212,19 @@ public class HomePageController implements Initializable {
 					drawer.open();
 				}
 			});
+			filter.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					myPlansTable.setPredicate(new Predicate<TreeItem<NutPlanPOJO>>() {
+						@Override
+						public boolean test(TreeItem<NutPlanPOJO> plan) {
+							boolean flag = plan.getValue().getName().contains(newValue)
+									|| plan.getValue().getObjective().contains(newValue);
+							return flag;
+						}
+					});
+				}
+			});
 		} catch (IOException e) {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}
@@ -214,33 +238,71 @@ public class HomePageController implements Initializable {
 		try {
 			planList = UserServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
 			ObservableList<NutPlanPOJO> plans = FXCollections.observableArrayList(planList);
-
-			TableColumn<NutPlanPOJO, String> nameCol = new TableColumn<NutPlanPOJO, String>("Name");
-			nameCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, String>("name"));
+			JFXTreeTableColumn<NutPlanPOJO, String> nameCol = new JFXTreeTableColumn<>("Name");
+			nameCol.setCellValueFactory(
+					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(
+								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
+							return new SimpleStringProperty(param.getValue().getValue().getName());
+						}
+					});
 			nameCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-
-			TableColumn<NutPlanPOJO, String> objectiveCol = new TableColumn<NutPlanPOJO, String>("Objective");
-			objectiveCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, String>("objective"));
+			JFXTreeTableColumn<NutPlanPOJO, String> objectiveCol = new JFXTreeTableColumn<>("Objective");
+			objectiveCol.setCellValueFactory(
+					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(
+								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
+							return new SimpleStringProperty(param.getValue().getValue().getObjective());
+						}
+					});
 			objectiveCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-
-			TableColumn<NutPlanPOJO, Double> caloriesCol = new TableColumn<NutPlanPOJO, Double>("Calories");
-			caloriesCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, Double>("calories"));
+			JFXTreeTableColumn<NutPlanPOJO, String> caloriesCol = new JFXTreeTableColumn<>("Calories");
+			caloriesCol.setCellValueFactory(
+					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(
+								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
+							return new SimpleStringProperty(Double.toString(param.getValue().getValue().getCalories()));
+						}
+					});
 			caloriesCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-
-			TableColumn<NutPlanPOJO, Double> proteinCol = new TableColumn<NutPlanPOJO, Double>("Protein");
-			proteinCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, Double>("protein"));
+			JFXTreeTableColumn<NutPlanPOJO, String> proteinCol = new JFXTreeTableColumn<>("Protein");
+			proteinCol.setCellValueFactory(
+					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(
+								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
+							return new SimpleStringProperty(Double.toString(param.getValue().getValue().getProtein()));
+						}
+					});
 			proteinCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-
-			TableColumn<NutPlanPOJO, Double> carbsCol = new TableColumn<NutPlanPOJO, Double>("Carbs");
-			carbsCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, Double>("carbs"));
+			JFXTreeTableColumn<NutPlanPOJO, String> carbsCol = new JFXTreeTableColumn<>("Carbs");
+			carbsCol.setCellValueFactory(
+					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(
+								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
+							return new SimpleStringProperty(Double.toString(param.getValue().getValue().getCarbs()));
+						}
+					});
 			carbsCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-
-			TableColumn<NutPlanPOJO, Double> fatCol = new TableColumn<NutPlanPOJO, Double>("Fat");
-			fatCol.setCellValueFactory(new PropertyValueFactory<NutPlanPOJO, Double>("fat"));
+			JFXTreeTableColumn<NutPlanPOJO, String> fatCol = new JFXTreeTableColumn<>("Fat");
+			fatCol.setCellValueFactory(
+					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(
+								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
+							return new SimpleStringProperty(Double.toString(param.getValue().getValue().getFat()));
+						}
+					});
 			fatCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-
-			myPlansTable.getColumns().addAll(nameCol, objectiveCol, caloriesCol, proteinCol, carbsCol, fatCol);
-			myPlansTable.setItems(plans);
+			final TreeItem<NutPlanPOJO> root = new RecursiveTreeItem<NutPlanPOJO>(plans,
+					RecursiveTreeObject::getChildren);
+			myPlansTable.getColumns().setAll(nameCol, objectiveCol, caloriesCol, proteinCol, carbsCol, fatCol);
+			myPlansTable.setRoot(root);
+			myPlansTable.setShowRoot(false);
 		} catch (Exception e) {
 			LOGGER.error("Error building tableview: " + e);
 		}
@@ -307,22 +369,18 @@ public class HomePageController implements Initializable {
 		flow.setVgap(20);
 		flow.setHgap(10);
 		flow.setPrefWidth(200);
-
 		content.setHeading(new Text("Choose your plan details: \n\n"));
-
 		errorLabelOb = new Label();
 		errorLabelOb.setPrefWidth(150);
 		objectives = new JFXComboBox<String>();
 		objectives.getItems().addAll("Hypertrophy", "Maintenance", "Fat Loss");
 		objectives.setPromptText("Objective");
 		objectives.setPrefWidth(150);
-
 		errorLabelName = new Label();
 		errorLabelName.setPrefWidth(150);
 		nameField = new JFXTextField();
 		nameField.setPromptText("Name");
 		nameField.setPrefWidth(150);
-
 		create = new JFXButton("CREATE");
 		create.setButtonType(ButtonType.RAISED);
 		create.setOnAction(new EventHandler<ActionEvent>() {
@@ -398,7 +456,6 @@ public class HomePageController implements Initializable {
 			LOGGER.error("Plan creation fields not properly filled");
 			throw new Exception();
 		}
-
 	}
 
 	private void checkMessages() throws Exception {

@@ -7,15 +7,16 @@
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
 <StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.HomePageController">
    <children>
@@ -118,7 +119,19 @@
                   </Group>
                   <Group fx:id="myPlansGroup">
                      <children>
-                        <TableView fx:id="myPlansTable" layoutX="-248.0" layoutY="-108.0" prefHeight="406.0" prefWidth="563.0" />
+                        <VBox>
+                           <children>
+                              <FlowPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXTreeTableView fx:id="myPlansTable" prefHeight="400.0" prefWidth="530.0" stylesheets="@demo.css" />
+                                 </children>
+                              </FlowPane>
+                              <JFXTextField fx:id="filter" labelFloat="true" prefHeight="25.0" prefWidth="530.0" promptText="Filter by name or objective">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin></JFXTextField>
+                           </children>
+                        </VBox>
                      </children>
                   </Group>
                </children>
