@@ -27,6 +27,11 @@
 			<version>1.7.24</version>
 		</dependency>
 		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.11</version>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.24</version>
@@ -93,6 +98,8 @@
 					<mainClass>carmo.tiago.ui.LoginApp</mainClass>
 					<preLoader>carmo.tiago.ui.LoginAppPreloader</preLoader>
 					<bundler>EXE</bundler>
+					<verbose>true</verbose>
+					<icon>src/main/deploy/package/windows/${project.build.finalName}.ico</icon>
 				</configuration>
 			</plugin>
 		</plugins>

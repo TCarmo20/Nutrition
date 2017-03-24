@@ -15,10 +15,11 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.HomePageController">
+<StackPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.HomePageController">
    <children>
       <AnchorPane fx:id="HomePage" stylesheets="@demo.css">
          <children>
@@ -119,19 +120,90 @@
                   </Group>
                   <Group fx:id="myPlansGroup">
                      <children>
-                        <VBox>
+                        <HBox id="hBoxPlans" alignment="TOP_CENTER" fillHeight="false" prefHeight="402.0" prefWidth="537.0" stylesheets="@demo.css">
                            <children>
-                              <FlowPane prefHeight="200.0" prefWidth="200.0">
+                              <VBox id="vBoxPlans" fx:id="vBoxPlans" alignment="CENTER" stylesheets="@demo.css">
                                  <children>
-                                    <JFXTreeTableView fx:id="myPlansTable" prefHeight="400.0" prefWidth="530.0" stylesheets="@demo.css" />
+                                    <JFXTreeTableView fx:id="myPlansTable" prefHeight="384.0" prefWidth="331.0" showRoot="false" stylesheets="@demo.css">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTreeTableView>
                                  </children>
-                              </FlowPane>
-                              <JFXTextField fx:id="filter" labelFloat="true" prefHeight="25.0" prefWidth="530.0" promptText="Filter by name or objective">
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin></JFXTextField>
+                              </VBox>
+                              <VBox>
+                                 <children>
+                                    <AnchorPane>
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="15.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <VBox prefHeight="180.0" prefWidth="155.0">
+                                             <children>
+                                                <JFXTextField fx:id="caloriesPlan" editable="false" labelFloat="true" promptText="Calories">
+                                                   <VBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </VBox.margin>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="proteinPlan" editable="false" labelFloat="true" promptText="Protein">
+                                                   <VBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </VBox.margin>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="carbsPlan" editable="false" labelFloat="true" promptText="Carbs">
+                                                   <VBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </VBox.margin>
+                                                </JFXTextField>
+                                                <JFXTextField fx:id="fatPlan" editable="false" labelFloat="true" promptText="Fat">
+                                                   <VBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </VBox.margin>
+                                                </JFXTextField>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="202.0" prefWidth="155.0">
+                                       <children>
+                                          <VBox layoutX="-1.0" layoutY="170.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                             <children>
+                                                <Label fx:id="deleteExportLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" textFill="RED">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" />
+                                                   </VBox.margin>
+                                                   <effect>
+                                                      <DropShadow />
+                                                   </effect>
+                                                </Label>
+                                                <JFXTextField fx:id="filter" promptText="Filter by name or objective">
+                                                   <VBox.margin>
+                                                      <Insets bottom="10.0" />
+                                                   </VBox.margin>
+                                                </JFXTextField>
+                                                <JFXButton fx:id="exportPlanBtn" onAction="#processExportPlan" prefHeight="25.0" prefWidth="155.0" text="EXPORT" />
+                                                <JFXButton fx:id="deletePlanBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#processDeletePlan" prefHeight="25.0" prefWidth="155.0" text="DELETE" textAlignment="CENTER">
+                                                   <VBox.margin>
+                                                      <Insets top="10.0" />
+                                                   </VBox.margin>
+                                                </JFXButton>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                    </AnchorPane>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
-                        </VBox>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </HBox>
                      </children>
                   </Group>
                </children>

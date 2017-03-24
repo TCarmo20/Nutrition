@@ -6,11 +6,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,15 +24,16 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableRow;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
 import carmo.tiago.services.NutPlanPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,9 +42,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
-import javafx.geometry.Orientation;
-import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -53,7 +50,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -135,9 +132,6 @@ public class HomePageController implements Initializable {
 	private JFXTreeTableView<NutPlanPOJO> myPlansTable;
 
 	@FXML
-	private JFXTextField filter;
-
-	@FXML
 	private JFXDrawer drawer;
 
 	@FXML
@@ -158,17 +152,192 @@ public class HomePageController implements Initializable {
 	@FXML
 	private Label errorLabelName;
 
-	private List<NutPlanPOJO> planList;
+	@FXML
+	private VBox vBoxPlans;
 
-	private Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+	@FXML
+	private JFXTextField caloriesPlan;
+
+	@FXML
+	private JFXTextField proteinPlan;
+
+	@FXML
+	private JFXTextField carbsPlan;
+
+	@FXML
+	private JFXTextField fatPlan;
+
+	@FXML
+	private JFXTextField filter;
+
+	@FXML
+	private JFXButton exportPlanBtn;
+
+	@FXML
+	private JFXButton deletePlanBtn;
+
+	@FXML
+	private Label deleteExportLabel;
+	
+	private JFXDialog dialog;
+
+	private HamburgerBasicCloseTransition burgerTask;
+
+	private static NutPlanPOJO rowData;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomePageController.class);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		drawer.open();
 		myPlansGroup.setOpacity(0);
 		updateUserGroup.setOpacity(0);
+		try {
+			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
+			drawer.setSidePane(anchor);
+			VBox vbox = (VBox) anchor.getChildren().get(0);
+			for (Node node : vbox.getChildren()) {
+				if (node.getAccessibleText() != null) {
+					node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+						switch (node.getAccessibleText()) {
+						case "Create Plan":
+							fadeMessages();
+							processCreatePlan();
+							break;
+						case "My Plans":
+							fadeMessages();
+							processMyPlans();
+							break;
+						case "Update Details":
+							fadeMessages();
+							processUpdateUserScreen();
+							break;
+						case "Logout":
+							fadeMessages();
+							processLogout();
+							break;
+						}
+					});
+				}
+			}
+			burgerTask = new HamburgerBasicCloseTransition(hamburger);
+			burgerTask.setRate(-1);
+			hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+				burgerTask.setRate(burgerTask.getRate() * -1);
+				burgerTask.play();
+				if (drawer.isShown()) {
+					drawer.close();
+				} else {
+					drawer.open();
+					dialog.close();
+				}
+			});
+			loadDialog();
+		} catch (IOException e) {
+			LOGGER.error("Error initializing Home Page's drawer: " + e);
+		}
+		LOGGER.info("Home Page initialized");
+	}
+
+	private void loadDialog() {
+		JFXDialogLayout content = new JFXDialogLayout();
+		dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+		content.setHeading(new Text("Welcome to the Nutrition app"));
+		content.setBody(new Text(
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lorem risus, aliquam quis vehicula vitae,"
+						+ "\nrutrum non elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer commodo sodales purus,"
+						+ "\nnec dignissim odio laoreet eu. Ut viverra lorem vitae mauris rutrum, ac elementum mauris dapibus."
+						+ "\nFusce ut sollicitudin justo. Nunc ac posuere erat. Cras eget lorem elit. Aenean ultrices molestie"
+						+ "\nrisus ut consequat. Aliquam ultricies magna vitae quam posuere pellentesque.\n\nMorbi scelerisque pretium maximus."
+						+ "\nNunc maximus urna in rhoncus porttitor. Sed vestibulum mollis vestibulum. Suspendisse placerat blandit"
+						+ "\nmauris sed pellentesque. Nulla tempor augue consectetur, aliquet ipsum vitae, pharetra ligula."
+						+ "\nVivamus commodo elementum scelerisque. Vivamus ac leo sed diam molestie aliquet quis id erat."
+						+ "\nInteger hendrerit, felis sit amet efficitur iaculis, metus nisl interdum risus, in suscipit massa odio vitae enim."
+						+ "\nMaecenas at odio vulputate, ullamcorper eros nec, ultrices diam. Aliquam at vehicula orci."
+						+ "\nVestibulum rhoncus consequat velit eget dapibus."));
+		JFXButton close = new JFXButton("OK");
+		close.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				dialog.close();
+			}
+		});
+		content.setActions(close);
+		dialog.show();
+	}
+
+	private void processMyPlans() {
+		drawer.close();
+		burgerTask.setRate(-1);
+		burgerTask.play();
+		myPlansTable.getColumns().clear();
+		updateTable();
+		myPlansGroup.setOpacity(1);
+		updateUserGroup.setOpacity(0);
+		myPlansGroup.toFront();
+		updateUserGroup.toBack();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void updateTable() {
+		List<NutPlanPOJO> planList;
+		try {
+			planList = UserServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
+			JFXTreeTableColumn<NutPlanPOJO, String> nameCol = new JFXTreeTableColumn<>("Name");
+			nameCol.setCellValueFactory(
+					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(
+								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
+							return new SimpleStringProperty(param.getValue().getValue().getName());
+						}
+					});
+			nameCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(2));
+			JFXTreeTableColumn<NutPlanPOJO, String> objectiveCol = new JFXTreeTableColumn<>("Objective");
+			objectiveCol.setCellValueFactory(
+					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
+						@Override
+						public ObservableValue<String> call(
+								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
+							return new SimpleStringProperty(param.getValue().getValue().getObjective());
+						}
+					});
+			objectiveCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(2));
+			ObservableList<NutPlanPOJO> plans = FXCollections.observableArrayList(planList);
+			TreeItem<NutPlanPOJO> root = new RecursiveTreeItem<NutPlanPOJO>(plans, RecursiveTreeObject::getChildren);
+			myPlansTable.setRoot(root);
+			myPlansTable.setShowRoot(false);
+			myPlansTable.getColumns().setAll(nameCol, objectiveCol);
+			myPlansTable.setRowFactory(tv -> {
+				JFXTreeTableRow<NutPlanPOJO> row = new JFXTreeTableRow<>();
+				row.setOnMouseClicked(event -> {
+					fadeMessages();
+					rowData = row.getItem();
+					if (rowData != null) {
+						caloriesPlan.setText(String.valueOf(rowData.getCalories()));
+						proteinPlan.setText(String.valueOf(rowData.getProtein()));
+						carbsPlan.setText(String.valueOf(rowData.getCarbs()));
+						fatPlan.setText(String.valueOf(rowData.getFat()));
+					}
+				});
+				return row;
+			});
+			filter.textProperty().addListener((o, oldVal, newVal) -> {
+				myPlansTable.setPredicate(plan -> plan.getValue().getName().contains(newVal)
+						|| plan.getValue().getObjective().contains(newVal));
+			});
+		} catch (Exception e) {
+			LOGGER.error("Error building tableview: " + e);
+		}
+	}
+
+	private void processUpdateUserScreen() {
+		drawer.close();
+		burgerTask.setRate(-1);
+		burgerTask.play();
+		myPlansGroup.setOpacity(0);
+		updateUserGroup.setOpacity(1);
+		myPlansGroup.toBack();
+		updateUserGroup.toFront();
 		updateName.setText(LoginApp.getInstance().getLoggedUser().getName());
 		updateEmail.setText(LoginApp.getInstance().getLoggedUser().getEmail());
 		updateHeight.setText(LoginApp.getInstance().getLoggedUser().getHeight());
@@ -181,143 +350,6 @@ public class HomePageController implements Initializable {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate localDate = LocalDate.parse(LoginApp.getInstance().getLoggedUser().getDob(), formatter);
 		updateAge.setValue(localDate);
-		try {
-			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
-			drawer.setSidePane(anchor);
-			VBox vbox = (VBox) anchor.getChildren().get(0);
-			for (Node node : vbox.getChildren()) {
-				if (node.getAccessibleText() != null) {
-					node.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-						switch (node.getAccessibleText()) {
-						case "Create Plan":
-							processCreatePlan();
-							break;
-						case "My Plans":
-							processMyPlans();
-							break;
-						case "Update Details":
-							processUpdateUserScreen();
-							break;
-						case "Logout":
-							processLogout();
-							break;
-						}
-					});
-				}
-			}
-			hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
-				if (drawer.isShown()) {
-					drawer.close();
-				} else {
-					drawer.open();
-				}
-			});
-			filter.textProperty().addListener(new ChangeListener<String>() {
-				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-					myPlansTable.setPredicate(new Predicate<TreeItem<NutPlanPOJO>>() {
-						@Override
-						public boolean test(TreeItem<NutPlanPOJO> plan) {
-							boolean flag = plan.getValue().getName().contains(newValue)
-									|| plan.getValue().getObjective().contains(newValue);
-							return flag;
-						}
-					});
-				}
-			});
-		} catch (IOException e) {
-			LOGGER.error("Error initializing Home Page's drawer: " + e);
-		}
-		LOGGER.info("Home Page initialized");
-	}
-
-	@SuppressWarnings("unchecked")
-	private void processMyPlans() {
-		drawer.close();
-		myPlansTable.getColumns().clear();
-		try {
-			planList = UserServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
-			ObservableList<NutPlanPOJO> plans = FXCollections.observableArrayList(planList);
-			JFXTreeTableColumn<NutPlanPOJO, String> nameCol = new JFXTreeTableColumn<>("Name");
-			nameCol.setCellValueFactory(
-					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
-						@Override
-						public ObservableValue<String> call(
-								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
-							return new SimpleStringProperty(param.getValue().getValue().getName());
-						}
-					});
-			nameCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-			JFXTreeTableColumn<NutPlanPOJO, String> objectiveCol = new JFXTreeTableColumn<>("Objective");
-			objectiveCol.setCellValueFactory(
-					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
-						@Override
-						public ObservableValue<String> call(
-								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
-							return new SimpleStringProperty(param.getValue().getValue().getObjective());
-						}
-					});
-			objectiveCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-			JFXTreeTableColumn<NutPlanPOJO, String> caloriesCol = new JFXTreeTableColumn<>("Calories");
-			caloriesCol.setCellValueFactory(
-					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
-						@Override
-						public ObservableValue<String> call(
-								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
-							return new SimpleStringProperty(Double.toString(param.getValue().getValue().getCalories()));
-						}
-					});
-			caloriesCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-			JFXTreeTableColumn<NutPlanPOJO, String> proteinCol = new JFXTreeTableColumn<>("Protein");
-			proteinCol.setCellValueFactory(
-					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
-						@Override
-						public ObservableValue<String> call(
-								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
-							return new SimpleStringProperty(Double.toString(param.getValue().getValue().getProtein()));
-						}
-					});
-			proteinCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-			JFXTreeTableColumn<NutPlanPOJO, String> carbsCol = new JFXTreeTableColumn<>("Carbs");
-			carbsCol.setCellValueFactory(
-					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
-						@Override
-						public ObservableValue<String> call(
-								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
-							return new SimpleStringProperty(Double.toString(param.getValue().getValue().getCarbs()));
-						}
-					});
-			carbsCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-			JFXTreeTableColumn<NutPlanPOJO, String> fatCol = new JFXTreeTableColumn<>("Fat");
-			fatCol.setCellValueFactory(
-					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
-						@Override
-						public ObservableValue<String> call(
-								TreeTableColumn.CellDataFeatures<NutPlanPOJO, String> param) {
-							return new SimpleStringProperty(Double.toString(param.getValue().getValue().getFat()));
-						}
-					});
-			fatCol.prefWidthProperty().bind(myPlansTable.widthProperty().divide(6));
-			final TreeItem<NutPlanPOJO> root = new RecursiveTreeItem<NutPlanPOJO>(plans,
-					RecursiveTreeObject::getChildren);
-			myPlansTable.getColumns().setAll(nameCol, objectiveCol, caloriesCol, proteinCol, carbsCol, fatCol);
-			myPlansTable.setRoot(root);
-			myPlansTable.setShowRoot(false);
-		} catch (Exception e) {
-			LOGGER.error("Error building tableview: " + e);
-		}
-		myPlansGroup.setOpacity(1);
-		updateUserGroup.setOpacity(0);
-		myPlansGroup.toFront();
-		updateUserGroup.toBack();
-	}
-
-	private void processUpdateUserScreen() {
-		drawer.close();
-		myPlansGroup.setOpacity(0);
-		updateUserGroup.setOpacity(1);
-		myPlansGroup.toBack();
-		updateUserGroup.toFront();
 		LOGGER.info("Changed to user update screen");
 	}
 
@@ -358,17 +390,12 @@ public class HomePageController implements Initializable {
 		LoginApp.getInstance().gotoLogin();
 	}
 
-	public void processCreatePlan() {
+	private void processCreatePlan() {
 		drawer.close();
+		burgerTask.setRate(-1);
+		burgerTask.play();
 		JFXDialogLayout content = new JFXDialogLayout();
 		JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
-		FlowPane flow = new FlowPane(Orientation.VERTICAL);
-		flow.setRowValignment(VPos.CENTER);
-		flow.setColumnHalignment(HPos.CENTER);
-		flow.setPrefWrapLength(200);
-		flow.setVgap(20);
-		flow.setHgap(10);
-		flow.setPrefWidth(200);
 		content.setHeading(new Text("Choose your plan details: \n\n"));
 		errorLabelOb = new Label();
 		errorLabelOb.setPrefWidth(150);
@@ -391,26 +418,31 @@ public class HomePageController implements Initializable {
 					checkMessagesPlan();
 					UserServices.createPlan(nameField.getText(), objectives.getSelectionModel().getSelectedItem());
 					dialog.close();
+					processMyPlans();
+				} catch (Exception e) {
 					JFXDialogLayout content2 = new JFXDialogLayout();
-					content2.setHeading(new Text("Plan created!"));
+					content2.setHeading(new Text("Error creating plan!"));
 					JFXDialog dialog2 = new JFXDialog(stackPane, content2, JFXDialog.DialogTransition.CENTER);
 					JFXButton create2 = new JFXButton("OK");
 					create2.setOnAction(new EventHandler<ActionEvent>() {
 						@Override
 						public void handle(ActionEvent event2) {
 							dialog2.close();
-							processMyPlans();
 						}
 					});
 					content2.setActions(create2);
 					dialog2.show();
-				} catch (Exception e) {
 					LOGGER.error("Error creating plan: " + e);
 				}
 			}
 		});
-		flow.getChildren().addAll(nameField, errorLabelName, objectives, errorLabelOb, create);
-		content.setBody(flow);
+		VBox mainVbox = new VBox(20);
+		HBox nameHbox = new HBox(10);
+		nameHbox.getChildren().addAll(nameField, errorLabelName);
+		HBox obHbox = new HBox(10);
+		obHbox.getChildren().addAll(objectives, errorLabelOb);
+		mainVbox.getChildren().addAll(nameHbox, obHbox);
+		content.setBody(mainVbox);
 		content.setActions(create);
 		dialog.show();
 	}
@@ -429,6 +461,7 @@ public class HomePageController implements Initializable {
 		updateHeightWeightLabel.setText("");
 		updateSexActivityLevel.setText("");
 		updateAgeLabel.setText("");
+		deleteExportLabel.setText("");
 		LOGGER.info("Messages cleared");
 	}
 
@@ -460,6 +493,7 @@ public class HomePageController implements Initializable {
 
 	private void checkMessages() throws Exception {
 		Calendar date = new GregorianCalendar();
+		Pattern emailRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 		boolean flag = false;
 		if (updateEmail.getText().equals("")) {
 			updateEmailLabel.setText("Email cannot be empty");
@@ -542,6 +576,137 @@ public class HomePageController implements Initializable {
 		ft.setFromValue(0.0);
 		ft.setToValue(1);
 		ft.play();
+	}
+
+	@FXML
+	private void processExportPlan(ActionEvent event) {
+		fadeMessages();
+		if (rowData != null) {
+			JFXDialogLayout content = new JFXDialogLayout();
+			JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+			content.setHeading(new Text("Plan name: \n\n"));
+			JFXTextField name = new JFXTextField();
+			name.setPromptText("Name");
+			name.setPrefWidth(150);
+			Label errorLabel = new Label();
+			errorLabel.setPrefWidth(150);
+			JFXButton export = new JFXButton("EXPORT");
+			export.setButtonType(ButtonType.RAISED);
+			export.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					if (!name.getText().equals("")) {
+						try {
+							CreatePDF.createPDF(rowData, name.getText());
+							dialog.close();
+							JFXDialogLayout content2 = new JFXDialogLayout();
+							JFXDialog dialog2 = new JFXDialog(stackPane, content2, JFXDialog.DialogTransition.CENTER);
+							content2.setHeading(new Text("Plan successfully exported"));
+							JFXButton exportOk = new JFXButton("OK");
+							exportOk.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent event) {
+									dialog2.close();
+								}
+							});
+							content2.setActions(exportOk);
+							dialog2.show();
+						} catch (Exception e) {
+							LOGGER.error("Error exporting to pdf: " + e);
+							JFXDialogLayout content2 = new JFXDialogLayout();
+							JFXDialog dialog2 = new JFXDialog(stackPane, content2, JFXDialog.DialogTransition.CENTER);
+							content2.setHeading(new Text("Problem exporting plan"));
+							JFXButton exportOk = new JFXButton("OK");
+							exportOk.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent event) {
+									dialog2.close();
+								}
+							});
+							content2.setActions(exportOk);
+							dialog2.show();
+						}
+					} else {
+						errorLabel.setTextFill(Color.RED);
+						DropShadow ds = new DropShadow();
+						ds.setOffsetY(3.0f);
+						errorLabel.setEffect(ds);
+						errorLabel.setText("Please enter a name");
+						animateMessage(errorLabel);
+					}
+				}
+			});
+			HBox hbox = new HBox(10);
+			hbox.getChildren().addAll(name, errorLabel);
+			content.setBody(hbox);
+			content.setActions(export);
+			dialog.show();
+		} else {
+			deleteExportLabel.setText("Please select a plan first");
+			animateMessage(updateAgeLabel);
+		}
+	}
+
+	@FXML
+	private void processDeletePlan(ActionEvent event) {
+		fadeMessages();
+		if (rowData != null) {
+			JFXDialogLayout content1 = new JFXDialogLayout();
+			content1.setHeading(new Text("Are you sure?"));
+			JFXDialog dialog1 = new JFXDialog(stackPane, content1, JFXDialog.DialogTransition.CENTER);
+			JFXButton delete = new JFXButton("YES");
+			delete.setButtonType(ButtonType.RAISED);
+			delete.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					try {
+						dialog1.close();
+						UserServices.deletePlan(rowData);
+						updateTable();
+						rowData = null;
+						caloriesPlan.setText("");
+						proteinPlan.setText("");
+						carbsPlan.setText("");
+						fatPlan.setText("");
+					} catch (Exception e1) {
+						JFXDialogLayout content3 = new JFXDialogLayout();
+						content3.setHeading(new Text("Error deleting plan!"));
+						JFXDialog dialog3 = new JFXDialog(stackPane, content3, JFXDialog.DialogTransition.CENTER);
+						JFXButton create3 = new JFXButton("OK");
+						create3.setButtonType(ButtonType.RAISED);
+						create3.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event) {
+								try {
+									dialog3.close();
+								} catch (Exception e) {
+									LOGGER.error("Error closing dialog: " + e);
+								}
+							}
+						});
+						content3.setActions(create3);
+						dialog3.toFront();
+						dialog3.show();
+					}
+				}
+			});
+			JFXButton noDelete = new JFXButton("NO");
+			noDelete.setButtonType(ButtonType.RAISED);
+			noDelete.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					dialog1.close();
+				}
+			});
+			HBox hbox = new HBox(10);
+			hbox.getChildren().addAll(delete, noDelete);
+			content1.setActions(hbox);
+			dialog1.toFront();
+			dialog1.show();
+		} else {
+			deleteExportLabel.setText("Please select a plan first");
+			animateMessage(updateAgeLabel);
+		}
 	}
 
 }

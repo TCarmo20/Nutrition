@@ -10,7 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+/**
+ *
+ * @author Tiago Carmo
+ *
+ */
 @Entity
 @Table(name = "PLAN")
 public class NutPlanEntity implements Serializable {
@@ -19,7 +23,7 @@ public class NutPlanEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long planId;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String name;
 	@Column
 	private double calories;

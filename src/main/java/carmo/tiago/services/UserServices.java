@@ -212,4 +212,8 @@ public class UserServices {
 		return userPlans;
 	}
 
+	public static void deletePlan(NutPlanPOJO rowData) throws Exception {
+		NutPlanFacade.deletePlan(rowData);
+	}
+
 }
