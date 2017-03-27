@@ -3,12 +3,9 @@ package carmo.tiago.ui;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.restfb.types.User;
-
 import carmo.tiago.services.UserPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
@@ -89,13 +86,6 @@ public class LoginApp extends Application {
 		LOGGER.info("Logging in with FB");
 	}
 
-	public void userLogout() {
-		setLoggedUser(null);
-		LoginController.setUser(null);
-		gotoLogin();
-		LOGGER.info("Logged out");
-	}
-
 	public void goToAddUser() {
 		try {
 			replaceSceneContent("/AddUser.fxml");
@@ -144,10 +134,10 @@ public class LoginApp extends Application {
 		}
 	}
 
-	private Parent replaceSceneContent(String fxml) throws Exception {
+	private void replaceSceneContent(String fxml) throws Exception {
 		Parent page = FXMLLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
 		Scene scene = stage.getScene();
-		if (scene == null) {
+		if (scene == null) {			
 			FadeTransition ft = new FadeTransition(new Duration(3000), page);
 			ft.setFromValue(0.0);
 			ft.setToValue(1);
@@ -162,7 +152,6 @@ public class LoginApp extends Application {
 			ft.play();
 			stage.getScene().setRoot(page);
 		}
-		return page;
 	}
 
 	public void setLoggedUser(UserPOJO loggedUser) {

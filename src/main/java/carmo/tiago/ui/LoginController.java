@@ -40,7 +40,7 @@ import javafx.util.Duration;
  * @author Tiago Carmo
  *
  */
-public class LoginController implements Initializable {
+public class LoginController implements Initializable{
 
 	@FXML
 	private BorderPane Login;
@@ -105,8 +105,6 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		userIdLogin.setPromptText("Email");
-		passwordLogin.setPromptText("Password");
 		LOGGER.info("Login controller initialized");
 	}
 
