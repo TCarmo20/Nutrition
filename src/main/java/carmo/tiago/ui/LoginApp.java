@@ -120,6 +120,30 @@ public class LoginApp extends Application {
 		}
 	}
 
+	public void gotoMyPlans() {
+		try {
+			replaceSceneContent("/MyPlans.fxml");
+		} catch (Exception ex) {
+			LOGGER.error("Error changing scene: " + ex);
+		}
+	}
+
+	public void gotoUpdateUserScreen() {
+		try {
+			replaceSceneContent("/UpdateDetails.fxml");
+		} catch (Exception ex) {
+			LOGGER.error("Error changing scene: " + ex);
+		}
+	}
+	
+	public void gotoTipsScreen() {
+		try {
+			replaceSceneContent("/NutritionTips.fxml");
+		} catch (Exception ex) {
+			LOGGER.error("Error changing scene: " + ex);
+		}
+	}
+
 	private Parent replaceSceneContent(String fxml) throws Exception {
 		Parent page = FXMLLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
 		Scene scene = stage.getScene();

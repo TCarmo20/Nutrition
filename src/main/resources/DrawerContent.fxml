@@ -9,27 +9,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="anchorPaneBar" fx:id="anchorPane" prefHeight="600.0" prefWidth="200.0" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
+<AnchorPane id="anchorPaneBar" fx:id="anchorPane" prefHeight="600.0" prefWidth="200.0" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
 	<children>
 		<VBox fx:id="vBoxMenuBar" alignment="TOP_CENTER" layoutX="16.0" prefWidth="200.0" stylesheets="@demo.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
 				<ImageView fx:id="imageViewMenuBar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-				<JFXButton id="createplanbtn" fx:id="CreatePlanMenuBar" accessibleText="Create Plan" buttonType="RAISED" contentDisplay="CENTER" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="CREATE PLAN">
+				<JFXButton id="myplansbtn" fx:id="MyPlansMenuBar" accessibleText="My Plans" buttonType="RAISED" contentDisplay="CENTER" onAction="#processMyPlans" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="MY PLANS">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</JFXButton>
-				<JFXButton id="myplansbtn" fx:id="MyPlansMenuBar" accessibleText="My Plans" buttonType="RAISED" contentDisplay="CENTER" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="MY PLANS">
+				<JFXButton id="updatedetailsbtn" fx:id="UpdateDetailsMenuBar" accessibleText="Update Details" buttonType="RAISED" contentDisplay="CENTER" onAction="#processUpdateDetails" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="UPDATE DETAILS">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>
 				</JFXButton>
-				<JFXButton id="updatedetailsbtn" fx:id="UpdateDetailsMenuBar" accessibleText="Update Details" buttonType="RAISED" contentDisplay="CENTER" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="UPDATE DETAILS">
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-				</JFXButton>
-				<JFXButton id="logoutbtn" fx:id="LogoutManuBar" accessibleText="Logout" buttonType="RAISED" contentDisplay="CENTER" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="LOGOUT">
+            <JFXButton id="nutritiontipsbtn" fx:id="nutritionTipsBtn" buttonType="RAISED" contentDisplay="CENTER" onAction="#processNutritionTips" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="NUTRITION TIPS">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+				<JFXButton id="logoutbtn" fx:id="LogoutManuBar" accessibleText="Logout" buttonType="RAISED" contentDisplay="CENTER" onAction="#processLogout" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="LOGOUT">
 					<cursor>
 						<Cursor fx:constant="HAND" />
 					</cursor>

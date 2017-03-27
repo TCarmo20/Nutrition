@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.jfoenix.controls.JFXButton;
 import com.restfb.types.User;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -25,30 +26,36 @@ import javafx.scene.layout.VBox;
 public class DrawerContentController implements Initializable {
 
 	@FXML
-	private AnchorPane anchorPane;
+    private AnchorPane anchorPane;
 
-	@FXML
-	private VBox vBoxMenuBar;
+    @FXML
+    private VBox vBoxMenuBar;
 
-	@FXML
-	private ImageView imageViewMenuBar;
+    @FXML
+    private ImageView imageViewMenuBar;
 
-	@FXML
-	private JFXButton CreatePlanMenuBar;
+    @FXML
+    private JFXButton MyPlansMenuBar;
 
-	@FXML
-	private JFXButton MyPlansMenuBar;
+    @FXML
+    private JFXButton UpdateDetailsMenuBar;
 
-	@FXML
-	private JFXButton UpdateDetailsMenuBar;
+    @FXML
+    private JFXButton nutritionTipsBtn;
 
-	@FXML
-	private JFXButton LogoutManuBar;
+    @FXML
+    private JFXButton LogoutManuBar;
 
-	@FXML
-	private Label nameLabel;
-	
+    @FXML 
+    public Label nameLabel;
+    
+    private static DrawerContentController instance;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(DrawerContentController.class);
+	
+	public DrawerContentController() {
+		instance = this;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -74,4 +81,35 @@ public class DrawerContentController implements Initializable {
 		imageViewMenuBar = imageViewMenuBar1;
 	}
 
+	@FXML
+	void processLogout(ActionEvent event) {
+		LoginApp.getInstance().setLoggedUser(null);
+		LoginController.setUser(null);
+		LoginApp.getInstance().gotoLogin();
+	}
+
+	@FXML
+	void processMyPlans(ActionEvent event) {
+		LoginApp.getInstance().gotoMyPlans();
+	}
+
+	@FXML
+	void processUpdateDetails(ActionEvent event) {
+		LoginApp.getInstance().gotoUpdateUserScreen();
+	}
+
+	@FXML
+	void processCreatePlan(ActionEvent event) {
+		LoginApp.getInstance().gotoUpdateUserScreen();
+	}
+	
+	@FXML
+    void processNutritionTips(ActionEvent event) {
+		LoginApp.getInstance().gotoTipsScreen();
+    }
+
+	public static DrawerContentController getInstance() {
+		return instance;
+	}
+	
 }

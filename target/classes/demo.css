@@ -145,6 +145,8 @@
 .tree-table-view{
     -fx-tree-table-color: rgba(0.0, 150.0, 0.0, 0.8);
     -fx-tree-table-rippler-color : rgba(255.0, 0.0, 0.0, 0.9);
+    -fx-border-width: 0;
+    -fx-border-style: none;
 }
 .tree-table-view:focused .tree-table-row-cell:selected {
     -fx-background-color: -fx-tree-table-color  ;
