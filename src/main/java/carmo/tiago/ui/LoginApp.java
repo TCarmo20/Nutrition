@@ -26,17 +26,17 @@ import javafx.util.Duration;
 public class LoginApp extends Application {
 
 	private static final String PERSISTENCE_UNIT_NAME = "nutrition";
-	
+
 	private EntityManagerFactory emf;
-	
+
 	private EntityManager em;
-	
+
 	private Stage stage;
-	
+
 	private UserPOJO loggedUser;
-	
+
 	private static LoginApp instance;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginApp.class);
 
 	@Override
@@ -131,10 +131,26 @@ public class LoginApp extends Application {
 			LOGGER.error("Error changing scene: " + ex);
 		}
 	}
-	
-	public void gotoTipsScreen() {
+
+	public void gotoProteinTips() {
 		try {
-			replaceSceneContent("/NutritionTips.fxml");
+			replaceSceneContent("/ProteinTips.fxml");
+		} catch (Exception ex) {
+			LOGGER.error("Error changing scene: " + ex);
+		}
+	}
+
+	public void gotoCarbsTips() {
+		try {
+			replaceSceneContent("/CarbsTips.fxml");
+		} catch (Exception ex) {
+			LOGGER.error("Error changing scene: " + ex);
+		}
+	}
+
+	public void gotoFatTips() {
+		try {
+			replaceSceneContent("/FatTips.fxml");
 		} catch (Exception ex) {
 			LOGGER.error("Error changing scene: " + ex);
 		}
@@ -143,7 +159,7 @@ public class LoginApp extends Application {
 	private void replaceSceneContent(String fxml) throws Exception {
 		Parent page = FXMLLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
 		Scene scene = stage.getScene();
-		if (scene == null) {			
+		if (scene == null) {
 			FadeTransition ft = new FadeTransition(new Duration(3000), page);
 			ft.setFromValue(0.0);
 			ft.setToValue(1);

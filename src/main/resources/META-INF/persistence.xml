@@ -7,6 +7,9 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>carmo.tiago.persistence.UserEntity</class>
 		<class>carmo.tiago.persistence.NutPlanEntity</class>
+		<class>carmo.tiago.persistence.ProteinEntity</class>
+		<class>carmo.tiago.persistence.CarbsEntity</class>
+		<class>carmo.tiago.persistence.FatEntity</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
 	   		<property name="javax.persistence.jdbc.url" value="jdbc:derby:nutritionDB" />

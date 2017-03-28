@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.CarbsTipsController">
+   <children>
+      <AnchorPane fx:id="HomePage" stylesheets="@demo.css">
+         <children>
+            <StackPane fx:id="stackPane" layoutX="200.0" layoutY="69.0" prefHeight="600.0" prefWidth="770.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" overLayVisible="false" prefHeight="600.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <JFXHamburger fx:id="hamburger" alignment="TOP_RIGHT" layoutX="752.0" prefHeight="42.0" prefWidth="49.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets right="10.0" top="10.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXHamburger>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

@@ -32,35 +32,27 @@ import javafx.scene.text.Text;
 public class HomePageController implements Initializable {
 
 	@FXML
-    private AnchorPane HomePage;
+	private AnchorPane HomePage;
 
-    @FXML
-    private StackPane stackPane;
+	@FXML
+	private StackPane stackPane;
 
-    @FXML
-    private JFXDrawer drawer;
+	@FXML
+	private JFXDrawer drawer;
 
-    @FXML
-    private JFXHamburger hamburger;
+	@FXML
+	private JFXHamburger hamburger;
 
 	private JFXDialog dialog;
 
 	private HamburgerBasicCloseTransition burgerTask;
-	
+
 	private static HomePageController instance;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomePageController.class);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		initializeHomePage();
-	}
-	
-	public HomePageController(){
-		instance = this;
-	}
-
-	public void initializeHomePage() {
 		try {
 			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
 			drawer.setSidePane(anchor);
@@ -81,7 +73,10 @@ public class HomePageController implements Initializable {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}
 		LOGGER.info("Home Page initialized");
+	}
 
+	public HomePageController() {
+		instance = this;
 	}
 
 	private void loadDialog() {
@@ -110,7 +105,7 @@ public class HomePageController implements Initializable {
 		content.setActions(close);
 		dialog.show();
 	}
-	
+
 	public static HomePageController getInstance() {
 		return instance;
 	}
