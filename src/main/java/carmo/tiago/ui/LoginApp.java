@@ -26,11 +26,17 @@ import javafx.util.Duration;
 public class LoginApp extends Application {
 
 	private static final String PERSISTENCE_UNIT_NAME = "nutrition";
+	
 	private EntityManagerFactory emf;
+	
 	private EntityManager em;
+	
 	private Stage stage;
+	
 	private UserPOJO loggedUser;
+	
 	private static LoginApp instance;
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginApp.class);
 
 	@Override

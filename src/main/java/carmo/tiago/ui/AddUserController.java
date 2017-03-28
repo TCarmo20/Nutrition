@@ -101,9 +101,10 @@ public class AddUserController implements Initializable {
 		height.setPromptText("Height (cm)");
 		weight.setPromptText("Weight (kg)");
 		errorMessage.setOpacity(0);
-		sex.getItems().addAll("Male", "Female");
-		activityLevel.getItems().addAll("Sedentary", "Light activity", "Moderate activity", "Very active",
-				"Extremely Active");
+		sex.getItems().addAll(Sex.MALE.getSexString(), Sex.FEMALE.getSexString());
+		activityLevel.getItems().addAll(ActivityLevel.SEDENTARY.getActivityString(),
+				ActivityLevel.LIGHT.getActivityString(), ActivityLevel.MODERATE.getActivityString(),
+				ActivityLevel.VERY.getActivityString(), ActivityLevel.EXTREMELY.getActivityString());
 		sex.setPromptText("Sex");
 		activityLevel.setPromptText("Activity level");
 		agePicker.setPromptText("Date of birth (YYYY-MM-dd)");

@@ -41,70 +41,70 @@ import javafx.util.Duration;
 public class UpdateDetailsController implements Initializable {
 
 	@FXML
-    private AnchorPane HomePage;
+	private AnchorPane HomePage;
 
-    @FXML
-    private StackPane stackPane;
+	@FXML
+	private StackPane stackPane;
 
-    @FXML
-    private JFXTextField updateName;
+	@FXML
+	private JFXTextField updateName;
 
-    @FXML
-    private Label updateNameLabel;
+	@FXML
+	private Label updateNameLabel;
 
-    @FXML
-    private JFXTextField updateEmail;
+	@FXML
+	private JFXTextField updateEmail;
 
-    @FXML
-    private Label updateEmailLabel;
+	@FXML
+	private Label updateEmailLabel;
 
-    @FXML
-    private JFXPasswordField updatePassword;
+	@FXML
+	private JFXPasswordField updatePassword;
 
-    @FXML
-    private Label updatePasswordLabel;
+	@FXML
+	private Label updatePasswordLabel;
 
-    @FXML
-    private JFXPasswordField updatePassword2;
+	@FXML
+	private JFXPasswordField updatePassword2;
 
-    @FXML
-    private Label updatePassword2Label;
+	@FXML
+	private Label updatePassword2Label;
 
-    @FXML
-    private JFXDatePicker updateAge;
+	@FXML
+	private JFXDatePicker updateAge;
 
-    @FXML
-    private Label updateAgeLabel;
+	@FXML
+	private Label updateAgeLabel;
 
-    @FXML
-    private JFXTextField updateWeight;
+	@FXML
+	private JFXTextField updateWeight;
 
-    @FXML
-    private JFXTextField updateHeight;
+	@FXML
+	private JFXTextField updateHeight;
 
-    @FXML
-    private Label updateHeightWeightLabel;
+	@FXML
+	private Label updateHeightWeightLabel;
 
-    @FXML
-    private JFXComboBox<String> updateSex;
+	@FXML
+	private JFXComboBox<String> updateSex;
 
-    @FXML
-    private JFXComboBox<String> updateActivity;
+	@FXML
+	private JFXComboBox<String> updateActivity;
 
-    @FXML
-    private Label updateSexActivityLevel;
+	@FXML
+	private Label updateSexActivityLevel;
 
-    @FXML
-    private JFXButton updateUserBtn;
+	@FXML
+	private JFXButton updateUserBtn;
 
-    @FXML
-    private JFXDrawer drawer;
+	@FXML
+	private JFXDrawer drawer;
 
-    @FXML
-    private JFXHamburger hamburger;
-    
+	@FXML
+	private JFXHamburger hamburger;
+
 	private HamburgerBasicCloseTransition burgerTask;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(UpdateDetailsController.class);
 
 	@Override
@@ -114,9 +114,10 @@ public class UpdateDetailsController implements Initializable {
 		updateEmail.setText(LoginApp.getInstance().getLoggedUser().getEmail());
 		updateHeight.setText(LoginApp.getInstance().getLoggedUser().getHeight());
 		updateWeight.setText(LoginApp.getInstance().getLoggedUser().getWeight());
-		updateSex.getItems().addAll("Male", "Female");
-		updateActivity.getItems().addAll("Sedentary", "Light activity", "Moderate activity", "Very active",
-				"Extremely Active");
+		updateSex.getItems().addAll(Sex.MALE.getSexString(), Sex.FEMALE.getSexString());
+		updateActivity.getItems().addAll(ActivityLevel.SEDENTARY.getActivityString(),
+				ActivityLevel.LIGHT.getActivityString(), ActivityLevel.MODERATE.getActivityString(),
+				ActivityLevel.VERY.getActivityString(), ActivityLevel.EXTREMELY.getActivityString());
 		updateSex.setValue(LoginApp.getInstance().getLoggedUser().getSex());
 		updateActivity.setValue(LoginApp.getInstance().getLoggedUser().getActivityLevel());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -124,7 +125,7 @@ public class UpdateDetailsController implements Initializable {
 		updateAge.setValue(localDate);
 		LOGGER.info("Changed to user update screen");
 	}
-	
+
 	public void initializeHomePage() {
 		try {
 			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));

@@ -24,7 +24,7 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
 import carmo.tiago.services.NutPlanPOJO;
-import carmo.tiago.services.UserServices;
+import carmo.tiago.services.PlanServices;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -160,7 +160,7 @@ public class MyPlansController implements Initializable {
 				public void handle(ActionEvent event) {
 					try {
 						dialog1.close();
-						UserServices.deletePlan(rowData);
+						PlanServices.deletePlan(rowData);
 						updateTable();
 						rowData = null;
 						caloriesPlan.setText("");
@@ -216,7 +216,8 @@ public class MyPlansController implements Initializable {
 		errorLabelOb = new Label();
 		errorLabelOb.setPrefWidth(150);
 		objectives = new JFXComboBox<String>();
-		objectives.getItems().addAll("Hypertrophy", "Maintenance", "Fat Loss");
+		objectives.getItems().addAll(Objectives.HYPERTROPHY.getObjectiveLetter(),
+				Objectives.MAINTENANCE.getObjectiveLetter(), Objectives.FAT_LOSS.getObjectiveLetter());
 		objectives.setPromptText("Objective");
 		objectives.setPrefWidth(150);
 		errorLabelName = new Label();
@@ -232,7 +233,7 @@ public class MyPlansController implements Initializable {
 				fadeMessagesPlan();
 				try {
 					checkMessagesPlan();
-					UserServices.createPlan(nameField.getText(), objectives.getSelectionModel().getSelectedItem());
+					PlanServices.createPlan(nameField.getText(), objectives.getSelectionModel().getSelectedItem());
 					dialog.close();
 					updateTable();
 				} catch (Exception e) {
@@ -368,7 +369,7 @@ public class MyPlansController implements Initializable {
 	private void updateTable() {
 		List<NutPlanPOJO> planList;
 		try {
-			planList = UserServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
+			planList = PlanServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
 			JFXTreeTableColumn<NutPlanPOJO, String> nameCol = new JFXTreeTableColumn<>("Name");
 			nameCol.setCellValueFactory(
 					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {
