@@ -13,6 +13,8 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
+import carmo.tiago.services.FoodPOJO;
+import carmo.tiago.services.FoodServices;
 import carmo.tiago.services.ProteinPOJO;
 import carmo.tiago.services.ProteinServices;
 import javafx.beans.value.ChangeListener;
@@ -33,40 +35,37 @@ import javafx.scene.layout.VBox;
 public class ProteinTipsController implements Initializable {
 
 	@FXML
-	private AnchorPane HomePage;
+    private AnchorPane HomePage;
 
-	@FXML
-	private StackPane stackPane;
+    @FXML
+    private StackPane stackPane;
 
-	@FXML
-	private Group proteinGroup;
+    @FXML
+    private Group proteinGroup;
 
-	@FXML
-	private VBox vBoxPlans;
+    @FXML
+    private VBox vBoxProtein;
 
-	@FXML
-	private JFXListView<Label> listView;
+    @FXML
+    private JFXListView<Label> listView;
 
-	@FXML
-	private JFXTextField caloriesProtein;
+    @FXML
+    private JFXTextField caloriesProtein;
 
-	@FXML
-	private JFXTextField proteinProtein;
+    @FXML
+    private JFXTextField proteinProtein;
 
-	@FXML
-	private JFXTextField carbsProtein;
+    @FXML
+    private JFXTextField carbsProtein;
 
-	@FXML
-	private JFXTextField fatProtein;
+    @FXML
+    private JFXTextField fatProtein;
 
-	@FXML
-	private Label deleteExportLabel;
+    @FXML
+    private JFXDrawer drawer;
 
-	@FXML
-	private JFXDrawer drawer;
-
-	@FXML
-	private JFXHamburger hamburger;
+    @FXML
+    private JFXHamburger hamburger;
 
 	private HamburgerBasicCloseTransition burgerTask;
 
@@ -140,14 +139,13 @@ public class ProteinTipsController implements Initializable {
 			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
 				@Override
 				public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
-					ProteinPOJO protein = ProteinServices.getProteinByName(newValue.getText());
+					FoodPOJO protein = FoodServices.getFoodByName(newValue.getText());
 					proteinProtein.setText(protein.getProtein());
 					carbsProtein.setText(protein.getCarbs());
 					fatProtein.setText(protein.getFat());
 					caloriesProtein.setText(protein.getCalories());
 				}
 			});
-
 		} catch (IOException e) {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}

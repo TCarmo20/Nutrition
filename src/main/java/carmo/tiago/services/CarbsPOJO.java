@@ -1,5 +1,5 @@
 package carmo.tiago.services;
 
-public class CarbsPOJO {
+public class CarbsPOJO extends FoodPOJO{
 
 }

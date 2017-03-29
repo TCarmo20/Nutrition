@@ -23,7 +23,7 @@
                      <children>
                         <HBox id="hBoxPlans" alignment="TOP_CENTER" fillHeight="false" prefHeight="402.0" prefWidth="449.0" stylesheets="@demo.css">
                            <children>
-                              <VBox id="vBoxPlans" fx:id="vBoxPlans" alignment="CENTER" stylesheets="@demo.css">
+                              <VBox id="vBoxPlans" fx:id="vBoxProtein" alignment="CENTER" stylesheets="@demo.css">
                                  <children>
                                     <JFXListView id="listView" fx:id="listView" depthProperty="1" prefHeight="384.0" prefWidth="235.0" stylesheets="@demo.css">
                                        <VBox.margin>
