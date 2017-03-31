@@ -109,10 +109,10 @@ public class LoginApp extends Application {
 		return mealStart;
 	}
 
-	public void setMealStart(boolean mealStart) {
+	public void setMealStart(boolean mealStart, String name) {
 		if (mealStart) {
 			this.mealStart.set(true);
-			startMeal();
+			startMeal(name);
 		} else {
 			this.mealStart.set(false);
 			finishMeal();
@@ -149,6 +149,7 @@ public class LoginApp extends Application {
 		try {
 			replaceSceneContent("/HomePage.fxml");
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			LOGGER.error("Error changing scene: " + ex);
 		}
 	}
@@ -206,6 +207,7 @@ public class LoginApp extends Application {
 		try {
 			replaceSceneContent("/MealPrep.fxml");
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			LOGGER.error("Error changing scene: " + ex);
 		}
 	}
@@ -266,8 +268,9 @@ public class LoginApp extends Application {
 		this.stage = stage;
 	}
 
-	public static void startMeal() {
+	public static void startMeal(String name) {
 		meal = new MealPOJO();
+		meal.setName(name);
 	}
 
 	public MealPOJO getMeal() {
@@ -281,8 +284,10 @@ public class LoginApp extends Application {
 	public static void finishMeal() {
 		try {
 			MealServices.addMeal(meal);
+		} catch (NullPointerException e) {
+			LOGGER.error("Missing ingredients");
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Other error");
 		}
 	}
 

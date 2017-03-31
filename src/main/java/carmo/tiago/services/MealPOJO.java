@@ -6,6 +6,7 @@ public class MealPOJO {
 	private CarbsPOJO carbs;
 	private FatPOJO fat;
 	private UserPOJO user;
+	private String name;
 
 	public MealPOJO() {
 
@@ -41,6 +42,14 @@ public class MealPOJO {
 
 	public void setUser(UserPOJO user) {
 		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

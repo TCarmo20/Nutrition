@@ -13,9 +13,6 @@ public class MealFacade {
 	}
 
 	public static void addMeal(MealEntity meal) {
-		System.out.print("CENAS: " + meal.getProtein().getName());
-		System.out.println("Cenas 2: " + meal.getCarbs().getName());
-		System.out.println("Cenas 3: " + meal.getFat().getName());
 		LoginApp.getInstance().getEm().getTransaction().begin();
 		LoginApp.getInstance().getEm().persist(meal);
 		LoginApp.getInstance().getEm().getTransaction().commit();
@@ -39,6 +36,11 @@ public class MealFacade {
 		fat.getMeals().add(meal);
 		LoginApp.getInstance().getEm().persist(fat);
 		LoginApp.getInstance().getEm().getTransaction().commit();
+	}
+
+	public static MealEntity getMealByName(String name) {
+		return (MealEntity) LoginApp.getInstance().getEm().createNamedQuery(MealEntity.FIND_SPECIFIC_NAME)
+				.setParameter(1, name).getSingleResult();
 	}
 
 }

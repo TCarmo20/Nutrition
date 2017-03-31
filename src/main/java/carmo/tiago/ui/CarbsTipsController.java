@@ -148,7 +148,7 @@ public class CarbsTipsController implements Initializable {
 	private void initialieHomePage() {
 		try {
 			clearMessage();
-			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
+			StackPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
 			drawer.setSidePane(anchor);
 			burgerTask = new HamburgerBasicCloseTransition(hamburger);
 			burgerTask.setRate(-1);

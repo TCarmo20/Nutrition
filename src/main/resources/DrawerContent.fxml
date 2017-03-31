@@ -8,44 +8,50 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="anchorPaneBar" fx:id="anchorPane" prefHeight="600.0" prefWidth="200.0" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
-	<children>
-		<VBox fx:id="vBoxMenuBar" alignment="TOP_CENTER" layoutX="16.0" prefWidth="200.0" stylesheets="@demo.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-			<children>
-				<ImageView fx:id="imageViewMenuBar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-				<JFXButton id="myplansbtn" fx:id="MyPlansMenuBar" accessibleText="My Plans" buttonType="RAISED" contentDisplay="CENTER" onAction="#processMyPlans" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="MY PLANS">
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-				</JFXButton>
-				<JFXButton id="updatedetailsbtn" fx:id="UpdateDetailsMenuBar" accessibleText="Update Details" buttonType="RAISED" contentDisplay="CENTER" onAction="#processUpdateDetails" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="UPDATE DETAILS">
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-				</JFXButton>
-				<JFXButton id="logoutbtn" fx:id="LogoutManuBar" accessibleText="Logout" buttonType="RAISED" contentDisplay="CENTER" onAction="#processLogout" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="LOGOUT">
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-				</JFXButton>
-            <JFXNodesList fx:id="foodList" alignment="CENTER" prefHeight="35.0" prefWidth="200.0" stylesheets="@demo.css" />
-			</children>
-		</VBox>
-      <JFXToggleButton fx:id="startMealToggle" text="START MEAL" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="503.0">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </JFXToggleButton>
-		<Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="200.0" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-			<font>
-				<Font name="System Bold" size="15.0" />
-			</font>
-		</Label>
-	</children>
-	<effect>
-		<DropShadow />
-	</effect>
-</AnchorPane>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
+   <children>
+      <AnchorPane id="anchorPaneBar" fx:id="anchorPane" prefHeight="600.0" prefWidth="200.0" stylesheets="@demo.css">
+      	<children>
+      		<VBox fx:id="vBoxMenuBar" alignment="TOP_CENTER" layoutX="16.0" prefWidth="200.0" stylesheets="@demo.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      			<children>
+      				<ImageView fx:id="imageViewMenuBar" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      				<JFXButton id="myplansbtn" fx:id="MyPlansMenuBar" accessibleText="My Plans" buttonType="RAISED" contentDisplay="CENTER" onAction="#processMyPlans" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="MY PLANS">
+      					<cursor>
+      						<Cursor fx:constant="HAND" />
+      					</cursor>
+      				</JFXButton>
+      				<JFXButton id="updatedetailsbtn" fx:id="UpdateDetailsMenuBar" accessibleText="Update Details" buttonType="RAISED" contentDisplay="CENTER" onAction="#processUpdateDetails" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="UPDATE DETAILS">
+      					<cursor>
+      						<Cursor fx:constant="HAND" />
+      					</cursor>
+      				</JFXButton>
+      				<JFXButton id="logoutbtn" fx:id="LogoutManuBar" accessibleText="Logout" buttonType="RAISED" contentDisplay="CENTER" onAction="#processLogout" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="LOGOUT">
+      					<cursor>
+      						<Cursor fx:constant="HAND" />
+      					</cursor>
+      				</JFXButton>
+                  <JFXNodesList fx:id="foodList" alignment="CENTER" prefHeight="35.0" prefWidth="200.0" stylesheets="@demo.css" />
+      			</children>
+      		</VBox>
+            <JFXToggleButton fx:id="startMealToggle" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="503.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </JFXToggleButton>
+      		<Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="200.0" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      			<font>
+      				<Font name="System Bold" size="15.0" />
+      			</font>
+      		</Label>
+      	</children>
+      	<effect>
+      		<DropShadow />
+      	</effect>
+      </AnchorPane>
+   </children>
+</StackPane>

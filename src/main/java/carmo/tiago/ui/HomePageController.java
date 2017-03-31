@@ -54,7 +54,7 @@ public class HomePageController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
-			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
+			StackPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
 			drawer.setSidePane(anchor);
 			burgerTask = new HamburgerBasicCloseTransition(hamburger);
 			burgerTask.setRate(-1);

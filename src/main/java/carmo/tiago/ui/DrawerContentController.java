@@ -5,8 +5,11 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXNodesList;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.restfb.types.User;
 import javafx.event.ActionEvent;
@@ -17,7 +20,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -25,6 +31,9 @@ import javafx.scene.layout.VBox;
  *
  */
 public class DrawerContentController implements Initializable {
+
+	@FXML
+	private StackPane stackPane;
 
 	@FXML
 	private AnchorPane anchorPane;
@@ -54,9 +63,9 @@ public class DrawerContentController implements Initializable {
 	public Label nameLabel;
 
 	private static DrawerContentController instance;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(DrawerContentController.class);
-	
+
 	public DrawerContentController() {
 		instance = this;
 	}
@@ -114,19 +123,59 @@ public class DrawerContentController implements Initializable {
 		foodList.addAnimatedNode(carbsBtn);
 		foodList.addAnimatedNode(fatBtn);
 		foodList.addAnimatedNode(mealBtn);
-		
+
 		startMealToggle.setSelected(LoginApp.getInstance().mealStart.get());
 		startMealToggle.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(startMealToggle.isSelected()){
-					LoginApp.getInstance().setMealStart(true);
+				if (startMealToggle.isSelected()) {
+					try {
+						JFXDialogLayout content = new JFXDialogLayout();
+						JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+						content.setHeading(new Text("Meal name: \n\n"));
+						JFXTextField name = new JFXTextField();
+						name.setPromptText("Name");
+						name.setPrefWidth(150);
+						Label errorLabel = new Label();
+						errorLabel.setPrefWidth(150);
+						JFXButton prepareMeal = new JFXButton("CONTINUE");
+						prepareMeal.setButtonType(ButtonType.RAISED);
+						prepareMeal.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event) {
+								startMealToggle.setText("FINISH MEAL");
+								LoginApp.getInstance().setMealStart(true, name.getText());
+								dialog.close();
+							}
+						});
+						JFXButton cancelMeal = new JFXButton("CANCEL");
+						cancelMeal.setButtonType(ButtonType.RAISED);
+						cancelMeal.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent event) {
+								startMealToggle.fire();
+								dialog.close();
+							}
+						});
+						HBox hbox = new HBox(10);
+						hbox.getChildren().addAll(name, errorLabel);
+						content.setBody(hbox);
+						content.setActions(prepareMeal, cancelMeal);
+						dialog.show();
+					} catch (NullPointerException e) {
+						LOGGER.error("Dialog null");
+					}
 				} else {
-					LoginApp.getInstance().setMealStart(false);
+					startMealToggle.setText("START MEAL");
+					LoginApp.getInstance().setMealStart(false, null);
 				}
 			}
 		});
-
+		if (startMealToggle.isSelected()) {
+			startMealToggle.setText("FINISH MEAL");
+		} else {
+			startMealToggle.setText("START MEAL");
+		}
 		if (user != null) {
 			LOGGER.info("FB User found: " + user.getName());
 			String imageSource = "https://graph.facebook.com/" + user.getId() + "/picture?type=large";

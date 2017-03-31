@@ -3,6 +3,7 @@ package carmo.tiago.persistence;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +16,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "MEAL")
-@NamedQueries({ @NamedQuery(name = MealEntity.FIND_ALL, query = "SELECT s FROM MealEntity s") })
+@NamedQueries({ @NamedQuery(name = MealEntity.FIND_ALL, query = "SELECT s FROM MealEntity s"),
+		@NamedQuery(name = MealEntity.FIND_SPECIFIC_NAME, query = "SELECT s FROM MealEntity s WHERE s.name LIKE ?1") })
 public class MealEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,6 +25,8 @@ public class MealEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long mealId;
+	@Column(unique = true)
+	private String name;
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private ProteinEntity protein;
 	@ManyToOne(cascade = CascadeType.PERSIST)
@@ -33,9 +37,11 @@ public class MealEntity implements Serializable {
 	private UserEntity user;
 
 	public static final String FIND_ALL = "Meal.findAll";
+	public static final String FIND_SPECIFIC_NAME = "Meal.findSpecificName";
 
-	public MealEntity(ProteinEntity protein, CarbsEntity carbs, FatEntity fat, UserEntity user) {
+	public MealEntity(String name, ProteinEntity protein, CarbsEntity carbs, FatEntity fat, UserEntity user) {
 		super();
+		this.name = name;
 		this.protein = protein;
 		this.carbs = carbs;
 		this.fat = fat;
@@ -81,6 +87,14 @@ public class MealEntity implements Serializable {
 
 	public void setUser(UserEntity user) {
 		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

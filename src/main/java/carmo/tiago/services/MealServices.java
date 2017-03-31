@@ -21,6 +21,7 @@ public class MealServices {
 
 	private static MealPOJO entityToPOJOMeal(MealEntity meal) {
 		MealPOJO mealPOJO = new MealPOJO();
+		mealPOJO.setName(meal.getName());
 		mealPOJO.setCarbs(CarbsServices.entityToPOJOCarbs(meal.getCarbs()));
 		mealPOJO.setFat(FatServices.entityToPOJOFat(meal.getFat()));
 		mealPOJO.setProtein(ProteinServices.entityToPOJOProtein(meal.getProtein()));
@@ -29,6 +30,7 @@ public class MealServices {
 
 	private static MealEntity POJOToEntityMeal(MealPOJO meal) throws Exception {
 		MealEntity mealEnt = new MealEntity();
+		mealEnt.setName(meal.getName());
 		mealEnt.setUser(UserServices.getUserByEmail(meal.getUser().getEmail()));
 		mealEnt.setCarbs(CarbsServices.POJOToentityCarbs(meal.getCarbs()));
 		mealEnt.setFat(FatServices.POJOToentityFat(meal.getFat()));
@@ -41,13 +43,18 @@ public class MealServices {
 		MealFacade.addMeal(POJOToEntityMeal(meal));
 	}
 
-	public static List<MealPOJO> getUserMeals(long userId) throws Exception {
+	public static List<MealPOJO> getUserMeals(long userId) {
 		List<MealPOJO> userMeals = new ArrayList<MealPOJO>();
 		Set<MealEntity> planList = UserFacade.getUserMeals(userId);
 		for (MealEntity s : planList) {
 			userMeals.add(entityToPOJOMeal(s));
 		}
 		return userMeals;
+	}
+
+	public static MealPOJO getMealByName(String name) {
+		MealEntity food = MealFacade.getMealByName(name);
+		return entityToPOJOMeal(food);
 	}
 
 }

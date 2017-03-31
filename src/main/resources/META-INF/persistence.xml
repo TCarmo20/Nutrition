@@ -17,7 +17,7 @@
 <!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:derby:nutritionDB;create=true" /> -->
 <!-- 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" /> -->
 			<property name="eclipselink.ddl-generation.output-mode" value="database" />
-	   		<property name="javax.persistence.sql-load-script-source" value="META-INF/add.sql" />
+<!-- 	   		<property name="javax.persistence.sql-load-script-source" value="META-INF/add.sql" /> -->
 		</properties>
 	</persistence-unit>
 
