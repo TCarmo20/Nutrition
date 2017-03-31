@@ -40,5 +40,10 @@ public class UserFacade {
 		UserEntity user = LoginApp.getInstance().getEm().find(UserEntity.class, userId);
 		return user.getPlans();
 	}
+	
+	public static Set<MealEntity> getUserMeals(long userId){
+		UserEntity user = LoginApp.getInstance().getEm().find(UserEntity.class, userId);
+		return user.getMeals();
+	}
 
 }

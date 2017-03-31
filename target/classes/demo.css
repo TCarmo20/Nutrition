@@ -10,6 +10,12 @@
 	-fx-text-alignment: center;
 }
 
+#createPlanBtn:hover{
+	-fx-background-color: #005853;
+	-fx-text-fill: #ffffff;
+	-fx-text-alignment: center;
+}
+
 #hBoxPlans{
 	-fx-background-color: white;
 	-fx-background-radius:5.0px;
@@ -143,8 +149,8 @@
 }
 
 .tree-table-view{
-    -fx-tree-table-color: rgba(0.0, 150.0, 0.0, 0.8);
-    -fx-tree-table-rippler-color : rgba(255.0, 0.0, 0.0, 0.9);
+    -fx-tree-table-color: turquoise;
+    -fx-tree-table-rippler-color : white;
     -fx-border-width: 0.0;
     -fx-border-style: none;
 }
@@ -154,7 +160,7 @@
 }
 
 .tree-table-view:focused .tree-table-row-cell:selected .tree-table-cell{
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .tree-table-view .jfx-rippler {
@@ -231,5 +237,12 @@
 .list-view .scroll-bar:horizontal .increment-button,
 .list-view .scroll-bar:horizontal .decrement-button {
     -fx-padding:0;
+}
+
+#myPlansTable .scroll-bar:horizontal .increment-arrow,
+#myPlansTable .scroll-bar:horizontal .decrement-arrow,
+#myPlansTable .scroll-bar:horizontal .increment-button,
+#myPlansTable .scroll-bar:horizontal .decrement-button{
+	-fx-padding:0;
 }
 

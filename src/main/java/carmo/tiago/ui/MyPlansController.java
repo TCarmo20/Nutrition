@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
@@ -22,9 +20,8 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
-
 import carmo.tiago.services.NutPlanPOJO;
-import carmo.tiago.services.PlanServices;
+import carmo.tiago.services.NutPlanServices;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -160,7 +157,7 @@ public class MyPlansController implements Initializable {
 				public void handle(ActionEvent event) {
 					try {
 						dialog1.close();
-						PlanServices.deletePlan(rowData);
+						NutPlanServices.deletePlan(rowData);
 						updateTable();
 						rowData = null;
 						caloriesPlan.setText("");
@@ -233,7 +230,7 @@ public class MyPlansController implements Initializable {
 				fadeMessagesPlan();
 				try {
 					checkMessagesPlan();
-					PlanServices.createPlan(nameField.getText(), objectives.getSelectionModel().getSelectedItem());
+					NutPlanServices.createPlan(nameField.getText(), objectives.getSelectionModel().getSelectedItem());
 					dialog.close();
 					updateTable();
 				} catch (Exception e) {
@@ -369,7 +366,7 @@ public class MyPlansController implements Initializable {
 	private void updateTable() {
 		List<NutPlanPOJO> planList;
 		try {
-			planList = PlanServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
+			planList = NutPlanServices.getUserPlans(LoginApp.getInstance().getLoggedUser().getUserId());
 			JFXTreeTableColumn<NutPlanPOJO, String> nameCol = new JFXTreeTableColumn<>("Name");
 			nameCol.setCellValueFactory(
 					new Callback<TreeTableColumn.CellDataFeatures<NutPlanPOJO, String>, ObservableValue<String>>() {

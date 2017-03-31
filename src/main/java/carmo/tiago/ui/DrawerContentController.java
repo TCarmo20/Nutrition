@@ -2,15 +2,13 @@ package carmo.tiago.ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.JFXNodesList;
+import com.jfoenix.controls.JFXToggleButton;
 import com.restfb.types.User;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -50,12 +48,15 @@ public class DrawerContentController implements Initializable {
 	private JFXNodesList foodList;
 
 	@FXML
+	private JFXToggleButton startMealToggle;
+
+	@FXML
 	public Label nameLabel;
 
 	private static DrawerContentController instance;
-
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DrawerContentController.class);
-
+	
 	public DrawerContentController() {
 		instance = this;
 	}
@@ -98,10 +99,33 @@ public class DrawerContentController implements Initializable {
 			}
 		});
 
+		JFXButton mealBtn = new JFXButton("MEAL PREP");
+		mealBtn.setButtonType(ButtonType.RAISED);
+		mealBtn.setPrefWidth(198);
+		mealBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				processMealPrep();
+			}
+		});
+
 		foodList.addAnimatedNode(nutritionTipsBtn);
 		foodList.addAnimatedNode(proteinBtn);
 		foodList.addAnimatedNode(carbsBtn);
 		foodList.addAnimatedNode(fatBtn);
+		foodList.addAnimatedNode(mealBtn);
+		
+		startMealToggle.setSelected(LoginApp.getInstance().mealStart.get());
+		startMealToggle.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if(startMealToggle.isSelected()){
+					LoginApp.getInstance().setMealStart(true);
+				} else {
+					LoginApp.getInstance().setMealStart(false);
+				}
+			}
+		});
 
 		if (user != null) {
 			LOGGER.info("FB User found: " + user.getName());
@@ -113,6 +137,7 @@ public class DrawerContentController implements Initializable {
 			imageViewMenuBar.setImage(new Image("Pictures/preloaderWall.jpg", 200, 150, true, false));
 			LOGGER.info("FB User not found: " + LoginApp.getInstance().getLoggedUser().getName());
 		}
+
 		LOGGER.info("Drawer initialized");
 	}
 
@@ -134,6 +159,10 @@ public class DrawerContentController implements Initializable {
 
 	private void processFatTips() {
 		LoginApp.getInstance().gotoFatTips();
+	}
+
+	private void processMealPrep() {
+		LoginApp.getInstance().gotoMealPrep();
 	}
 
 	@FXML

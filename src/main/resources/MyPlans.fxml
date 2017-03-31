@@ -27,7 +27,7 @@
                            <children>
                               <VBox id="vBoxPlans" fx:id="vBoxPlans" alignment="CENTER" stylesheets="@demo.css">
                                  <children>
-                                    <JFXTreeTableView fx:id="myPlansTable" prefHeight="384.0" prefWidth="331.0" showRoot="false" stylesheets="@demo.css">
+                                    <JFXTreeTableView id="myPlansTable" fx:id="myPlansTable" prefHeight="384.0" prefWidth="331.0" showRoot="false" stylesheets="@demo.css">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
@@ -79,21 +79,30 @@
                                                       <DropShadow />
                                                    </effect>
                                                 </Label>
-                                                <JFXTextField fx:id="filter" promptText="Filter by name or objective">
+                                                <JFXTextField fx:id="filter" labelFloat="true" promptText="Filter by name or objective">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" />
                                                    </VBox.margin>
                                                 </JFXTextField>
-                                                <JFXButton fx:id="createPlanBtn" alignment="TOP_CENTER" buttonType="RAISED" onAction="#processCreatePlan" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" text="CREATE PLAN">
+                                                <JFXButton id="createPlanBtn" fx:id="createPlanBtn" alignment="TOP_CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#processCreatePlan" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="CREATE PLAN" textAlignment="CENTER">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" />
                                                    </VBox.margin>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
                                                 </JFXButton>
-                                                <JFXButton fx:id="exportPlanBtn" alignment="CENTER" buttonType="RAISED" onAction="#processExportPlan" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" text="EXPORT" />
-                                                <JFXButton fx:id="deletePlanBtn" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#processDeletePlan" prefHeight="25.0" prefWidth="155.0" text="DELETE" textAlignment="CENTER">
+                                                <JFXButton fx:id="exportPlanBtn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#processExportPlan" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="EXPORT" textAlignment="CENTER">
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor></JFXButton>
+                                                <JFXButton fx:id="deletePlanBtn" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#processDeletePlan" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="DELETE" textAlignment="CENTER">
                                                    <VBox.margin>
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
                                                 </JFXButton>
                                              </children>
                                           </VBox>

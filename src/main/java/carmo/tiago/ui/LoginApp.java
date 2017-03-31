@@ -6,10 +6,17 @@ import javax.persistence.Persistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.restfb.types.User;
+
+import carmo.tiago.services.MealPOJO;
+import carmo.tiago.services.MealServices;
 import carmo.tiago.services.UserPOJO;
 import carmo.tiago.services.UserServices;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
@@ -39,11 +46,35 @@ public class LoginApp extends Application {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginApp.class);
 
+	public BooleanProperty mealStart = new SimpleBooleanProperty();
+
+	private static MealPOJO meal;
+
 	@Override
 	public void init() throws Exception {
 		setEmf(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
 		setEm(getEmf().createEntityManager());
 		LOGGER.info("Database prepared");
+		mealStart.addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				try {
+					ProteinTipsController.getInstance().addToMealProtein.setDisable(!mealStart.get());
+				} catch (NullPointerException e) {
+					LOGGER.info("Protein button is null: " + e);
+				}
+				try {
+					CarbsTipsController.getInstance().addToMealCarbs.setDisable(!mealStart.get());
+				} catch (NullPointerException e1) {
+					LOGGER.info("Carbs button is null: " + e1);
+				}
+				try {
+					FatTipsController.getInstance().addToMealFat.setDisable(!mealStart.get());
+				} catch (NullPointerException e2) {
+					LOGGER.info("Fat buttin is null: " + e2);
+				}
+			}
+		});
 	}
 
 	public LoginApp() {
@@ -71,6 +102,20 @@ public class LoginApp extends Application {
 			primaryStage.show();
 		} catch (Exception ex) {
 			LOGGER.error("Error starting stage: " + ex);
+		}
+	}
+
+	public BooleanProperty getMealStart() {
+		return mealStart;
+	}
+
+	public void setMealStart(boolean mealStart) {
+		if (mealStart) {
+			this.mealStart.set(true);
+			startMeal();
+		} else {
+			this.mealStart.set(false);
+			finishMeal();
 		}
 	}
 
@@ -110,6 +155,7 @@ public class LoginApp extends Application {
 
 	public void gotoLogin() {
 		try {
+			mealStart.set(false);
 			replaceSceneContent("/Login.fxml");
 		} catch (Exception ex) {
 			LOGGER.error("Error changing scene: " + ex);
@@ -151,6 +197,14 @@ public class LoginApp extends Application {
 	public void gotoFatTips() {
 		try {
 			replaceSceneContent("/FatTips.fxml");
+		} catch (Exception ex) {
+			LOGGER.error("Error changing scene: " + ex);
+		}
+	}
+
+	public void gotoMealPrep() {
+		try {
+			replaceSceneContent("/MealPrep.fxml");
 		} catch (Exception ex) {
 			LOGGER.error("Error changing scene: " + ex);
 		}
@@ -210,6 +264,26 @@ public class LoginApp extends Application {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+	}
+
+	public static void startMeal() {
+		meal = new MealPOJO();
+	}
+
+	public MealPOJO getMeal() {
+		return meal;
+	}
+
+	public void setMeal(MealPOJO meal) {
+		LoginApp.meal = meal;
+	}
+
+	public static void finishMeal() {
+		try {
+			MealServices.addMeal(meal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

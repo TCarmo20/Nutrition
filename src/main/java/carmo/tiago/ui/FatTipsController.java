@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXListView;
@@ -16,8 +17,7 @@ import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
 import carmo.tiago.services.FatPOJO;
 import carmo.tiago.services.FatServices;
-import carmo.tiago.services.FoodPOJO;
-import carmo.tiago.services.FoodServices;
+import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -32,6 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 public class FatTipsController implements Initializable {
 
@@ -68,6 +69,14 @@ public class FatTipsController implements Initializable {
 	@FXML
 	private JFXHamburger hamburger;
 
+	@FXML
+	public JFXButton addToMealFat;
+
+	@FXML
+	private Label addToMealLabel;
+	
+	private FatPOJO fat;
+
 	private HamburgerBasicCloseTransition burgerTask;
 
 	private static FatTipsController instance;
@@ -80,7 +89,71 @@ public class FatTipsController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initializeHomePage();
+		updateTable();
+	}
+
+	private void updateTable() {
+		clearMessage();
+		List<FatPOJO> list = FatServices.getAllFat();
+		for (FatPOJO fat : list) {
+			if (fat.getName().equals("Avocado")) {
+				Label lbl = new Label("Avocado");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/avocado.jpg", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
+			} else if (fat.getName().equals("Almonds")) {
+				Label lbl = new Label("Almonds");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/almonds.jpg", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
+			} else if (fat.getName().equals("Nuts")) {
+				Label lbl = new Label("Nuts");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/nut.png", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
+			} else if (fat.getName().equals("Olive oil")) {
+				Label lbl = new Label("Olive oil");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/olive.png", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
+			} else if (fat.getName().equals("Coconut oil")) {
+				Label lbl = new Label("Coconut oil");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/coconut.jpg", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
+			} else if (fat.getName().equals("Chia seeds")) {
+				Label lbl = new Label("Chia seeds");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/chia.jpg", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
+			} else if (fat.getName().equals("Pistachio")) {
+				Label lbl = new Label("Pistachio");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/pistachio.jpg", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
+			} else if (fat.getName().equals("Linseed oil")) {
+				Label lbl = new Label("Linseed oil");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/linseed.jpg", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
+			}
+		}
+		listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
+			@Override
+			public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
+				fat = FatServices.getFatByName(newValue.getText());
+				proteinFat.setText(fat.getProtein());
+				carbsFat.setText(fat.getCarbs());
+				fatFat.setText(fat.getFat());
+				caloriesFat.setText(fat.getCalories());
+			}
+		});
+	}
+
+	private void initializeHomePage() {
 		try {
+			clearMessage();
 			AnchorPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
 			drawer.setSidePane(anchor);
 			burgerTask = new HamburgerBasicCloseTransition(hamburger);
@@ -94,64 +167,37 @@ public class FatTipsController implements Initializable {
 					drawer.open();
 				}
 			});
-			List<FatPOJO> list = FatServices.getAllFat();
-			for (FatPOJO fat : list) {
-				if (fat.getName().equals("Avocado")) {
-					Label lbl = new Label("Avocado");
-					lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/avocado.jpg", 200, 150, true, false)));
-					lbl.setContentDisplay(ContentDisplay.TOP);
-					listView.getItems().add(lbl);
-				} else if (fat.getName().equals("Almonds")) {
-					Label lbl = new Label("Almonds");
-					lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/almonds.jpg", 200, 150, true, false)));
-					lbl.setContentDisplay(ContentDisplay.TOP);
-					listView.getItems().add(lbl);
-				} else if (fat.getName().equals("Nuts")) {
-					Label lbl = new Label("Nuts");
-					lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/nut.png", 200, 150, true, false)));
-					lbl.setContentDisplay(ContentDisplay.TOP);
-					listView.getItems().add(lbl);
-				} else if (fat.getName().equals("Olive oil")) {
-					Label lbl = new Label("Olive oil");
-					lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/olive.png", 200, 150, true, false)));
-					lbl.setContentDisplay(ContentDisplay.TOP);
-					listView.getItems().add(lbl);
-				} else if (fat.getName().equals("Coconut oil")) {
-					Label lbl = new Label("Coconut oil");
-					lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/coconut.jpg", 200, 150, true, false)));
-					lbl.setContentDisplay(ContentDisplay.TOP);
-					listView.getItems().add(lbl);
-				} else if (fat.getName().equals("Chia seeds")) {
-					Label lbl = new Label("Chia seeds");
-					lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/chia.jpg", 200, 150, true, false)));
-					lbl.setContentDisplay(ContentDisplay.TOP);
-					listView.getItems().add(lbl);
-				} else if (fat.getName().equals("Pistachio")) {
-					Label lbl = new Label("Pistachio");
-					lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/pistachio.jpg", 200, 150, true, false)));
-					lbl.setContentDisplay(ContentDisplay.TOP);
-					listView.getItems().add(lbl);
-				} else if (fat.getName().equals("Linseed oil")) {
-					Label lbl = new Label("Linseed oil");
-					lbl.setGraphic(new ImageView(new Image("Pictures/Food/Fat/linseed.jpg", 200, 150, true, false)));
-					lbl.setContentDisplay(ContentDisplay.TOP);
-					listView.getItems().add(lbl);
-				}
-			}
-			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
-				@Override
-				public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
-					FoodPOJO fat = FoodServices.getFoodByName(newValue.getText());
-					proteinFat.setText(fat.getProtein());
-					carbsFat.setText(fat.getCarbs());
-					fatFat.setText(fat.getFat());
-					caloriesFat.setText(fat.getCalories());
-				}
-			});
+			listView.getItems().clear();
+			addToMealFat.setDisable(!LoginApp.getInstance().mealStart.get());
 		} catch (IOException e) {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}
 		LOGGER.info("Home Page initialized");
+	}
+
+	private void clearMessage() {
+		addToMealLabel.setText("");
+	}
+
+	@FXML
+	private void processAddToMeal() {
+		clearMessage();
+		try {
+			if (fat instanceof FatPOJO) {
+				LoginApp.getInstance().getMeal().setFat((FatPOJO) fat);
+			}
+			LOGGER.info("ADICIONADO, nome = " + fat.getName());
+		} catch (NullPointerException e) {
+			addToMealLabel.setText("Please select food first");
+			animateMessage(addToMealLabel);
+		}
+	}
+
+	private void animateMessage(Label message) {
+		FadeTransition ft = new FadeTransition(new Duration(1000), message);
+		ft.setFromValue(0.0);
+		ft.setToValue(1);
+		ft.play();
 	}
 
 	public static FatTipsController getInstance() {

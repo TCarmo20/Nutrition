@@ -10,7 +10,7 @@
 		<class>carmo.tiago.persistence.ProteinEntity</class>
 		<class>carmo.tiago.persistence.CarbsEntity</class>
 		<class>carmo.tiago.persistence.FatEntity</class>
-		<class>carmo.tiago.persistence.FoodEntity</class>
+		<class>carmo.tiago.persistence.MealEntity</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
 	   		<property name="javax.persistence.jdbc.url" value="jdbc:derby:nutritionDB" />

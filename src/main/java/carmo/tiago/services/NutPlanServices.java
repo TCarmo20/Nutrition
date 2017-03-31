@@ -13,7 +13,7 @@ import carmo.tiago.persistence.NutPlanFacade;
 import carmo.tiago.persistence.UserFacade;
 import carmo.tiago.ui.LoginApp;
 
-public class PlanServices {
+public class NutPlanServices {
 	
 	public static void createPlan(String name, String objective) throws NumberFormatException, Exception {
 		UserPOJO loggedUser = LoginApp.getInstance().getLoggedUser();

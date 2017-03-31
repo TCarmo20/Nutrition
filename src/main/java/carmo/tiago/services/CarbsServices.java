@@ -3,23 +3,20 @@ package carmo.tiago.services;
 import java.util.ArrayList;
 import java.util.List;
 import carmo.tiago.persistence.CarbsEntity;
-import carmo.tiago.persistence.FoodEntity;
-import carmo.tiago.persistence.FoodFacade;
+import carmo.tiago.persistence.CarbsFacade;
 
 public class CarbsServices {
 
 	public static List<CarbsPOJO> getAllCarbs() {
-		List<FoodEntity> listFood = FoodFacade.getAllFood();
+		List<CarbsEntity> listFood = CarbsFacade.getAllCarbs();
 		List<CarbsPOJO> pojoList = new ArrayList<CarbsPOJO>();
-		for (FoodEntity carbs : listFood) {
-			if (carbs instanceof CarbsEntity) {
-				pojoList.add(entityToPOJOCarbs((CarbsEntity) carbs));
-			}
+		for (CarbsEntity carbs : listFood) {
+			pojoList.add(entityToPOJOCarbs((CarbsEntity) carbs));
 		}
 		return pojoList;
 	}
 
-	private static CarbsPOJO entityToPOJOCarbs(CarbsEntity carbs) {
+	public static CarbsPOJO entityToPOJOCarbs(CarbsEntity carbs) {
 		CarbsPOJO carbsPOJO = new CarbsPOJO();
 		carbsPOJO.setCalories(carbs.getCalories());
 		carbsPOJO.setCarbs(carbs.getCarbs());
@@ -28,5 +25,15 @@ public class CarbsServices {
 		carbsPOJO.setProtein(carbs.getProtein());
 		return carbsPOJO;
 	}
-	
+
+	public static CarbsEntity POJOToentityCarbs(CarbsPOJO carbs) {
+		CarbsEntity food = CarbsFacade.getCarbsByName(carbs.getName());
+		return food;
+	}
+
+	public static CarbsPOJO getCarbsByName(String name) {
+		CarbsEntity food = CarbsFacade.getCarbsByName(name);
+		return entityToPOJOCarbs(food);
+	}
+
 }

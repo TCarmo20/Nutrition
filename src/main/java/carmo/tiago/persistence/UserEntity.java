@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -39,14 +40,18 @@ public class UserEntity implements Serializable {
 	private String sex;
 	@Column
 	private String activityLevel;
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy = "user")
+	@JoinColumn(name = "userId")
 	private Set<NutPlanEntity> plans;
+	@OneToMany(mappedBy = "user")
+	@JoinColumn(name = "userId")
+	private Set<MealEntity> meals;
 
 	public static final String FIND_ALL = "User.findAll";
 	public static final String FIND_SPECIFIC_EMAIL = "User.findSpecificEmail";
 
 	public UserEntity(String name, String email, String password, String dob, String height, String weight, String sex,
-			String activityLevel, Set<NutPlanEntity> plans) {
+			String activityLevel, Set<NutPlanEntity> plans, Set<MealEntity> meals) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -57,6 +62,7 @@ public class UserEntity implements Serializable {
 		this.sex = sex;
 		this.activityLevel = activityLevel;
 		this.plans = plans;
+		this.meals = meals;
 	}
 
 	public UserEntity() {
@@ -99,6 +105,14 @@ public class UserEntity implements Serializable {
 
 	public void setPlans(Set<NutPlanEntity> plans) {
 		this.plans = plans;
+	}
+
+	public Set<MealEntity> getMeals() {
+		return meals;
+	}
+
+	public void setMeals(Set<MealEntity> meals) {
+		this.meals = meals;
 	}
 
 	public String getDob() {
