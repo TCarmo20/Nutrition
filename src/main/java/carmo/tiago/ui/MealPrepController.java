@@ -29,38 +29,41 @@ import javafx.scene.layout.VBox;
 public class MealPrepController implements Initializable {
 
 	@FXML
-    private AnchorPane HomePage;
+	private AnchorPane HomePage;
 
-    @FXML
-    private StackPane stackPane;
+	@FXML
+	private StackPane stackPane;
 
-    @FXML
-    private Group mealPrepGroup;
+	@FXML
+	private Group mealPrepGroup;
 
-    @FXML
-    private VBox vBoxMeals;
+	@FXML
+	private VBox vBoxMeals;
 
-    @FXML
-    private JFXListView<Label> listView;
+	@FXML
+	private JFXListView<Label> listView;
 
-    @FXML
-    private JFXTextField proteinMeal;
+	@FXML
+	private JFXTextField proteinMeal;
 
-    @FXML
-    private JFXTextField carbsMeal;
+	@FXML
+	private JFXTextField carbsMeal;
 
-    @FXML
-    private JFXTextField fatMeal;
+	@FXML
+	private JFXTextField fatMeal;
 
-    @FXML
-    private JFXDrawer drawer;
+	@FXML
+	private JFXTextField caloriesMeal;
 
-    @FXML
-    private JFXHamburger hamburger;
-    
+	@FXML
+	private JFXDrawer drawer;
+
+	@FXML
+	private JFXHamburger hamburger;
+
 	private HamburgerBasicCloseTransition burgerTask;
-	
-	private MealPOJO protein;
+
+	private MealPOJO meal;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MealPrepController.class);
 
@@ -79,10 +82,17 @@ public class MealPrepController implements Initializable {
 		listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
 			@Override
 			public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
-				protein = MealServices.getMealByName(newValue.getText());
-				proteinMeal.setText(protein.getProtein().getName());
-				carbsMeal.setText(protein.getCarbs().getName());
-				fatMeal.setText(protein.getFat().getName());
+				meal = MealServices.getMealByName(newValue.getText());
+				System.out.println("Cal1: " + meal.getProtein().getCalories());
+				System.out.println("Cal2: " + meal.getCarbs().getCalories());
+				System.out.println("Cal3: " + meal.getFat().getCalories());
+
+				caloriesMeal.setText(String.valueOf(meal.getProtein().getCalories())
+						+ String.valueOf(meal.getCarbs().getCalories()) + String.valueOf(meal.getFat().getCalories()));
+				proteinMeal.setText(
+						meal.getProtein().getProtein() + meal.getCarbs().getProtein() + meal.getFat().getProtein());
+				carbsMeal.setText(meal.getProtein().getCarbs() + meal.getCarbs().getCarbs() + meal.getFat().getCarbs());
+				fatMeal.setText(meal.getProtein().getFat() + meal.getCarbs().getFat() + meal.getFat().getFat());
 			}
 		});
 	}

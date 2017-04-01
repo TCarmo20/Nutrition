@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -72,6 +73,9 @@ public class DrawerContentController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		LogoutManuBar.setGraphic(new ImageView(new Image("Pictures/logout.png",25, 25, true, false)));
+		LogoutManuBar.setContentDisplay(ContentDisplay.LEFT);
+		
 		User user = LoginController.getUser();
 
 		JFXButton nutritionTipsBtn = new JFXButton("NUTRITION TIPS");

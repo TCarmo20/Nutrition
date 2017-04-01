@@ -76,7 +76,7 @@
                                                       <Insets bottom="10.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <JFXButton fx:id="addToMealCarbs" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#processAddToMeal" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="ADD TO MEAL" textAlignment="CENTER">
+                                                <JFXButton fx:id="addToMealCarbs" alignment="BOTTOM_CENTER" contentDisplay="CENTER" onAction="#processAddToMeal" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="ADD TO MEAL" textAlignment="CENTER">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>

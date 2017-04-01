@@ -108,7 +108,7 @@
                                           <DropShadow />
                                        </effect>
                                     </Label>
-                                    <JFXButton id="updateUserBtn" fx:id="updateUserBtn" alignment="CENTER" buttonType="RAISED" onAction="#processUpdateUser" prefHeight="25.0" prefWidth="100.0" stylesheets="@demo.css" text="UPDATE" textAlignment="CENTER" wrapText="true">
+                                    <JFXButton id="updateUserBtn" fx:id="updateUserBtn" alignment="CENTER" onAction="#processUpdateUser" prefHeight="25.0" prefWidth="100.0" stylesheets="@demo.css" text="UPDATE" textAlignment="CENTER" wrapText="true">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>

@@ -75,7 +75,7 @@
                                           <VBox alignment="BOTTOM_CENTER" layoutY="170.0" prefHeight="190.0" prefWidth="155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
                                                 <Label fx:id="addToMealLabel" alignment="CENTER" contentDisplay="CENTER" prefWidth="155.0" textAlignment="CENTER" textFill="RED" />
-                                                <JFXButton fx:id="addToMealProtein" alignment="BOTTOM_CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#processAddToMeal" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="ADD TO MEAL" textAlignment="CENTER">
+                                                <JFXButton fx:id="addToMealProtein" alignment="BOTTOM_CENTER" contentDisplay="CENTER" onAction="#processAddToMeal" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="ADD TO MEAL" textAlignment="CENTER">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
