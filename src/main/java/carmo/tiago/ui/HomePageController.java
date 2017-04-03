@@ -109,5 +109,9 @@ public class HomePageController implements Initializable {
 	public static HomePageController getInstance() {
 		return instance;
 	}
+	
+	public StackPane getStackPane() {
+		return stackPane;
+	}
 
 }

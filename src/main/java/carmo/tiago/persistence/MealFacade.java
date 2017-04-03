@@ -2,6 +2,8 @@ package carmo.tiago.persistence;
 
 import java.util.List;
 import javax.persistence.TypedQuery;
+
+import carmo.tiago.services.MealPOJO;
 import carmo.tiago.ui.LoginApp;
 
 public class MealFacade {
@@ -41,6 +43,18 @@ public class MealFacade {
 	public static MealEntity getMealByName(String name) {
 		return (MealEntity) LoginApp.getInstance().getEm().createNamedQuery(MealEntity.FIND_SPECIFIC_NAME)
 				.setParameter(1, name).getSingleResult();
+	}
+
+	public static void deleteMeal(MealPOJO meal) {
+		MealEntity meal2 = LoginApp.getInstance().getEm().find(MealEntity.class, meal.getMealId());
+		LoginApp.getInstance().getEm().getTransaction().begin();
+		LoginApp.getInstance().getEm().remove(meal2);
+		LoginApp.getInstance().getEm().getTransaction().commit();
+		LoginApp.getInstance().getEm().getTransaction().begin();
+		UserEntity user = meal2.getUser();
+		user.getMeals().remove(meal2);
+		LoginApp.getInstance().getEm().persist(user);
+		LoginApp.getInstance().getEm().getTransaction().commit();
 	}
 
 }

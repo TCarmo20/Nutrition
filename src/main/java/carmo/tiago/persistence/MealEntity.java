@@ -35,6 +35,12 @@ public class MealEntity implements Serializable {
 	private FatEntity fat;
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private UserEntity user;
+	@Column
+	private String amountProtein;
+	@Column
+	private String amountCarbs;
+	@Column
+	private String amountFat;
 
 	public static final String FIND_ALL = "Meal.findAll";
 	public static final String FIND_SPECIFIC_NAME = "Meal.findSpecificName";
@@ -95,6 +101,30 @@ public class MealEntity implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAmountProtein() {
+		return amountProtein;
+	}
+
+	public void setAmountProtein(String amountProtein) {
+		this.amountProtein = amountProtein;
+	}
+
+	public String getAmountCarbs() {
+		return amountCarbs;
+	}
+
+	public void setAmountCarbs(String amountCarbs) {
+		this.amountCarbs = amountCarbs;
+	}
+
+	public String getAmountFat() {
+		return amountFat;
+	}
+
+	public void setAmountFat(String amountFat) {
+		this.amountFat = amountFat;
 	}
 
 }

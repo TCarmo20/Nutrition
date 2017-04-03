@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.restfb.types.User;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,7 +25,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 /**
  *
@@ -73,14 +76,19 @@ public class DrawerContentController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		LogoutManuBar.setGraphic(new ImageView(new Image("Pictures/logout.png",25, 25, true, false)));
+		LogoutManuBar.setGraphic(new ImageView(new Image("Pictures/logout.png", 25, 25, true, false)));
 		LogoutManuBar.setContentDisplay(ContentDisplay.LEFT);
-		
+		UpdateDetailsMenuBar.setGraphic(new ImageView(new Image("Pictures/profile.png", 25, 25, true, true)));
+		UpdateDetailsMenuBar.setContentDisplay(ContentDisplay.LEFT);
+		MyPlansMenuBar.setGraphic(new ImageView(new Image("Pictures/mealplan.png", 25, 25, true, true)));
+		MyPlansMenuBar.setContentDisplay(ContentDisplay.LEFT);
+
 		User user = LoginController.getUser();
 
 		JFXButton nutritionTipsBtn = new JFXButton("NUTRITION TIPS");
 		nutritionTipsBtn.setButtonType(ButtonType.RAISED);
 		nutritionTipsBtn.setPrefWidth(198);
+		nutritionTipsBtn.setGraphic(new ImageView(new Image("Pictures/down.png", 20, 20, true, true)));
 
 		JFXButton proteinBtn = new JFXButton("PROTEIN");
 		proteinBtn.setButtonType(ButtonType.RAISED);
@@ -112,7 +120,7 @@ public class DrawerContentController implements Initializable {
 			}
 		});
 
-		JFXButton mealBtn = new JFXButton("MEAL PREP");
+		JFXButton mealBtn = new JFXButton("MY MEALS");
 		mealBtn.setButtonType(ButtonType.RAISED);
 		mealBtn.setPrefWidth(198);
 		mealBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -139,17 +147,23 @@ public class DrawerContentController implements Initializable {
 						content.setHeading(new Text("Meal name: \n\n"));
 						JFXTextField name = new JFXTextField();
 						name.setPromptText("Name");
-						name.setPrefWidth(150);
+						name.setPrefWidth(100);
 						Label errorLabel = new Label();
+						errorLabel.setTextFill(Color.RED);
 						errorLabel.setPrefWidth(150);
-						JFXButton prepareMeal = new JFXButton("CONTINUE");
+						JFXButton prepareMeal = new JFXButton("START");
 						prepareMeal.setButtonType(ButtonType.RAISED);
 						prepareMeal.setOnAction(new EventHandler<ActionEvent>() {
 							@Override
 							public void handle(ActionEvent event) {
-								startMealToggle.setText("FINISH MEAL");
-								LoginApp.getInstance().setMealStart(true, name.getText());
-								dialog.close();
+								if (!name.getText().equals("")) {
+									startMealToggle.setText("FINISH MEAL");
+									LoginApp.getInstance().setMealStart(true, name.getText());
+									dialog.close();
+								} else {
+									errorLabel.setText("Please enter a name!");
+									animateMessage(errorLabel);
+								}
 							}
 						});
 						JFXButton cancelMeal = new JFXButton("CANCEL");
@@ -161,10 +175,12 @@ public class DrawerContentController implements Initializable {
 								dialog.close();
 							}
 						});
-						HBox hbox = new HBox(10);
-						hbox.getChildren().addAll(name, errorLabel);
-						content.setBody(hbox);
-						content.setActions(prepareMeal, cancelMeal);
+						VBox vbox = new VBox(10);
+						vbox.getChildren().addAll(name, errorLabel);
+						content.setBody(vbox);
+						HBox hbox = new HBox(8);
+						hbox.getChildren().addAll(prepareMeal,cancelMeal);
+						content.setActions(hbox);
 						dialog.show();
 					} catch (NullPointerException e) {
 						LOGGER.error("Dialog null");
@@ -192,6 +208,13 @@ public class DrawerContentController implements Initializable {
 		}
 
 		LOGGER.info("Drawer initialized");
+	}
+
+	private void animateMessage(Label message) {
+		FadeTransition ft = new FadeTransition(new Duration(1000), message);
+		ft.setFromValue(0.0);
+		ft.setToValue(1);
+		ft.play();
 	}
 
 	public ImageView getImageViewMenuBar() {

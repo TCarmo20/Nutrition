@@ -21,15 +21,23 @@ public class MealServices {
 
 	private static MealPOJO entityToPOJOMeal(MealEntity meal) {
 		MealPOJO mealPOJO = new MealPOJO();
+		mealPOJO.setAmountCarbs(meal.getAmountCarbs());
+		mealPOJO.setAmountFat(meal.getAmountFat());
+		mealPOJO.setAmountProtein(meal.getAmountProtein());
 		mealPOJO.setName(meal.getName());
 		mealPOJO.setCarbs(CarbsServices.entityToPOJOCarbs(meal.getCarbs()));
 		mealPOJO.setFat(FatServices.entityToPOJOFat(meal.getFat()));
 		mealPOJO.setProtein(ProteinServices.entityToPOJOProtein(meal.getProtein()));
+		mealPOJO.setMealId(meal.getMealId());
+		mealPOJO.setUser(UserServices.entityToPOJO(meal.getUser()));
 		return mealPOJO;
 	}
 
 	private static MealEntity POJOToEntityMeal(MealPOJO meal) throws Exception {
 		MealEntity mealEnt = new MealEntity();
+		mealEnt.setAmountProtein(meal.getAmountProtein());
+		mealEnt.setAmountCarbs(meal.getAmountCarbs());
+		mealEnt.setAmountFat(meal.getAmountFat());
 		mealEnt.setName(meal.getName());
 		mealEnt.setUser(UserServices.getUserByEmail(meal.getUser().getEmail()));
 		mealEnt.setCarbs(CarbsServices.POJOToentityCarbs(meal.getCarbs()));
@@ -55,6 +63,10 @@ public class MealServices {
 	public static MealPOJO getMealByName(String name) {
 		MealEntity food = MealFacade.getMealByName(name);
 		return entityToPOJOMeal(food);
+	}
+
+	public static void deleteMeal(MealPOJO meal) throws Exception {
+		MealFacade.deleteMeal(meal);
 	}
 
 }

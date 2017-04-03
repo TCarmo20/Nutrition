@@ -34,7 +34,7 @@ public class UserServices {
 		return UserFacade.getUserByEmail(email);
 	}
 
-	private static UserPOJO entityToPOJO(UserEntity userEntity) {
+	public static UserPOJO entityToPOJO(UserEntity userEntity) {
 		UserPOJO user = new UserPOJO();
 		user.setName(userEntity.getName());
 		user.setEmail(userEntity.getEmail());

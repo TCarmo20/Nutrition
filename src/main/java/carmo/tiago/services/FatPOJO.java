@@ -52,5 +52,4 @@ public class FatPOJO {
 		this.fat = fat;
 	}
 
-
 }

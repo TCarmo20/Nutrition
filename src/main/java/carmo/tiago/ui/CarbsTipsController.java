@@ -11,7 +11,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 import carmo.tiago.services.CarbsPOJO;
 import carmo.tiago.services.CarbsServices;
@@ -72,6 +74,9 @@ public class CarbsTipsController implements Initializable {
 
 	@FXML
 	private Label addToMealLabel;
+
+	@FXML
+	public JFXTextField amountCarbs;
 
 	private HamburgerBasicCloseTransition burgerTask;
 
@@ -163,6 +168,7 @@ public class CarbsTipsController implements Initializable {
 			});
 			listView.getItems().clear();
 			addToMealCarbs.setDisable(!LoginApp.getInstance().mealStart.get());
+			amountCarbs.setDisable(!LoginApp.getInstance().mealStart.get());
 		} catch (IOException e) {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}
@@ -176,13 +182,21 @@ public class CarbsTipsController implements Initializable {
 	@FXML
 	private void processAddToMeal() {
 		clearMessage();
-		try {
-			if (carbs instanceof CarbsPOJO) {
-				LoginApp.getInstance().getMeal().setCarbs((CarbsPOJO) carbs);
+		if (!amountCarbs.getText().equals("")) {
+			try {
+				LoginApp.getInstance().getMeal().setCarbs(carbs);
+				LoginApp.getInstance().getMeal().setAmountCarbs(amountCarbs.getText());
+				LOGGER.info("ADICIONADO, nome = " + carbs.getName());
+				JFXSnackbar carbsTipsSnack = new JFXSnackbar(stackPane);
+				carbsTipsSnack.enqueue(new SnackbarEvent(carbs.getName() + " added!".toUpperCase()));
+				addToMealCarbs.setDisable(true);
+				amountCarbs.setDisable(true);
+			} catch (NullPointerException e) {
+				addToMealLabel.setText("Please select food first");
+				animateMessage(addToMealLabel);
 			}
-			LOGGER.info("ADICIONADO, nome = " + carbs.getName());
-		} catch (NullPointerException e) {
-			addToMealLabel.setText("Please select food first");
+		} else {
+			addToMealLabel.setText("Please select amount first");
 			animateMessage(addToMealLabel);
 		}
 	}

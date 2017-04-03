@@ -60,16 +60,19 @@ public class LoginApp extends Application {
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				try {
 					ProteinTipsController.getInstance().addToMealProtein.setDisable(!mealStart.get());
+					ProteinTipsController.getInstance().amountProtein.setDisable(!mealStart.get());
 				} catch (NullPointerException e) {
 					LOGGER.info("Protein button is null: " + e);
 				}
 				try {
 					CarbsTipsController.getInstance().addToMealCarbs.setDisable(!mealStart.get());
+					CarbsTipsController.getInstance().amountCarbs.setDisable(!mealStart.get());
 				} catch (NullPointerException e1) {
 					LOGGER.info("Carbs button is null: " + e1);
 				}
 				try {
 					FatTipsController.getInstance().addToMealFat.setDisable(!mealStart.get());
+					FatTipsController.getInstance().amountFat.setDisable(!mealStart.get());
 				} catch (NullPointerException e2) {
 					LOGGER.info("Fat buttin is null: " + e2);
 				}
@@ -284,6 +287,7 @@ public class LoginApp extends Application {
 	public static void finishMeal() {
 		try {
 			MealServices.addMeal(meal);
+			LoginApp.getInstance().gotoMealPrep();
 		} catch (NullPointerException e) {
 			LOGGER.error("Missing ingredients");
 		} catch (Exception e) {

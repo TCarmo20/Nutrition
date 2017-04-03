@@ -24,7 +24,7 @@
       						<Cursor fx:constant="HAND" />
       					</cursor>
       				</JFXButton>
-      				<JFXButton id="updatedetailsbtn" fx:id="UpdateDetailsMenuBar" accessibleText="Update Details" buttonType="RAISED" contentDisplay="CENTER" onAction="#processUpdateDetails" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="UPDATE DETAILS">
+      				<JFXButton id="updatedetailsbtn" fx:id="UpdateDetailsMenuBar" accessibleText="Update Details" buttonType="RAISED" contentDisplay="CENTER" onAction="#processUpdateDetails" prefHeight="35.0" prefWidth="198.0" ripplerFill="WHITE" stylesheets="@demo.css" text="PROFILE">
       					<cursor>
       						<Cursor fx:constant="HAND" />
       					</cursor>

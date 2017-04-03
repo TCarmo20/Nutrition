@@ -7,6 +7,10 @@ public class MealPOJO {
 	private FatPOJO fat;
 	private UserPOJO user;
 	private String name;
+	private String amountProtein;
+	private String amountCarbs;
+	private String amountFat;
+	private long mealId;
 
 	public MealPOJO() {
 
@@ -50,6 +54,38 @@ public class MealPOJO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getAmountProtein() {
+		return amountProtein;
+	}
+
+	public void setAmountProtein(String amountProtein) {
+		this.amountProtein = amountProtein;
+	}
+
+	public String getAmountCarbs() {
+		return amountCarbs;
+	}
+
+	public void setAmountCarbs(String amountCarbs) {
+		this.amountCarbs = amountCarbs;
+	}
+
+	public String getAmountFat() {
+		return amountFat;
+	}
+
+	public void setAmountFat(String amountFat) {
+		this.amountFat = amountFat;
+	}
+
+	public long getMealId() {
+		return mealId;
+	}
+
+	public void setMealId(long mealId) {
+		this.mealId = mealId;
 	}
 
 }

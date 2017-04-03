@@ -10,6 +10,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 import carmo.tiago.services.ProteinPOJO;
@@ -71,6 +73,12 @@ public class ProteinTipsController implements Initializable {
 
 	@FXML
 	private Label addToMealLabel;
+
+	@FXML
+	private JFXSnackbar proteinTipsSnack;
+
+	@FXML
+	public JFXTextField amountProtein;
 
 	private HamburgerBasicCloseTransition burgerTask;
 
@@ -164,6 +172,7 @@ public class ProteinTipsController implements Initializable {
 			});
 			listView.getItems().clear();
 			addToMealProtein.setDisable(!LoginApp.getInstance().mealStart.get());
+			amountProtein.setDisable(!LoginApp.getInstance().mealStart.get());
 		} catch (IOException e) {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}
@@ -177,13 +186,21 @@ public class ProteinTipsController implements Initializable {
 	@FXML
 	private void processAddToMeal() {
 		clearMessage();
-		try {
-				LoginApp.getInstance().getMeal().setProtein((ProteinPOJO) protein);
-				LOGGER.info(protein.getName());
-			
-			LOGGER.info("ADICIONADO, name = " + protein.getName());
-		} catch (NullPointerException e) {
-			addToMealLabel.setText("Please select food first");
+		if (!amountProtein.getText().equals("")) {
+			try {
+				LoginApp.getInstance().getMeal().setProtein(protein);
+				LoginApp.getInstance().getMeal().setAmountProtein(amountProtein.getText());
+				LOGGER.info("ADICIONADO, name = " + protein.getName());
+				proteinTipsSnack = new JFXSnackbar(stackPane);
+				proteinTipsSnack.enqueue(new SnackbarEvent(protein.getName() + " added!".toUpperCase()));
+				amountProtein.setDisable(true);
+				addToMealProtein.setDisable(true);
+			} catch (NullPointerException e) {
+				addToMealLabel.setText("Please select food");
+				animateMessage(addToMealLabel);
+			}
+		} else {
+			addToMealLabel.setText("Please enter amount");
 			animateMessage(addToMealLabel);
 		}
 	}
