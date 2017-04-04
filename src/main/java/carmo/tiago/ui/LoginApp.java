@@ -1,5 +1,7 @@
 package carmo.tiago.ui;
 
+import java.util.Date;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -98,9 +100,9 @@ public class LoginApp extends Application {
 		primaryStage.getIcons().add(new Image("Pictures/icon.png"));
 		try {
 			stage = primaryStage;
-			// stage.setMaximized(true);
-			// stage.setFullScreen(true);
-			// stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+//			stage.setMaximized(true);
+//			stage.setFullScreen(true);
+//			stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 			gotoLogin();
 			primaryStage.show();
 		} catch (Exception ex) {
@@ -273,7 +275,7 @@ public class LoginApp extends Application {
 
 	public static void startMeal(String name) {
 		meal = new MealPOJO();
-		meal.setName(name);
+		meal.setName(name + " (" + new Date() + ")");
 	}
 
 	public MealPOJO getMeal() {

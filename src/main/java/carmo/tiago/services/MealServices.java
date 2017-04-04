@@ -51,7 +51,7 @@ public class MealServices {
 		MealFacade.addMeal(POJOToEntityMeal(meal));
 	}
 
-	public static List<MealPOJO> getUserMeals(long userId) {
+	public static List<MealPOJO> getUserMeals(long userId) throws Exception {
 		List<MealPOJO> userMeals = new ArrayList<MealPOJO>();
 		Set<MealEntity> planList = UserFacade.getUserMeals(userId);
 		for (MealEntity s : planList) {
@@ -60,7 +60,7 @@ public class MealServices {
 		return userMeals;
 	}
 
-	public static MealPOJO getMealByName(String name) {
+	public static MealPOJO getMealByName(String name) throws Exception {
 		MealEntity food = MealFacade.getMealByName(name);
 		return entityToPOJOMeal(food);
 	}

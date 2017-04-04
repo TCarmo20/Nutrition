@@ -93,55 +93,70 @@ public class MealPrepController implements Initializable {
 
 	private void updateTable() {
 		listView.getItems().clear();
-		List<MealPOJO> list = MealServices.getUserMeals(LoginApp.getInstance().getLoggedUser().getUserId());
-		for (MealPOJO meal : list) {
-			Label lbl = new Label(meal.getName());
-			listView.getItems().add(lbl);
+		List<MealPOJO> list = null;
+		try {
+			list = MealServices.getUserMeals(LoginApp.getInstance().getLoggedUser().getUserId());
+			if (list.isEmpty()) {
+				deleteMeal.setDisable(true);
+				LOGGER.error("No Meals");
+			} else {
+				for (MealPOJO meal : list) {
+					Label lbl = new Label(meal.getName());
+					listView.getItems().add(lbl);
+				}
+			}
+		} catch (Exception e1) {
+			LOGGER.error("Error obtaining meals");
 		}
+
 		listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
 			@Override
 			public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
 				fadeMessages();
-				meal = MealServices.getMealByName(newValue.getText());
+				try {
+					meal = MealServices.getMealByName(newValue.getText());
+					
+					double proteinAmount = Double.valueOf(meal.getAmountProtein());
+					double carbsamount = Double.valueOf(meal.getAmountCarbs());
+					double fatamount = Double.valueOf(meal.getAmountFat());
 
-				double proteinAmount = Double.valueOf(meal.getAmountProtein());
-				double carbsamount = Double.valueOf(meal.getAmountCarbs());
-				double fatamount = Double.valueOf(meal.getAmountFat());
+					double proteinInProtein = Double.valueOf(meal.getProtein().getProtein());
+					double carbsInProtein = Double.valueOf(meal.getProtein().getCarbs());
+					double fatInProtein = Double.valueOf(meal.getProtein().getFat());
+					double caloriesInprotein = Double.valueOf(meal.getProtein().getCalories());
 
-				double proteinInProtein = Double.valueOf(meal.getProtein().getProtein());
-				double carbsInProtein = Double.valueOf(meal.getProtein().getCarbs());
-				double fatInProtein = Double.valueOf(meal.getProtein().getFat());
-				double caloriesInprotein = Double.valueOf(meal.getProtein().getCalories());
+					double protein1 = (proteinInProtein * proteinAmount) / 100;
+					double carbs1 = (carbsInProtein * proteinAmount) / 100;
+					double fat1 = (fatInProtein * proteinAmount) / 100;
+					double calories1 = (caloriesInprotein * proteinAmount) / 100;
 
-				double protein1 = (proteinInProtein * proteinAmount) / 100;
-				double carbs1 = (carbsInProtein * proteinAmount) / 100;
-				double fat1 = (fatInProtein * proteinAmount) / 100;
-				double calories1 = (caloriesInprotein * proteinAmount) / 100;
+					double proteinInCarbs = Double.valueOf(meal.getCarbs().getProtein());
+					double carbsInCarbs = Double.valueOf(meal.getCarbs().getCarbs());
+					double fatInCarbs = Double.valueOf(meal.getCarbs().getFat());
+					double caloriesInCarbs = Double.valueOf(meal.getCarbs().getCalories());
 
-				double proteinInCarbs = Double.valueOf(meal.getCarbs().getProtein());
-				double carbsInCarbs = Double.valueOf(meal.getCarbs().getCarbs());
-				double fatInCarbs = Double.valueOf(meal.getCarbs().getFat());
-				double caloriesInCarbs = Double.valueOf(meal.getCarbs().getCalories());
+					double protein2 = (proteinInCarbs * carbsamount) / 100;
+					double carbs2 = (carbsInCarbs * carbsamount) / 100;
+					double fat2 = (fatInCarbs * carbsamount) / 100;
+					double calories2 = (caloriesInCarbs * carbsamount) / 100;
 
-				double protein2 = (proteinInCarbs * carbsamount) / 100;
-				double carbs2 = (carbsInCarbs * carbsamount) / 100;
-				double fat2 = (fatInCarbs * carbsamount) / 100;
-				double calories2 = (caloriesInCarbs * carbsamount) / 100;
+					double proteinInFat = Double.valueOf(meal.getFat().getProtein());
+					double carbsInFat = Double.valueOf(meal.getFat().getCarbs());
+					double fatInFat = Double.valueOf(meal.getFat().getFat());
+					double caloriesInFat = Double.valueOf(meal.getFat().getCalories());
 
-				double proteinInFat = Double.valueOf(meal.getFat().getProtein());
-				double carbsInFat = Double.valueOf(meal.getFat().getCarbs());
-				double fatInFat = Double.valueOf(meal.getFat().getFat());
-				double caloriesInFat = Double.valueOf(meal.getFat().getCalories());
+					double protein3 = (proteinInFat * fatamount) / 100;
+					double carbs3 = (carbsInFat * fatamount) / 100;
+					double fat3 = (fatInFat * fatamount) / 100;
+					double calories3 = (caloriesInFat * fatamount) / 100;
 
-				double protein3 = (proteinInFat * fatamount) / 100;
-				double carbs3 = (carbsInFat * fatamount) / 100;
-				double fat3 = (fatInFat * fatamount) / 100;
-				double calories3 = (caloriesInFat * fatamount) / 100;
-
-				caloriesMeal.setText(String.valueOf(calories1 + calories2 + calories3));
-				proteinMeal.setText(String.valueOf(protein1 + protein2 + protein3));
-				carbsMeal.setText(String.valueOf(carbs1 + carbs2 + carbs3));
-				fatMeal.setText(String.valueOf(fat1 + fat2 + fat3));
+					caloriesMeal.setText(String.valueOf(calories1 + calories2 + calories3));
+					proteinMeal.setText(String.valueOf(protein1 + protein2 + protein3));
+					carbsMeal.setText(String.valueOf(carbs1 + carbs2 + carbs3));
+					fatMeal.setText(String.valueOf(fat1 + fat2 + fat3));
+				} catch (Exception e) {
+					LOGGER.error("Error obtaining meal");
+				}
 			}
 		});
 	}
@@ -162,6 +177,11 @@ public class MealPrepController implements Initializable {
 				}
 			});
 			listView.getItems().clear();
+			if(LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()){
+				burgerTask.setRate(burgerTask.getRate() * -1);
+				burgerTask.play();
+				drawer.open();
+			}
 		} catch (IOException e) {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}

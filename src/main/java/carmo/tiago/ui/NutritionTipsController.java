@@ -60,6 +60,11 @@ public class NutritionTipsController implements Initializable {
 					drawer.open();
 				}
 			});
+			if(LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()){
+				burgerTask.setRate(burgerTask.getRate() * -1);
+				burgerTask.play();
+				drawer.open();
+			}
 		} catch (IOException e) {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}

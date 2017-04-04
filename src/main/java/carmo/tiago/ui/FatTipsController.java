@@ -175,6 +175,11 @@ public class FatTipsController implements Initializable {
 			listView.getItems().clear();
 			addToMealFat.setDisable(!LoginApp.getInstance().mealStart.get());
 			amountFat.setDisable(!LoginApp.getInstance().mealStart.get());
+			if(LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()){
+				burgerTask.setRate(burgerTask.getRate() * -1);
+				burgerTask.play();
+				drawer.open();
+			}
 		} catch (IOException e) {
 			LOGGER.error("Error initializing Home Page's drawer: " + e);
 		}

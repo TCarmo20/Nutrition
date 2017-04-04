@@ -25,7 +25,7 @@ public class MealEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long mealId;
-	@Column(unique = true)
+	@Column
 	private String name;
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private ProteinEntity protein;

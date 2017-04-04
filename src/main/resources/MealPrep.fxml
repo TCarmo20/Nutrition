@@ -40,22 +40,22 @@
                                        <children>
                                           <VBox prefHeight="180.0" prefWidth="155.0">
                                              <children>
-                                                <JFXTextField fx:id="caloriesMeal" labelFloat="true" promptText="Calories (100gr)">
+                                                <JFXTextField fx:id="caloriesMeal" editable="false" labelFloat="true" promptText="Calories (total)">
                                                    <VBox.margin>
                                                       <Insets top="20.0" />
                                                    </VBox.margin>
                                                 </JFXTextField>
-                                                <JFXTextField fx:id="proteinMeal" editable="false" labelFloat="true" promptText="Protein (100gr)">
+                                                <JFXTextField fx:id="proteinMeal" editable="false" labelFloat="true" promptText="Protein (total)">
                                                    <VBox.margin>
                                                       <Insets top="20.0" />
                                                    </VBox.margin>
                                                 </JFXTextField>
-                                                <JFXTextField fx:id="carbsMeal" editable="false" labelFloat="true" promptText="Carbs (100gr)">
+                                                <JFXTextField fx:id="carbsMeal" editable="false" labelFloat="true" promptText="Carbs (total)">
                                                    <VBox.margin>
                                                       <Insets top="20.0" />
                                                    </VBox.margin>
                                                 </JFXTextField>
-                                                <JFXTextField fx:id="fatMeal" editable="false" labelFloat="true" promptText="Fat (100gr)">
+                                                <JFXTextField fx:id="fatMeal" editable="false" labelFloat="true" promptText="Fat (total)">
                                                    <VBox.margin>
                                                       <Insets top="20.0" />
                                                    </VBox.margin>
