@@ -196,6 +196,7 @@ public class CarbsTipsController implements Initializable {
 				carbsTipsSnack.enqueue(new SnackbarEvent(carbs.getName() + " added!".toUpperCase()));
 				addToMealCarbs.setDisable(true);
 				amountCarbs.setDisable(true);
+				LoginApp.getInstance().gotoFatTips();
 			} catch (NullPointerException e) {
 				addToMealLabel.setText("Please select food first");
 				animateMessage(addToMealLabel);

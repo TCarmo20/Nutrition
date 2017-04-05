@@ -200,6 +200,7 @@ public class ProteinTipsController implements Initializable {
 				proteinTipsSnack.enqueue(new SnackbarEvent(protein.getName() + " added!".toUpperCase()));
 				amountProtein.setDisable(true);
 				addToMealProtein.setDisable(true);
+				LoginApp.getInstance().gotoCarbsTips();
 			} catch (NullPointerException e) {
 				addToMealLabel.setText("Please select food");
 				animateMessage(addToMealLabel);

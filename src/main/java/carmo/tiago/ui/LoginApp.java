@@ -49,8 +49,10 @@ public class LoginApp extends Application {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginApp.class);
 
 	public BooleanProperty mealStart = new SimpleBooleanProperty();
-
+	
 	private static MealPOJO meal;
+	
+	public FXMLLoader fxmlLoader;
 
 	@Override
 	public void init() throws Exception {
@@ -217,8 +219,10 @@ public class LoginApp extends Application {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	private void replaceSceneContent(String fxml) throws Exception {
-		Parent page = FXMLLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
+		fxmlLoader = new FXMLLoader();
+		Parent page = fxmlLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
 		Scene scene = stage.getScene();
 		if (scene == null) {
 			FadeTransition ft = new FadeTransition(new Duration(3000), page);
