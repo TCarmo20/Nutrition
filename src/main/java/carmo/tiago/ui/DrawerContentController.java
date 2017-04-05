@@ -8,7 +8,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXButton.ButtonType;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXNodesList;
+import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
 import com.restfb.types.User;
@@ -143,7 +145,9 @@ public class DrawerContentController implements Initializable {
 				if (startMealToggle.isSelected()) {
 					try {
 						JFXDialogLayout content = new JFXDialogLayout();
-						JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+						JFXDialog dialog = new JFXDialog(
+								(StackPane) LoginApp.getInstance().getStage().getScene().getRoot(), content,
+								JFXDialog.DialogTransition.CENTER);
 						content.setHeading(new Text("Meal name: \n\n"));
 						JFXTextField name = new JFXTextField();
 						name.setPromptText("Name");
@@ -153,6 +157,7 @@ public class DrawerContentController implements Initializable {
 						errorLabel.setPrefWidth(150);
 						JFXButton prepareMeal = new JFXButton("START");
 						prepareMeal.setButtonType(ButtonType.RAISED);
+						dialog.overlayCloseProperty().set(false);
 						prepareMeal.setOnAction(new EventHandler<ActionEvent>() {
 							@Override
 							public void handle(ActionEvent event) {
@@ -160,6 +165,10 @@ public class DrawerContentController implements Initializable {
 									startMealToggle.setText("FINISH MEAL");
 									LoginApp.getInstance().setMealStart(true, name.getText());
 									dialog.close();
+									LoginApp.getInstance().gotoProteinTips();
+									JFXSnackbar mealSnack = new JFXSnackbar(
+											(StackPane) LoginApp.getInstance().getStage().getScene().getRoot());
+									mealSnack.enqueue(new SnackbarEvent("MEAL STARTED! SELECT YOUR INGREDIENTS"));
 								} else {
 									errorLabel.setText("Please enter a name!");
 									animateMessage(errorLabel);
@@ -179,7 +188,7 @@ public class DrawerContentController implements Initializable {
 						vbox.getChildren().addAll(name, errorLabel);
 						content.setBody(vbox);
 						HBox hbox = new HBox(8);
-						hbox.getChildren().addAll(prepareMeal,cancelMeal);
+						hbox.getChildren().addAll(prepareMeal, cancelMeal);
 						content.setActions(hbox);
 						dialog.show();
 					} catch (NullPointerException e) {
