@@ -114,7 +114,7 @@ public class LoginController implements Initializable{
 		String appId = "1030304780447484";
 		String authUrl = "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + appId
 				+ "&redirect_uri=" + domain + "&scope=email";
-		Stage stage = new Stage(StageStyle.UNIFIED);
+		Stage stage = new Stage(StageStyle.UTILITY);
 		url = new TextField();
 		url.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override
