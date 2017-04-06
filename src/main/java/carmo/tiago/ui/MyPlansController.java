@@ -89,7 +89,7 @@ public class MyPlansController implements Initializable {
 	private JFXButton deletePlanBtn;
 
 	@FXML
-	private JFXDrawer drawer;
+	public JFXDrawer drawer;
 
 	@FXML
 	private JFXHamburger hamburger;

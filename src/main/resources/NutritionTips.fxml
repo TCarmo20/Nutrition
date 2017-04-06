@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="carmo.tiago.ui.NutritionTipsController">
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="carmo.tiago.ui.NutritionTipsController">
    <children>
       <AnchorPane fx:id="HomePage" stylesheets="@demo.css">
          <children>

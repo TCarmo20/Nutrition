@@ -49,9 +49,9 @@ public class LoginApp extends Application {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginApp.class);
 
 	public BooleanProperty mealStart = new SimpleBooleanProperty();
-	
+
 	private static MealPOJO meal;
-	
+
 	public FXMLLoader fxmlLoader;
 
 	@Override
@@ -102,9 +102,9 @@ public class LoginApp extends Application {
 		primaryStage.getIcons().add(new Image("Pictures/icon.png"));
 		try {
 			stage = primaryStage;
-//			stage.setMaximized(true);
-//			stage.setFullScreen(true);
-//			stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+			// stage.setMaximized(true);
+			// stage.setFullScreen(true);
+			// stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 			gotoLogin();
 			primaryStage.show();
 		} catch (Exception ex) {

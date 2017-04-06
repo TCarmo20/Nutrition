@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DrawerContentController">
    <children>
       <AnchorPane id="anchorPaneBar" fx:id="anchorPane" prefHeight="600.0" prefWidth="200.0" stylesheets="@demo.css">
       	<children>

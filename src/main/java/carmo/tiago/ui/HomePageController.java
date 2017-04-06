@@ -87,24 +87,21 @@ public class HomePageController implements Initializable {
 	private void loadDialog() {
 		JFXDialogLayout content = new JFXDialogLayout();
 		dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+		dialog.overlayCloseProperty().set(false);
 		content.setHeading(new Text("Welcome to the Nutrition app"));
 		content.setBody(new Text(
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lorem risus, aliquam quis vehicula vitae,"
-						+ "\nrutrum non elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer commodo sodales purus,"
-						+ "\nnec dignissim odio laoreet eu. Ut viverra lorem vitae mauris rutrum, ac elementum mauris dapibus."
-						+ "\nFusce ut sollicitudin justo. Nunc ac posuere erat. Cras eget lorem elit. Aenean ultrices molestie"
-						+ "\nrisus ut consequat. Aliquam ultricies magna vitae quam posuere pellentesque.\n\nMorbi scelerisque pretium maximus."
-						+ "\nNunc maximus urna in rhoncus porttitor. Sed vestibulum mollis vestibulum. Suspendisse placerat blandit"
-						+ "\nmauris sed pellentesque. Nulla tempor augue consectetur, aliquet ipsum vitae, pharetra ligula."
-						+ "\nVivamus commodo elementum scelerisque. Vivamus ac leo sed diam molestie aliquet quis id erat."
-						+ "\nInteger hendrerit, felis sit amet efficitur iaculis, metus nisl interdum risus, in suscipit massa odio vitae enim."
-						+ "\nMaecenas at odio vulputate, ullamcorper eros nec, ultrices diam. Aliquam at vehicula orci."
-						+ "\nVestibulum rhoncus consequat velit eget dapibus."));
+				"To start please press the 'OK' button or the three lines at the top right corner of the page. "
+				+ "\nThis will open the menu drawer where you will be able to navigate to all the screens on the app."
+				+ "\nApp created by Tiago Carmo. Any questions or suggestions on how to improve the app, please email me!"
+				+ "\ntcarmo20@gmail.com"));
 		JFXButton close = new JFXButton("OK");
 		close.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				dialog.close();
+				burgerTask.setRate(burgerTask.getRate() * -1);
+				burgerTask.play();
+				drawer.open();
 			}
 		});
 		content.setActions(close);
@@ -113,10 +110,6 @@ public class HomePageController implements Initializable {
 
 	public static HomePageController getInstance() {
 		return instance;
-	}
-	
-	public StackPane getStackPane() {
-		return stackPane;
 	}
 
 }
