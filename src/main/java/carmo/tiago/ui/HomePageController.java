@@ -65,7 +65,6 @@ public class HomePageController implements Initializable {
 					drawer.close();
 				} else {
 					drawer.open();
-					dialog.close();
 				}
 			});
 			loadDialog();
@@ -98,7 +97,6 @@ public class HomePageController implements Initializable {
 		close.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				dialog.close();
 				burgerTask.setRate(burgerTask.getRate() * -1);
 				burgerTask.play();
 				drawer.open();
