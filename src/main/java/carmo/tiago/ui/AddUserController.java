@@ -129,7 +129,7 @@ public class AddUserController implements Initializable {
 				try {
 					UserServices.addUser(name.getText(), email.getText(), password.getText(),
 							agePicker.getValue().toString(), activityLevel.getSelectionModel().getSelectedItem(),
-							sex.getSelectionModel().getSelectedItem(), height.getText(), weight.getText());
+							sex.getSelectionModel().getSelectedItem(), height.getText(), weight.getText(), "User");
 					LoginApp.getInstance().gotoLogin();
 				} catch (Exception e) {
 					errorMessage.setText("Error adding user!");

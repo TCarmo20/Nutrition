@@ -22,6 +22,31 @@
 	-fx-border-width: 1.0;
 }
 
+#borderAdmin{
+	-fx-background-color: white;
+	-fx-background-radius:5.0px;
+	-fx-border-width: 1.0;
+}
+
+#nutPlanList > *.content{
+	-fx-background-color: transparent ;
+}
+
+#nutPlanList .title{
+	-fx-background-color: transparent ;
+	-fx-border-color: turquoise;
+}
+
+#mealsPane > *.content{
+	-fx-background-color: transparent ;
+}
+
+#mealsPane .title{
+	-fx-background-color: transparent ;
+	-fx-border-color: turquoise;
+}
+
+
 #anchorPaneUpdateUser{
 	-fx-background-color: white;
 	-fx-background-radius:5.0px;
@@ -229,7 +254,6 @@
 
 #listView:selected {
 	-fx-background-color: rgb(151.0,192.0,255.0) ;
-	
 }
 
 .list-view .scroll-bar:horizontal .increment-arrow,

@@ -160,7 +160,7 @@ public class UpdateDetailsController implements Initializable {
 			checkMessages();
 			UserServices.updateUser(updateName.getText(), updateEmail.getText(), updatePassword.getText(),
 					updateAge.getValue().toString(), updateActivity.getSelectionModel().getSelectedItem(),
-					updateSex.getSelectionModel().getSelectedItem(), updateHeight.getText(), updateWeight.getText());
+					updateSex.getSelectionModel().getSelectedItem(), updateHeight.getText(), updateWeight.getText(), "User");
 			JFXDialogLayout content = new JFXDialogLayout();
 			content.setHeading(new Text("User Successfully Updated!"));
 			JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);

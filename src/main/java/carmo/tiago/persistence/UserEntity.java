@@ -3,6 +3,7 @@ package carmo.tiago.persistence;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,18 +41,20 @@ public class UserEntity implements Serializable {
 	private String sex;
 	@Column
 	private String activityLevel;
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId")
 	private Set<NutPlanEntity> plans;
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId")
 	private Set<MealEntity> meals;
+	@Column
+	private String profile;
 
 	public static final String FIND_ALL = "User.findAll";
 	public static final String FIND_SPECIFIC_EMAIL = "User.findSpecificEmail";
 
 	public UserEntity(String name, String email, String password, String dob, String height, String weight, String sex,
-			String activityLevel, Set<NutPlanEntity> plans, Set<MealEntity> meals) {
+			String activityLevel, Set<NutPlanEntity> plans, Set<MealEntity> meals, String profile) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -63,6 +66,7 @@ public class UserEntity implements Serializable {
 		this.activityLevel = activityLevel;
 		this.plans = plans;
 		this.meals = meals;
+		this.profile = profile;
 	}
 
 	public UserEntity() {
@@ -153,6 +157,14 @@ public class UserEntity implements Serializable {
 
 	public void setActivityLevel(String activityLevel) {
 		this.activityLevel = activityLevel;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 
 }

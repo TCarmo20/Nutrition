@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -17,6 +19,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PLAN")
+@NamedQueries({ @NamedQuery(name = NutPlanEntity.FIND_ALL, query = "SELECT s FROM NutPlanEntity s"),
+		@NamedQuery(name = NutPlanEntity.FIND_SPECIFIC_NAME, query = "SELECT s FROM NutPlanEntity s WHERE s.name LIKE ?1") })
 public class NutPlanEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +42,11 @@ public class NutPlanEntity implements Serializable {
 	@ManyToOne
 	private UserEntity user;
 
-	public NutPlanEntity(String name, double calories, double protein, double carbs, double fat, String objective, UserEntity user) {
+	public static final String FIND_ALL = "NutPlan.findAll";
+	public static final String FIND_SPECIFIC_NAME = "NutPlan.findSpecificName";
+
+	public NutPlanEntity(String name, double calories, double protein, double carbs, double fat, String objective,
+			UserEntity user) {
 		super();
 		this.name = name;
 		this.calories = calories;
@@ -58,7 +66,7 @@ public class NutPlanEntity implements Serializable {
 	public long getPlanId() {
 		return planId;
 	}
-	
+
 	public double getCalories() {
 		return calories;
 	}
@@ -106,7 +114,7 @@ public class NutPlanEntity implements Serializable {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -114,6 +122,5 @@ public class NutPlanEntity implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 }

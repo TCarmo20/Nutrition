@@ -2,7 +2,9 @@ package carmo.tiago.services;
 
 import java.util.Set;
 
-public class UserPOJO {
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+public class UserPOJO extends RecursiveTreeObject<UserPOJO> {
 	
 	private long userId;
 	private String name;
@@ -14,6 +16,8 @@ public class UserPOJO {
 	private String sex;
 	private String activityLevel;
 	private Set<NutPlanPOJO> plans;
+	private Set<MealPOJO> meals;
+	private String profile;
 	
 	public UserPOJO(){
 	}
@@ -96,6 +100,22 @@ public class UserPOJO {
 	
 	public void setPlans(Set<NutPlanPOJO> plans) {
 		this.plans = plans;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public Set<MealPOJO> getMeals() {
+		return meals;
+	}
+
+	public void setMeals(Set<MealPOJO> meals) {
+		this.meals = meals;
 	}
 
 }

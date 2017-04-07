@@ -1,7 +1,8 @@
 package carmo.tiago.persistence;
 
+import java.util.List;
 import java.util.Set;
-
+import javax.persistence.TypedQuery;
 import carmo.tiago.ui.LoginApp;
 
 public class UserFacade {
@@ -44,6 +45,19 @@ public class UserFacade {
 	public static Set<MealEntity> getUserMeals(long userId){
 		UserEntity user = LoginApp.getInstance().getEm().find(UserEntity.class, userId);
 		return user.getMeals();
+	}
+
+	public static List<UserEntity> getAllUsers() {
+		TypedQuery<UserEntity> allUsers = LoginApp.getInstance().getEm().createNamedQuery(UserEntity.FIND_ALL,
+				UserEntity.class);
+		return allUsers.getResultList();
+	}
+
+	public static void deleteUser(long userId) {
+		UserEntity user = LoginApp.getInstance().getEm().find(UserEntity.class, userId);
+		LoginApp.getInstance().getEm().getTransaction().begin();
+		LoginApp.getInstance().getEm().remove(user);
+		LoginApp.getInstance().getEm().getTransaction().commit();
 	}
 
 }

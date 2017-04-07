@@ -130,7 +130,6 @@ public class LoginApp extends Application {
 		UserPOJO user = UserServices.getUserByEmailPOJO(email);
 		if (user.getPassword().equals(UserServices.encrypt(password))) {
 			setLoggedUser(user);
-			gotoHomePage();
 		} else {
 			LOGGER.error("Passwords do not match");
 			throw new Exception();
@@ -152,7 +151,7 @@ public class LoginApp extends Application {
 		}
 	}
 
-	private void gotoHomePage() {
+	public void gotoHomePage() {
 		try {
 			replaceSceneContent("/HomePage.fxml");
 		} catch (Exception ex) {
@@ -213,6 +212,15 @@ public class LoginApp extends Application {
 	public void gotoMealPrep() {
 		try {
 			replaceSceneContent("/MealPrep.fxml");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			LOGGER.error("Error changing scene: " + ex);
+		}
+	}
+	
+	public void gotoAdminPage() {
+		try {
+			replaceSceneContent("/AdminPage.fxml");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			LOGGER.error("Error changing scene: " + ex);

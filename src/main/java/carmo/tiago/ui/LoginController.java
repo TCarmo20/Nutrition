@@ -18,6 +18,8 @@ import com.restfb.types.User;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,10 +27,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -40,31 +44,37 @@ import javafx.util.Duration;
  * @author Tiago Carmo
  *
  */
-public class LoginController implements Initializable{
+public class LoginController implements Initializable {
 
 	@FXML
-	private BorderPane Login;
+    private BorderPane Login;
 
-	@FXML
-	private Group groupLogin;
+    @FXML
+    private Group groupLogin;
 
-	@FXML
-	private Label errorMessage;
+    @FXML
+    private Label errorMessage;
 
-	@FXML
-	private JFXTextField userIdLogin;
+    @FXML
+    private JFXTextField userIdLogin;
 
-	@FXML
-	private JFXPasswordField passwordLogin;
+    @FXML
+    private JFXPasswordField passwordLogin;
 
-	@FXML
-	private JFXButton login;
+    @FXML
+    private JFXButton login;
 
-	@FXML
-	private JFXButton addUserLogin;
+    @FXML
+    private JFXButton addUserLogin;
 
-	@FXML
-	private JFXButton facebookBtn;
+    @FXML
+    private JFXButton facebookBtn;
+
+    @FXML
+    private VBox progressBox;
+
+    @FXML
+    private ProgressIndicator progressLogin;
 
 	private TextField url;
 	private WebView webView;
@@ -75,14 +85,35 @@ public class LoginController implements Initializable{
 	@FXML
 	protected void processLogin() {
 		fadeMessage();
-		try {
-			LoginApp.getInstance().userLogging(userIdLogin.getText(), passwordLogin.getText());
-			LOGGER.info("User logged in");
-		} catch (Exception e) {
-			LOGGER.error("Error logging in");
-			errorMessage.setText("Username/password combination is invalid.");
-			animateMessage(errorMessage);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				progressLogin.setVisible(true);
+				LoginApp.getInstance().userLogging(userIdLogin.getText(), passwordLogin.getText());
+				LOGGER.info("User logged in");
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				progressLogin.setVisible(false);
+				if(LoginApp.getInstance().getLoggedUser().getProfile().equals("Admin")){
+					LoginApp.getInstance().gotoAdminPage();
+				} else {
+					LoginApp.getInstance().gotoHomePage();
+				}
+			}
+		});
+		task.setOnFailed(new EventHandler<WorkerStateEvent>(){
+			@Override
+			public void handle(WorkerStateEvent event) {
+				progressLogin.setVisible(false);
+				errorMessage.setText("Username/Password is wrong!");
+				animateMessage(errorMessage);
+			}
+		});
+		new Thread(task).start();
 	}
 
 	private void fadeMessage() {

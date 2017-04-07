@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.AdminPageController">
+   <children>
+      <AnchorPane fx:id="HomePage" stylesheets="@demo.css">
+         <children>
+            <StackPane fx:id="stackPane" layoutX="200.0" layoutY="69.0" prefHeight="600.0" prefWidth="770.0" stylesheets="@demo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Group fx:id="AdminGroup">
+                     <children>
+                        <BorderPane fx:id="borderAdmin" prefHeight="450.0" prefWidth="500.0">
+                           <center>
+                              <JFXTreeTableView fx:id="usersTable" prefHeight="450.0" prefWidth="250.0">
+                                 <BorderPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </BorderPane.margin></JFXTreeTableView>
+                           </center>
+                           <bottom>
+                              <VBox BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </BorderPane.margin>
+                                 <children>
+                                    <FlowPane alignment="CENTER_LEFT">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <JFXTextField fx:id="filter" labelFloat="true" prefWidth="218.0" promptText="Filter by name" />
+                                          <Label fx:id="errorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="228.0" textFill="RED">
+                                             <FlowPane.margin>
+                                                <Insets left="20.0" />
+                                             </FlowPane.margin>
+                                             <effect>
+                                                <DropShadow />
+                                             </effect>
+                                          </Label>
+                                       </children>
+                                    </FlowPane>
+                                    <HBox alignment="BOTTOM_CENTER">
+                                       <children>
+                                          <AnchorPane prefHeight="31.0" prefWidth="500.0">
+                                             <children>
+                                                <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <JFXButton fx:id="deleteUserAdmin" onAction="#deleteUser" text="DELETE USER" textAlignment="CENTER">
+                                                         <HBox.margin>
+                                                            <Insets right="65.0" />
+                                                         </HBox.margin>
+                                                      </JFXButton>
+                                                      <JFXButton fx:id="deleteMealAdmin" alignment="CENTER" onAction="#deleteMealAdmin" text="DELETE MEAL">
+                                                         <HBox.margin>
+                                                            <Insets />
+                                                         </HBox.margin>
+                                                      </JFXButton>
+                                                      <JFXButton fx:id="deletePlanAdmin" alignment="CENTER_RIGHT" contentDisplay="CENTER" onAction="#deletePlanAdmin" text="DELETE PLAN">
+                                                         <HBox.margin>
+                                                            <Insets left="65.0" />
+                                                         </HBox.margin>
+                                                      </JFXButton>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </bottom>
+                           <right>
+                              <VBox prefHeight="450.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TitledPane id="nutPlanList" alignment="CENTER" contentDisplay="CENTER" stylesheets="@demo.css" text="Nutrition Plans">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <content>
+                                          <JFXListView fx:id="nutPlansList" prefHeight="225.0" prefWidth="250.0" />
+                                       </content>
+                                    </TitledPane>
+                                    <TitledPane id="mealsPane" alignment="CENTER" contentDisplay="CENTER" stylesheets="@demo.css" text="Meals">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <content>
+                                          <JFXListView fx:id="mealPlanList" prefHeight="225.0" prefWidth="250.0" />
+                                       </content>
+                                    </TitledPane>
+                                 </children>
+                              </VBox>
+                           </right>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </BorderPane>
+                     </children>
+                  </Group>
+               </children>
+            </StackPane>
+            <Hyperlink fx:id="logoutLink" onAction="#processLogout" text="Logout" textFill="TURQUOISE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

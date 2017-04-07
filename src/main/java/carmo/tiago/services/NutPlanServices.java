@@ -1,6 +1,7 @@
 package carmo.tiago.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -8,6 +9,8 @@ import java.util.Set;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 
+import carmo.tiago.persistence.MealEntity;
+import carmo.tiago.persistence.MealFacade;
 import carmo.tiago.persistence.NutPlanEntity;
 import carmo.tiago.persistence.NutPlanFacade;
 import carmo.tiago.persistence.UserFacade;
@@ -61,7 +64,7 @@ public class NutPlanServices {
 			carbs = (FA - (protein * 4 + fat * 9)) / 4;
 			NutPlanEntity plan = new NutPlanEntity();
 			plan.setCalories(Math.round(FA));
-			plan.setName(name);
+			plan.setName(name + " (" + new Date() + ")");
 			plan.setCarbs(Math.round(carbs));
 			plan.setProtein(Math.round(protein));
 			plan.setFat(Math.round(fat));
@@ -136,6 +139,11 @@ public class NutPlanServices {
 
 	public static void deletePlan(NutPlanPOJO rowData) throws Exception {
 		NutPlanFacade.deletePlan(rowData);
+	}
+
+	public static NutPlanPOJO getPlanByName(String name) {
+		NutPlanEntity plan = NutPlanFacade.getPlanByName(name);
+		return entityToPOJOPlan(plan);
 	}
 
 }
