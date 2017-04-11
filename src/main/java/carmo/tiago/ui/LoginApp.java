@@ -19,6 +19,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
@@ -53,6 +56,10 @@ public class LoginApp extends Application {
 	private static MealPOJO meal;
 
 	public FXMLLoader fxmlLoader;
+
+	private Scene scene;
+
+	private Parent page;
 
 	@Override
 	public void init() throws Exception {
@@ -170,11 +177,35 @@ public class LoginApp extends Application {
 	}
 
 	public void gotoMyPlans() {
-		try {
-			replaceSceneContent("/MyPlans.fxml");
-		} catch (Exception ex) {
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/MyPlans.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
+	}
+
+	@SuppressWarnings("static-access")
+	private void replaceSceneContentTest(String fxml) throws Exception {
+		fxmlLoader = new FXMLLoader();
+		page = fxmlLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
+		scene = stage.getScene();
 	}
 
 	public void gotoUpdateUserScreen() {
@@ -217,7 +248,7 @@ public class LoginApp extends Application {
 			LOGGER.error("Error changing scene: " + ex);
 		}
 	}
-	
+
 	public void gotoAdminPage() {
 		try {
 			replaceSceneContent("/AdminPage.fxml");

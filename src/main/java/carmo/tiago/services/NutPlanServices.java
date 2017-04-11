@@ -5,12 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
-
-import carmo.tiago.persistence.MealEntity;
-import carmo.tiago.persistence.MealFacade;
 import carmo.tiago.persistence.NutPlanEntity;
 import carmo.tiago.persistence.NutPlanFacade;
 import carmo.tiago.persistence.UserFacade;

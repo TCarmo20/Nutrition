@@ -49,12 +49,15 @@ public class UserEntity implements Serializable {
 	private Set<MealEntity> meals;
 	@Column
 	private String profile;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JoinColumn(name = "userId")
+	private Set<DayEntity> days;
 
 	public static final String FIND_ALL = "User.findAll";
 	public static final String FIND_SPECIFIC_EMAIL = "User.findSpecificEmail";
 
 	public UserEntity(String name, String email, String password, String dob, String height, String weight, String sex,
-			String activityLevel, Set<NutPlanEntity> plans, Set<MealEntity> meals, String profile) {
+			String activityLevel, Set<NutPlanEntity> plans, Set<MealEntity> meals, String profile, Set<DayEntity> days) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -67,6 +70,7 @@ public class UserEntity implements Serializable {
 		this.plans = plans;
 		this.meals = meals;
 		this.profile = profile;
+		this.days = days;
 	}
 
 	public UserEntity() {
@@ -166,5 +170,14 @@ public class UserEntity implements Serializable {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
+	
+	public Set<DayEntity> getDays() {
+		return days;
+	}
+
+	public void setDays(Set<DayEntity> days) {
+		this.days = days;
+	}
+
 
 }
