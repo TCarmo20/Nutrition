@@ -19,6 +19,7 @@ import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
 import carmo.tiago.services.FatPOJO;
 import carmo.tiago.services.FatServices;
+import carmo.tiago.services.MealPOJO;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -96,6 +97,10 @@ public class FatTipsController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		initializeHomePage();
 		updateTable();
+		if (DrawerContentController.getInstance().startMealToggle.isSelected()) {
+			JFXSnackbar carbsTipsSnack = new JFXSnackbar(stackPane);
+			carbsTipsSnack.enqueue(new SnackbarEvent("Choose the fat for the meal and the amount".toUpperCase()));
+		}
 	}
 
 	private void updateTable() {
@@ -175,7 +180,7 @@ public class FatTipsController implements Initializable {
 			listView.getItems().clear();
 			addToMealFat.setDisable(!LoginApp.getInstance().mealStart.get());
 			amountFat.setDisable(!LoginApp.getInstance().mealStart.get());
-			if(LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()){
+			if (LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()) {
 				burgerTask.setRate(burgerTask.getRate() * -1);
 				burgerTask.play();
 				drawer.open();
@@ -198,10 +203,9 @@ public class FatTipsController implements Initializable {
 				LoginApp.getInstance().getMeal().setFat(fat);
 				LoginApp.getInstance().getMeal().setAmountFat(amountFat.getText());
 				LOGGER.info("ADICIONADO, nome = " + fat.getName());
-				JFXSnackbar fatTipsSnack = new JFXSnackbar(stackPane);
-				fatTipsSnack.enqueue(new SnackbarEvent(fat.getName() + " added!".toUpperCase()));
 				addToMealFat.setDisable(true);
 				amountFat.setDisable(true);
+				whereToGo();
 			} catch (NullPointerException e) {
 				addToMealLabel.setText("Please select food first");
 				animateMessage(addToMealLabel);
@@ -209,6 +213,19 @@ public class FatTipsController implements Initializable {
 		} else {
 			addToMealLabel.setText("Please select amount first");
 			animateMessage(addToMealLabel);
+		}
+	}
+
+	private void whereToGo() {
+		MealPOJO meal = LoginApp.getInstance().getMeal();
+		if (meal.getCarbs() != null && meal.getProtein() != null && meal.getFat() != null) {
+			DrawerContentController.getInstance().startMealToggle.fire();
+		} else if (meal.getCarbs() == null) {
+			LoginApp.getInstance().gotoCarbsTips();
+		} else if (meal.getFat() == null) {
+			LoginApp.getInstance().gotoFatTips();
+		} else if (meal.getProtein() == null) {
+			LoginApp.getInstance().gotoProteinTips();
 		}
 	}
 

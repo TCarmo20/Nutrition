@@ -14,6 +14,8 @@ import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
+
+import carmo.tiago.services.MealPOJO;
 import carmo.tiago.services.ProteinPOJO;
 import carmo.tiago.services.ProteinServices;
 import javafx.animation.FadeTransition;
@@ -92,6 +94,10 @@ public class ProteinTipsController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		initializeHomePage();
 		updateTable();
+		if (DrawerContentController.getInstance().startMealToggle.isSelected()) {
+			JFXSnackbar carbsTipsSnack = new JFXSnackbar(stackPane);
+			carbsTipsSnack.enqueue(new SnackbarEvent("Choose the protein for the meal and the amount".toUpperCase()));
+		}
 	}
 
 	private void updateTable() {
@@ -140,6 +146,11 @@ public class ProteinTipsController implements Initializable {
 				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Protein/cottage.jpg", 200, 150, true, false)));
 				lbl.setContentDisplay(ContentDisplay.TOP);
 				listView.getItems().add(lbl);
+			} else if (protein.getName().equals("Skyr")) {
+				Label lbl = new Label("Skyr");
+				lbl.setGraphic(new ImageView(new Image("Pictures/Food/Protein/skyr.jpg", 200, 150, true, false)));
+				lbl.setContentDisplay(ContentDisplay.TOP);
+				listView.getItems().add(lbl);
 			}
 		}
 		listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
@@ -173,7 +184,7 @@ public class ProteinTipsController implements Initializable {
 			listView.getItems().clear();
 			addToMealProtein.setDisable(!LoginApp.getInstance().mealStart.get());
 			amountProtein.setDisable(!LoginApp.getInstance().mealStart.get());
-			if(LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()){
+			if (LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()) {
 				burgerTask.setRate(burgerTask.getRate() * -1);
 				burgerTask.play();
 				drawer.open();
@@ -196,11 +207,9 @@ public class ProteinTipsController implements Initializable {
 				LoginApp.getInstance().getMeal().setProtein(protein);
 				LoginApp.getInstance().getMeal().setAmountProtein(amountProtein.getText());
 				LOGGER.info("ADICIONADO, name = " + protein.getName());
-				proteinTipsSnack = new JFXSnackbar(stackPane);
-				proteinTipsSnack.enqueue(new SnackbarEvent(protein.getName() + " added!".toUpperCase()));
 				amountProtein.setDisable(true);
 				addToMealProtein.setDisable(true);
-				LoginApp.getInstance().gotoCarbsTips();
+				whereToGo();
 			} catch (NullPointerException e) {
 				addToMealLabel.setText("Please select food");
 				animateMessage(addToMealLabel);
@@ -208,6 +217,19 @@ public class ProteinTipsController implements Initializable {
 		} else {
 			addToMealLabel.setText("Please enter amount");
 			animateMessage(addToMealLabel);
+		}
+	}
+
+	private void whereToGo() {
+		MealPOJO meal = LoginApp.getInstance().getMeal();
+		if (meal.getCarbs() != null && meal.getProtein() != null && meal.getFat() != null) {
+			DrawerContentController.getInstance().startMealToggle.fire();
+		} else if (meal.getCarbs() == null) {
+			LoginApp.getInstance().gotoCarbsTips();
+		} else if (meal.getFat() == null) {
+			LoginApp.getInstance().gotoFatTips();
+		} else if (meal.getProtein() == null) {
+			LoginApp.getInstance().gotoProteinTips();
 		}
 	}
 

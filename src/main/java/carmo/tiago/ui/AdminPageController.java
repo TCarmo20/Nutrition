@@ -17,6 +17,9 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.JFXButton.ButtonType;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+import carmo.tiago.services.DayPOJO;
+import carmo.tiago.services.DayServices;
 import carmo.tiago.services.MealPOJO;
 import carmo.tiago.services.MealServices;
 import carmo.tiago.services.NutPlanPOJO;
@@ -87,11 +90,19 @@ public class AdminPageController implements Initializable {
 	@FXML
 	private Label errorLabel;
 
+	@FXML
+	private JFXButton deleteDayAdmin;
+
+	@FXML
+	private JFXListView<Label> dayList;
+
 	private static UserPOJO rowData;
 
 	private static NutPlanPOJO nutPlan;
 
 	private static MealPOJO meal;
+
+	private static DayPOJO day;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdminPageController.class);
 
@@ -109,6 +120,7 @@ public class AdminPageController implements Initializable {
 		usersTable.getColumns().clear();
 		nutPlansList.getItems().clear();
 		mealPlanList.getItems().clear();
+		dayList.getItems().clear();
 		try {
 			userList = UserServices.getAllUsers();
 			JFXTreeTableColumn<UserPOJO, String> nameCol = new JFXTreeTableColumn<>("Name");
@@ -131,12 +143,15 @@ public class AdminPageController implements Initializable {
 				row.setOnMouseClicked(event -> {
 					nutPlan = null;
 					meal = null;
+					day = null;
 					nutPlansList.getItems().clear();
 					mealPlanList.getItems().clear();
+					dayList.getItems().clear();
 					rowData = row.getItem();
 					if (rowData != null) {
 						List<NutPlanPOJO> planList = null;
 						List<MealPOJO> mealList = null;
+						List<DayPOJO> dayList2 = null;
 						try {
 							planList = NutPlanServices.getUserPlans(rowData.getUserId());
 							if (planList != null) {
@@ -161,6 +176,18 @@ public class AdminPageController implements Initializable {
 						} catch (Exception e) {
 							LOGGER.error("Error obtaining meals");
 						}
+						try {
+							dayList2 = DayServices.getUserDays(rowData.getUserId());
+							if (dayList2 != null) {
+								for (DayPOJO day : dayList2) {
+									Label lbl = new Label(day.getDay());
+									dayList.getItems().add(lbl);
+									LOGGER.info("DAY: " + day.getCreationDate());
+								}
+							}
+						} catch (Exception e) {
+							LOGGER.error("Error obtaining days");
+						}
 					}
 				});
 				nutPlansList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
@@ -177,11 +204,22 @@ public class AdminPageController implements Initializable {
 				mealPlanList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
 					@Override
 					public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
-						nutPlan = null;
+						meal = null;
 						try {
 							meal = MealServices.getMealByName(newValue.getText());
 						} catch (Exception e) {
 							LOGGER.error("No meals for user");
+						}
+					}
+				});
+				dayList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
+					@Override
+					public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
+						day = null;
+						try {
+							day = DayServices.getDayByName(newValue.getText());
+						} catch (Exception e) {
+							LOGGER.error("No days for user");
 						}
 					}
 				});
@@ -288,6 +326,51 @@ public class AdminPageController implements Initializable {
 			}
 		} else {
 			errorLabel.setText("Please select a plan first");
+			animateMessage(errorLabel);
+		}
+	}
+
+	@FXML
+	void deleteDayAdmin(ActionEvent event) {
+		if (day != null) {
+			try {
+				JFXDialogLayout content = new JFXDialogLayout();
+				JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+				content.setHeading(new Text("Are you sure?"));
+				JFXButton delete = new JFXButton("YES");
+				delete.setButtonType(ButtonType.RAISED);
+				delete.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						try {
+							DayServices.deleteDay(day);
+							updateTable();
+							dialog.close();
+						} catch (Exception e) {
+							LOGGER.error("Error deleting user");
+						}
+					}
+				});
+				JFXButton noDelete = new JFXButton("NO");
+				noDelete.setButtonType(ButtonType.RAISED);
+				noDelete.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						dialog.close();
+					}
+				});
+				HBox hbox = new HBox(10);
+				hbox.getChildren().addAll(delete, noDelete);
+				content.setActions(hbox);
+				dialog.toFront();
+				dialog.show();
+			} catch (Exception e) {
+				errorLabel.setText("Please select a day first!");
+				animateMessage(errorLabel);
+				LOGGER.error("Error deleting day");
+			}
+		} else {
+			errorLabel.setText("Please select a day first");
 			animateMessage(errorLabel);
 		}
 	}

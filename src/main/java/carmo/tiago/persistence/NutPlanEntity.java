@@ -1,7 +1,6 @@
 package carmo.tiago.persistence;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -43,14 +41,12 @@ public class NutPlanEntity implements Serializable {
 	private String objective;
 	@ManyToOne
 	private UserEntity user;
-	@OneToMany(mappedBy = "nutPlan")
-	private Set<DayEntity> days;
-
+	
 	public static final String FIND_ALL = "NutPlan.findAll";
 	public static final String FIND_SPECIFIC_NAME = "NutPlan.findSpecificName";
 
 	public NutPlanEntity(String name, double calories, double protein, double carbs, double fat, String objective,
-			UserEntity user, Set<DayEntity> days) {
+			UserEntity user) {
 		super();
 		this.name = name;
 		this.calories = calories;
@@ -59,7 +55,6 @@ public class NutPlanEntity implements Serializable {
 		this.fat = fat;
 		this.objective = objective;
 		this.user = user;
-		this.days = days;
 	}
 
 	public NutPlanEntity() {
@@ -126,14 +121,6 @@ public class NutPlanEntity implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public Set<DayEntity> getDays() {
-		return days;
-	}
-
-	public void setDays(Set<DayEntity> days) {
-		this.days = days;
 	}
 
 }

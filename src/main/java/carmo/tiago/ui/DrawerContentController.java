@@ -63,7 +63,7 @@ public class DrawerContentController implements Initializable {
 	private JFXNodesList foodList;
 
 	@FXML
-	private JFXToggleButton startMealToggle;
+	public JFXToggleButton startMealToggle;
 
 	@FXML
 	public Label nameLabel;

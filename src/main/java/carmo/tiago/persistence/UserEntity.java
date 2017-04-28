@@ -49,10 +49,9 @@ public class UserEntity implements Serializable {
 	private Set<MealEntity> meals;
 	@Column
 	private String profile;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@JoinColumn(name = "userId")
+	@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
 	private Set<DayEntity> days;
-
+	
 	public static final String FIND_ALL = "User.findAll";
 	public static final String FIND_SPECIFIC_EMAIL = "User.findSpecificEmail";
 
@@ -178,6 +177,5 @@ public class UserEntity implements Serializable {
 	public void setDays(Set<DayEntity> days) {
 		this.days = days;
 	}
-
 
 }

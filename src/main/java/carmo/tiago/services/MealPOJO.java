@@ -11,6 +11,10 @@ public class MealPOJO {
 	private String amountCarbs;
 	private String amountFat;
 	private long mealId;
+	private double totalCal;
+	private double totalProt;
+	private double totalCarb;
+	private double totalFat;
 
 	public MealPOJO() {
 
@@ -86,6 +90,38 @@ public class MealPOJO {
 
 	public void setMealId(long mealId) {
 		this.mealId = mealId;
+	}
+
+	public double getTotalCal() {
+		return totalCal;
+	}
+
+	public void setTotalCal(double totalCal) {
+		this.totalCal = totalCal;
+	}
+
+	public double getTotalProt() {
+		return totalProt;
+	}
+
+	public void setTotalProt(double totalProt) {
+		this.totalProt = totalProt;
+	}
+
+	public double getTotalCarb() {
+		return totalCarb;
+	}
+
+	public void setTotalCarb(double totalCarb) {
+		this.totalCarb = totalCarb;
+	}
+
+	public double getTotalFat() {
+		return totalFat;
+	}
+
+	public void setTotalFat(double totalFat) {
+		this.totalFat = totalFat;
 	}
 
 }

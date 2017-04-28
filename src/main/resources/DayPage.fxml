@@ -3,9 +3,9 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
-<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
@@ -16,123 +16,110 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.MealPrepController">
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carmo.tiago.ui.DayPageController">
    <children>
       <AnchorPane fx:id="HomePage" stylesheets="@demo.css">
          <children>
             <StackPane fx:id="stackPane" layoutX="200.0" layoutY="69.0" prefHeight="600.0" prefWidth="770.0" stylesheets="@demo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Group fx:id="mealPrepGroup">
+                  <Group fx:id="dayGroup">
                      <children>
-                        <HBox id="hBoxPlans" alignment="TOP_CENTER" fillHeight="false" prefHeight="402.0" prefWidth="690.0" stylesheets="@demo.css">
+                        <HBox id="hBoxPlans" alignment="TOP_CENTER" fillHeight="false" prefHeight="402.0" stylesheets="@demo.css">
                            <children>
-                              <VBox id="vBoxPlans" fx:id="vBoxMeals" alignment="CENTER_LEFT" fillWidth="false" stylesheets="@demo.css">
+                              <VBox id="vBoxPlans" fx:id="vBoxDays" alignment="CENTER" stylesheets="@demo.css">
                                  <children>
-                                    <JFXListView id="listView" fx:id="listView" depthProperty="1" fixedCellSize="0.0" prefHeight="380.0" prefWidth="235.0" stylesheets="@demo.css" verticalGap="10.0">
+                                    <JFXTreeTableView id="myPlansTable" fx:id="DaysTable" prefHeight="384.0" prefWidth="200.0" showRoot="false" stylesheets="@demo.css">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
-                                    </JFXListView>
+                                    </JFXTreeTableView>
                                  </children>
                               </VBox>
-                              <VBox alignment="CENTER" fillWidth="false">
+                              <VBox>
                                  <children>
                                     <AnchorPane>
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="15.0" />
+                                       </VBox.margin>
                                        <children>
-                                          <VBox alignment="TOP_CENTER" prefHeight="263.0" prefWidth="155.0">
+                                          <VBox prefHeight="280.0" prefWidth="155.0">
                                              <children>
-                                                <JFXTextField fx:id="caloriesMeal" editable="false" labelFloat="true" promptText="Calories (total)">
+                                                <JFXTextField fx:id="caloriesDay" editable="false" labelFloat="true" promptText="Calories">
                                                    <VBox.margin>
                                                       <Insets top="20.0" />
                                                    </VBox.margin>
                                                 </JFXTextField>
-                                                <JFXTextField fx:id="proteinMeal" editable="false" labelFloat="true" promptText="Protein (total)">
+                                                <JFXTextField fx:id="proteinDay" editable="false" labelFloat="true" promptText="Protein">
                                                    <VBox.margin>
                                                       <Insets top="20.0" />
                                                    </VBox.margin>
                                                 </JFXTextField>
-                                                <JFXTextField fx:id="carbsMeal" editable="false" labelFloat="true" promptText="Carbs (total)">
+                                                <JFXTextField fx:id="carbsDay" editable="false" labelFloat="true" promptText="Carbs">
                                                    <VBox.margin>
                                                       <Insets top="20.0" />
                                                    </VBox.margin>
                                                 </JFXTextField>
-                                                <JFXTextField fx:id="fatMeal" editable="false" labelFloat="true" promptText="Fat (total)">
+                                                <JFXTextField fx:id="fatDay" editable="false" labelFloat="true" promptText="Fat">
                                                    <VBox.margin>
                                                       <Insets top="20.0" />
                                                    </VBox.margin>
                                                 </JFXTextField>
-                                                <JFXTextArea fx:id="ingredientsMeal" editable="false" labelFloat="true" prefHeight="53.0" prefWidth="155.0" promptText="Ingredients">
+                                                <JFXTextArea fx:id="ingredientsMeal" editable="false" labelFloat="true" prefHeight="83.0" prefWidth="155.0" promptText="Meals">
                                                    <VBox.margin>
-                                                      <Insets top="22.0" />
+                                                      <Insets top="20.0" />
                                                    </VBox.margin>
                                                 </JFXTextArea>
                                              </children>
                                           </VBox>
                                        </children>
-                                       <VBox.margin>
-                                          <Insets left="10.0" right="10.0" top="15.0" />
-                                       </VBox.margin>
                                     </AnchorPane>
                                     <AnchorPane prefHeight="202.0" prefWidth="155.0">
                                        <children>
                                           <VBox alignment="BOTTOM_CENTER" layoutY="170.0" prefHeight="190.0" prefWidth="155.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Label fx:id="errorDeleteMeal" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" textFill="RED">
+                                                <Label fx:id="deleteExportLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" textFill="RED">
                                                    <VBox.margin>
                                                       <Insets bottom="10.0" />
                                                    </VBox.margin>
+                                                   <effect>
+                                                      <DropShadow />
+                                                   </effect>
                                                 </Label>
-                                                <JFXButton fx:id="addToDay" onAction="#addMealToDay" prefHeight="25.0" prefWidth="155.0" text="ADD TO DAY &gt;" />
-                                                <JFXButton fx:id="deleteMeal" alignment="BOTTOM_CENTER" contentDisplay="CENTER" onAction="#deletePlan" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="DELETE" textAlignment="CENTER">
+                                                <JFXButton fx:id="exportDayBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#processExportDay" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="EXPORT" textAlignment="CENTER">
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />
                                                    </cursor>
+                                                </JFXButton>
+                                                <JFXButton fx:id="deleteDayBtn" alignment="BOTTOM_CENTER" contentDisplay="CENTER" onAction="#processDeleteDay" prefHeight="25.0" prefWidth="155.0" ripplerFill="WHITE" stylesheets="@demo.css" text="DELETE" textAlignment="CENTER">
                                                    <VBox.margin>
-                                                      <Insets bottom="13.0" top="10.0" />
+                                                      <Insets top="10.0" />
                                                    </VBox.margin>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
                                                 </JFXButton>
                                              </children>
                                           </VBox>
                                        </children>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" />
+                                       </VBox.margin>
                                     </AnchorPane>
                                  </children>
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
                               </VBox>
-                              <VBox alignment="CENTER_RIGHT" fillWidth="false">
-                                 <children>
-                                    <HBox alignment="CENTER" prefWidth="235.0" spacing="40.0">
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                       <children>
-                                          <JFXButton fx:id="saveDay" alignment="CENTER" contentDisplay="CENTER" onAction="#saveDay" prefWidth="80.0" text="SAVE" textAlignment="CENTER" />
-                                          <JFXButton fx:id="allDaysBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#gotoAllDays" prefWidth="120.0" text="ALL DAYS" textAlignment="CENTER" />
-                                       </children>
-                                    </HBox>
-                                    <JFXListView fx:id="dayMeals" depthProperty="1" fixedCellSize="0.0" prefHeight="380.0" prefWidth="235.0" verticalGap="10.0">
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="10.0" top="10.0" />
-                                       </VBox.margin>
-                                    </JFXListView>
-                                    <HBox alignment="CENTER" prefHeight="25.0" prefWidth="235.0" spacing="20.0">
-                                       <children>
-                                          <JFXButton fx:id="dayTotal" contentDisplay="CENTER" onAction="#calculate" prefWidth="110.0" text="TOTAL" />
-                                          <JFXButton fx:id="deleteMealDay" alignment="CENTER" contentDisplay="CENTER" onAction="#deleteMealFromDay" prefWidth="110.0" text="CLEAR" textAlignment="JUSTIFY" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="13.0" />
-                                       </VBox.margin>
-                                    </HBox>
-                                 </children>
-                              </VBox>
                            </children>
                            <effect>
                               <DropShadow />
                            </effect>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
                         </HBox>
-                     </children></Group>
+                     </children>
+                  </Group>
                </children>
             </StackPane>
             <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" overLayVisible="false" prefHeight="600.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />

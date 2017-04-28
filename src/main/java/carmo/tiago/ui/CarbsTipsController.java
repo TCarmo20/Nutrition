@@ -17,6 +17,7 @@ import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 import carmo.tiago.services.CarbsPOJO;
 import carmo.tiago.services.CarbsServices;
+import carmo.tiago.services.MealPOJO;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -90,6 +91,10 @@ public class CarbsTipsController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		initialieHomePage();
 		updateTable();
+		if (DrawerContentController.getInstance().startMealToggle.isSelected()) {
+			JFXSnackbar carbsTipsSnack = new JFXSnackbar(stackPane);
+			carbsTipsSnack.enqueue(new SnackbarEvent("Choose the carbs for the meal and the amount".toUpperCase()));
+		}
 	}
 
 	private void updateTable() {
@@ -169,7 +174,7 @@ public class CarbsTipsController implements Initializable {
 			listView.getItems().clear();
 			addToMealCarbs.setDisable(!LoginApp.getInstance().mealStart.get());
 			amountCarbs.setDisable(!LoginApp.getInstance().mealStart.get());
-			if(LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()){
+			if (LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()) {
 				burgerTask.setRate(burgerTask.getRate() * -1);
 				burgerTask.play();
 				drawer.open();
@@ -192,11 +197,9 @@ public class CarbsTipsController implements Initializable {
 				LoginApp.getInstance().getMeal().setCarbs(carbs);
 				LoginApp.getInstance().getMeal().setAmountCarbs(amountCarbs.getText());
 				LOGGER.info("ADICIONADO, nome = " + carbs.getName());
-				JFXSnackbar carbsTipsSnack = new JFXSnackbar(stackPane);
-				carbsTipsSnack.enqueue(new SnackbarEvent(carbs.getName() + " added!".toUpperCase()));
 				addToMealCarbs.setDisable(true);
 				amountCarbs.setDisable(true);
-				LoginApp.getInstance().gotoFatTips();
+				whereToGo();
 			} catch (NullPointerException e) {
 				addToMealLabel.setText("Please select food first");
 				animateMessage(addToMealLabel);
@@ -204,6 +207,19 @@ public class CarbsTipsController implements Initializable {
 		} else {
 			addToMealLabel.setText("Please select amount first");
 			animateMessage(addToMealLabel);
+		}
+	}
+
+	private void whereToGo() {
+		MealPOJO meal = LoginApp.getInstance().getMeal();
+		if (meal.getCarbs() != null && meal.getProtein() != null && meal.getFat() != null) {
+			DrawerContentController.getInstance().startMealToggle.fire();
+		} else if (meal.getCarbs() == null) {
+			LoginApp.getInstance().gotoCarbsTips();
+		} else if (meal.getFat() == null) {
+			LoginApp.getInstance().gotoFatTips();
+		} else if (meal.getProtein() == null) {
+			LoginApp.getInstance().gotoProteinTips();
 		}
 	}
 

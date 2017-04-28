@@ -46,6 +46,15 @@
 	-fx-border-color: turquoise;
 }
 
+#dayPane > *.content{
+	-fx-background-color: transparent ;
+}
+
+#dayPane .title{
+	-fx-background-color: transparent ;
+	-fx-border-color: turquoise;
+}
+
 
 #anchorPaneUpdateUser{
 	-fx-background-color: white;

@@ -1,7 +1,6 @@
 package carmo.tiago.persistence;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -43,21 +41,25 @@ public class MealEntity implements Serializable {
 	private String amountCarbs;
 	@Column
 	private String amountFat;
-	@ManyToMany(mappedBy = "meals")
-	private Set<DayEntity> days;
+	@Column
+	private double totalCal;
+	@Column
+	private double totalProt;
+	@Column
+	private double totalCarb;
+	@Column
+	private double totalFat;
 
 	public static final String FIND_ALL = "Meal.findAll";
 	public static final String FIND_SPECIFIC_NAME = "Meal.findSpecificName";
 
-	public MealEntity(String name, ProteinEntity protein, CarbsEntity carbs, FatEntity fat, UserEntity user,
-			Set<DayEntity> days) {
+	public MealEntity(String name, ProteinEntity protein, CarbsEntity carbs, FatEntity fat, UserEntity user) {
 		super();
 		this.name = name;
 		this.protein = protein;
 		this.carbs = carbs;
 		this.fat = fat;
 		this.user = user;
-		this.days = days;
 	}
 
 	public MealEntity() {
@@ -133,12 +135,36 @@ public class MealEntity implements Serializable {
 		this.amountFat = amountFat;
 	}
 
-	public Set<DayEntity> getDays() {
-		return days;
+	public double getTotalCal() {
+		return totalCal;
 	}
 
-	public void setDays(Set<DayEntity> days) {
-		this.days = days;
+	public void setTotalCal(double totalCal) {
+		this.totalCal = totalCal;
 	}
 
+	public double getTotalProt() {
+		return totalProt;
+	}
+
+	public void setTotalProt(double totalProt) {
+		this.totalProt = totalProt;
+	}
+
+	public double getTotalCarb() {
+		return totalCarb;
+	}
+
+	public void setTotalCarb(double totalCarb) {
+		this.totalCarb = totalCarb;
+	}
+
+	public double getTotalFat() {
+		return totalFat;
+	}
+
+	public void setTotalFat(double totalFat) {
+		this.totalFat = totalFat;
+	}
+	
 }

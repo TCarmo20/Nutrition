@@ -134,10 +134,10 @@ public class NutPlanServices {
 	}
 
 	public static void deletePlan(NutPlanPOJO rowData) throws Exception {
-		NutPlanFacade.deletePlan(rowData);
+		NutPlanFacade.deletePlan(rowData.getPlanId());
 	}
 
-	public static NutPlanPOJO getPlanByName(String name) {
+	public static NutPlanPOJO getPlanByName(String name) throws Exception{
 		NutPlanEntity plan = NutPlanFacade.getPlanByName(name);
 		return entityToPOJOPlan(plan);
 	}
