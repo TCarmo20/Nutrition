@@ -114,28 +114,43 @@ public class MealPrepController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initializeHomePage();
-		listView.getItems().clear();
 		updateTable();
 	}
 
 	private void updateTable() {
-		listView.getItems().clear();
 		List<MealPOJO> list = null;
 		try {
 			list = MealServices.getUserMeals(LoginApp.getInstance().getLoggedUser().getUserId());
-			if (list.isEmpty()) {
-				addToDay.setDisable(true);
-				deleteMeal.setDisable(true);
-				LOGGER.error("No Meals");
-			} else {
-				for (MealPOJO meal : list) {
-					Label lbl = new Label(meal.getName());
-					listView.getItems().add(lbl);
+		} catch (Exception e1) {
+			LOGGER.error("Error obtaining meals. Exception: " + e1);
+		}
+		if (list.isEmpty()) {
+			addToDay.setDisable(true);
+			deleteMeal.setDisable(true);
+			LOGGER.error("No Meals");
+		} else {
+			for (MealPOJO meal : list) {
+				Label lbl = new Label(meal.getName());
+				listView.getItems().add(lbl);
+			}
+		}
+		listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
+			@Override
+			public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
+				try {
+					meal = MealServices.getMealByName(newValue.getText());
+					caloriesMeal.setText(String.valueOf(meal.getTotalCal()));
+					proteinMeal.setText(String.valueOf(meal.getTotalProt()));
+					carbsMeal.setText(String.valueOf(meal.getTotalCarb()));
+					fatMeal.setText(String.valueOf(meal.getTotalFat()));
+					ingredientsMeal.setText(meal.getProtein().getName() + " - " + meal.getAmountProtein() + "gr\n"
+							+ meal.getCarbs().getName() + " - " + meal.getAmountCarbs() + "gr\n"
+							+ meal.getFat().getName() + " - " + meal.getAmountFat() + "gr");
+				} catch (Exception e) {
+					LOGGER.error("Error obtaining meal");
 				}
 			}
-		} catch (Exception e1) {
-			LOGGER.error("Error obtaining meals");
-		}
+		});
 	}
 
 	public void initializeHomePage() {
@@ -155,26 +170,6 @@ public class MealPrepController implements Initializable {
 			});
 			listView.getItems().clear();
 			dayMeals.getItems().clear();
-			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
-				@Override
-				public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
-					listView.getSelectionModel().clearSelection();
-					fadeMessages();
-					try {
-						meal = MealServices.getMealByName(newValue.getText());
-						caloriesMeal.setText(String.valueOf(meal.getTotalCal()));
-						proteinMeal.setText(String.valueOf(meal.getTotalProt()));
-						carbsMeal.setText(String.valueOf(meal.getTotalCarb()));
-						fatMeal.setText(String.valueOf(meal.getTotalFat()));
-						ingredientsMeal.setText(meal.getProtein().getName() + " - " + meal.getAmountProtein() + "gr\n"
-								+ meal.getCarbs().getName() + " - " + meal.getAmountCarbs() + "gr\n"
-								+ meal.getFat().getName() + " - " + meal.getAmountFat() + "gr");
-					} catch (Exception e) {
-						LOGGER.error("Error obtaining meal");
-					}
-				}
-			});
-			
 			if (LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()) {
 				burgerTask.setRate(burgerTask.getRate() * -1);
 				burgerTask.play();
@@ -315,7 +310,7 @@ public class MealPrepController implements Initializable {
 	}
 
 	@FXML
-	void gotoAllDays(ActionEvent event) {
+	private void gotoAllDays(ActionEvent event) {
 		LoginApp.getInstance().gotoAllDays();
 	}
 

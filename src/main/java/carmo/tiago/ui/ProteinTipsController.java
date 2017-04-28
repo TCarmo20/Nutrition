@@ -102,7 +102,12 @@ public class ProteinTipsController implements Initializable {
 
 	private void updateTable() {
 		clearMessage();
-		List<ProteinPOJO> list = ProteinServices.getAllProtein();
+		List<ProteinPOJO> list = null;
+		try {
+			list = ProteinServices.getAllProtein();
+		} catch (Exception e1) {
+			LOGGER.error("Error obtaining all protein. Exception: " + e1);
+		}
 		for (ProteinPOJO protein : list) {
 			if (protein.getName().equals("Chicken breast")) {
 				Label lbl = new Label("Chicken breast");
@@ -156,11 +161,15 @@ public class ProteinTipsController implements Initializable {
 		listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
 			@Override
 			public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
-				protein = ProteinServices.getProteinByName(newValue.getText());
-				proteinProtein.setText(protein.getProtein());
-				carbsProtein.setText(protein.getCarbs());
-				fatProtein.setText(protein.getFat());
-				caloriesProtein.setText(protein.getCalories());
+				try {
+					protein = ProteinServices.getProteinByName(newValue.getText());
+					proteinProtein.setText(protein.getProtein());
+					carbsProtein.setText(protein.getCarbs());
+					fatProtein.setText(protein.getFat());
+					caloriesProtein.setText(protein.getCalories());
+				} catch (Exception e) {
+					LOGGER.error("Error selecting protein. Exception: " + e);
+				}
 			}
 		});
 	}

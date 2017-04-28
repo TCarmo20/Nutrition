@@ -28,7 +28,7 @@
                            <children>
                               <VBox id="vBoxPlans" fx:id="vBoxMeals" alignment="CENTER_LEFT" fillWidth="false" stylesheets="@demo.css">
                                  <children>
-                                    <JFXListView id="listView" fx:id="listView" depthProperty="1" fixedCellSize="0.0" prefHeight="380.0" prefWidth="235.0" stylesheets="@demo.css" verticalGap="10.0">
+                                    <JFXListView id="listView" fx:id="listView" depthProperty="1" prefHeight="380.0" prefWidth="235.0" stylesheets="@demo.css">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
