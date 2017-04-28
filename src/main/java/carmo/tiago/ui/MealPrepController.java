@@ -24,7 +24,6 @@ import carmo.tiago.services.DayServices;
 import carmo.tiago.services.MealPOJO;
 import carmo.tiago.services.MealServices;
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
