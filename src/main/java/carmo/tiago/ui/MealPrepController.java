@@ -13,10 +13,14 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXButton.ButtonType;
+import com.jfoenix.controls.JFXSnackbar.SnackbarEvent;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
+import carmo.tiago.services.DayServices;
 import carmo.tiago.services.MealPOJO;
 import carmo.tiago.services.MealServices;
 import javafx.animation.FadeTransition;
@@ -78,82 +82,70 @@ public class MealPrepController implements Initializable {
 	@FXML
 	private JFXButton deleteMeal;
 
+	@FXML
+	private JFXTextArea ingredientsMeal;
+
+	@FXML
+	private JFXButton addToDay;
+
+	@FXML
+	private JFXListView<Label> dayMeals;
+
+	@FXML
+	private JFXButton dayTotal;
+
+	@FXML
+	private JFXButton deleteMealDay;
+
+	@FXML
+	private JFXButton saveDay;
+
+	@FXML
+	private JFXButton allDaysBtn;
+
 	private HamburgerBasicCloseTransition burgerTask;
 
 	private MealPOJO meal;
+
+	private Double[] totals = new Double[4];
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MealPrepController.class);
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initializeHomePage();
-		listView.getItems().clear();
 		updateTable();
 	}
 
 	private void updateTable() {
-		listView.getItems().clear();
 		List<MealPOJO> list = null;
 		try {
 			list = MealServices.getUserMeals(LoginApp.getInstance().getLoggedUser().getUserId());
-			if (list.isEmpty()) {
-				deleteMeal.setDisable(true);
-				LOGGER.error("No Meals");
-			} else {
-				for (MealPOJO meal : list) {
-					Label lbl = new Label(meal.getName());
-					listView.getItems().add(lbl);
-				}
-			}
 		} catch (Exception e1) {
-			LOGGER.error("Error obtaining meals");
+			LOGGER.error("Error obtaining meals. Exception: " + e1);
 		}
-
+		if (list.isEmpty()) {
+			addToDay.setDisable(true);
+			deleteMeal.setDisable(true);
+			LOGGER.error("No Meals");
+		} else {
+			for (MealPOJO meal : list) {
+				Label lbl = new Label(meal.getName());
+				listView.getItems().add(lbl);
+			}
+		}
 		listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
 			@Override
 			public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
-				fadeMessages();
 				try {
 					meal = MealServices.getMealByName(newValue.getText());
-					
-					double proteinAmount = Double.valueOf(meal.getAmountProtein());
-					double carbsamount = Double.valueOf(meal.getAmountCarbs());
-					double fatamount = Double.valueOf(meal.getAmountFat());
-
-					double proteinInProtein = Double.valueOf(meal.getProtein().getProtein());
-					double carbsInProtein = Double.valueOf(meal.getProtein().getCarbs());
-					double fatInProtein = Double.valueOf(meal.getProtein().getFat());
-					double caloriesInprotein = Double.valueOf(meal.getProtein().getCalories());
-
-					double protein1 = (proteinInProtein * proteinAmount) / 100;
-					double carbs1 = (carbsInProtein * proteinAmount) / 100;
-					double fat1 = (fatInProtein * proteinAmount) / 100;
-					double calories1 = (caloriesInprotein * proteinAmount) / 100;
-
-					double proteinInCarbs = Double.valueOf(meal.getCarbs().getProtein());
-					double carbsInCarbs = Double.valueOf(meal.getCarbs().getCarbs());
-					double fatInCarbs = Double.valueOf(meal.getCarbs().getFat());
-					double caloriesInCarbs = Double.valueOf(meal.getCarbs().getCalories());
-
-					double protein2 = (proteinInCarbs * carbsamount) / 100;
-					double carbs2 = (carbsInCarbs * carbsamount) / 100;
-					double fat2 = (fatInCarbs * carbsamount) / 100;
-					double calories2 = (caloriesInCarbs * carbsamount) / 100;
-
-					double proteinInFat = Double.valueOf(meal.getFat().getProtein());
-					double carbsInFat = Double.valueOf(meal.getFat().getCarbs());
-					double fatInFat = Double.valueOf(meal.getFat().getFat());
-					double caloriesInFat = Double.valueOf(meal.getFat().getCalories());
-
-					double protein3 = (proteinInFat * fatamount) / 100;
-					double carbs3 = (carbsInFat * fatamount) / 100;
-					double fat3 = (fatInFat * fatamount) / 100;
-					double calories3 = (caloriesInFat * fatamount) / 100;
-
-					caloriesMeal.setText(String.valueOf(calories1 + calories2 + calories3));
-					proteinMeal.setText(String.valueOf(protein1 + protein2 + protein3));
-					carbsMeal.setText(String.valueOf(carbs1 + carbs2 + carbs3));
-					fatMeal.setText(String.valueOf(fat1 + fat2 + fat3));
+					caloriesMeal.setText(String.valueOf(meal.getTotalCal()));
+					proteinMeal.setText(String.valueOf(meal.getTotalProt()));
+					carbsMeal.setText(String.valueOf(meal.getTotalCarb()));
+					fatMeal.setText(String.valueOf(meal.getTotalFat()));
+					ingredientsMeal.setText(meal.getProtein().getName() + " - " + meal.getAmountProtein() + "gr\n"
+							+ meal.getCarbs().getName() + " - " + meal.getAmountCarbs() + "gr\n"
+							+ meal.getFat().getName() + " - " + meal.getAmountFat() + "gr");
 				} catch (Exception e) {
 					LOGGER.error("Error obtaining meal");
 				}
@@ -163,6 +155,8 @@ public class MealPrepController implements Initializable {
 
 	public void initializeHomePage() {
 		try {
+			drawer.toBack();
+			mealPrepGroup.toFront();
 			StackPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
 			drawer.setSidePane(anchor);
 			burgerTask = new HamburgerBasicCloseTransition(hamburger);
@@ -172,12 +166,17 @@ public class MealPrepController implements Initializable {
 				burgerTask.play();
 				if (drawer.isShown()) {
 					drawer.close();
+					mealPrepGroup.toFront();
+					drawer.toBack();
 				} else {
 					drawer.open();
+					drawer.toFront();
+					mealPrepGroup.toBack();
 				}
 			});
 			listView.getItems().clear();
-			if(LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()){
+			dayMeals.getItems().clear();
+			if (LoginApp.getInstance().getStage().isMaximized() || LoginApp.getInstance().getStage().isFullScreen()) {
 				burgerTask.setRate(burgerTask.getRate() * -1);
 				burgerTask.play();
 				drawer.open();
@@ -189,7 +188,7 @@ public class MealPrepController implements Initializable {
 	}
 
 	@FXML
-	void deletePlan(ActionEvent event) {
+	private void deletePlan(ActionEvent event) {
 		fadeMessages();
 		if (meal != null) {
 			JFXDialogLayout content1 = new JFXDialogLayout();
@@ -203,12 +202,14 @@ public class MealPrepController implements Initializable {
 					try {
 						dialog1.close();
 						MealServices.deleteMeal(meal);
+						listView.getItems().clear();
 						updateTable();
 						meal = null;
 						caloriesMeal.setText("");
 						proteinMeal.setText("");
 						carbsMeal.setText("");
 						fatMeal.setText("");
+						ingredientsMeal.setText("");
 					} catch (Exception e1) {
 						JFXDialogLayout content3 = new JFXDialogLayout();
 						content3.setHeading(new Text("Error deleting plan!"));
@@ -252,6 +253,25 @@ public class MealPrepController implements Initializable {
 		}
 	}
 
+	@FXML
+	private void addMealToDay(ActionEvent event) {
+		if (meal != null && totals[0] == null) {
+			Label lbl = new Label(meal.getName());
+			dayMeals.getItems().add(lbl);
+			totals[0] = Double.valueOf(caloriesMeal.getText());
+			totals[1] = Double.valueOf(proteinMeal.getText());
+			totals[2] = Double.valueOf(carbsMeal.getText());
+			totals[3] = Double.valueOf(fatMeal.getText());
+		} else if (meal != null && totals[0] != null) {
+			Label lbl = new Label(meal.getName());
+			dayMeals.getItems().add(lbl);
+			totals[0] = totals[0] + Double.valueOf(caloriesMeal.getText());
+			totals[1] = totals[1] + Double.valueOf(proteinMeal.getText());
+			totals[2] = totals[2] + Double.valueOf(carbsMeal.getText());
+			totals[3] = totals[3] + Double.valueOf(fatMeal.getText());
+		}
+	}
+
 	private void fadeMessages() {
 		errorDeleteMeal.setText("");
 	}
@@ -261,6 +281,44 @@ public class MealPrepController implements Initializable {
 		ft.setFromValue(0.0);
 		ft.setToValue(1);
 		ft.play();
+	}
+
+	@FXML
+	private void calculate(ActionEvent event) {
+		if (!dayMeals.getItems().isEmpty()) {
+			caloriesMeal.setText(String.valueOf(totals[0]));
+			proteinMeal.setText(String.valueOf(totals[1]));
+			carbsMeal.setText(String.valueOf(totals[2]));
+			fatMeal.setText(String.valueOf(totals[3]));
+			ingredientsMeal.setText("");
+		}
+	}
+
+	@FXML
+	private void deleteMealFromDay(ActionEvent event) {
+		dayMeals.getItems().clear();
+		totals[0] = null;
+		totals[1] = null;
+		totals[2] = null;
+		totals[3] = null;
+	}
+
+	@FXML
+	private void saveDay(ActionEvent event) {
+		if (!dayMeals.getItems().isEmpty()) {
+			try {
+				DayServices.addDay(LoginApp.getInstance().getLoggedUser(), dayMeals, totals);
+				JFXSnackbar snack = new JFXSnackbar(stackPane);
+				snack.enqueue(new SnackbarEvent("Day added to your days".toUpperCase()));
+			} catch (Exception e) {
+				LOGGER.error("Error saving Day. Exception: " + e);
+			}
+		}
+	}
+
+	@FXML
+	private void gotoAllDays(ActionEvent event) {
+		LoginApp.getInstance().gotoAllDays();
 	}
 
 }

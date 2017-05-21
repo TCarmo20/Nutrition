@@ -30,6 +30,10 @@ public class MealServices {
 		mealPOJO.setProtein(ProteinServices.entityToPOJOProtein(meal.getProtein()));
 		mealPOJO.setMealId(meal.getMealId());
 		mealPOJO.setUser(UserServices.entityToPOJO(meal.getUser()));
+		mealPOJO.setTotalCal(meal.getTotalCal());
+		mealPOJO.setTotalProt(meal.getTotalProt());
+		mealPOJO.setTotalCarb(meal.getTotalCarb());
+		mealPOJO.setTotalFat(meal.getTotalFat());
 		return mealPOJO;
 	}
 
@@ -43,10 +47,53 @@ public class MealServices {
 		mealEnt.setCarbs(CarbsServices.POJOToentityCarbs(meal.getCarbs()));
 		mealEnt.setFat(FatServices.POJOToentityFat(meal.getFat()));
 		mealEnt.setProtein(ProteinServices.POJOToentityProtein(meal.getProtein()));
+		mealEnt.setTotalCal(meal.getTotalCal());
+		mealEnt.setTotalProt(meal.getTotalProt());
+		mealEnt.setTotalCarb(meal.getTotalCarb());
+		mealEnt.setTotalFat(meal.getTotalFat());
 		return mealEnt;
 	}
 
 	public static void addMeal(MealPOJO meal) throws Exception {
+
+		double proteinAmount = Double.valueOf(meal.getAmountProtein());
+		double carbsamount = Double.valueOf(meal.getAmountCarbs());
+		double fatamount = Double.valueOf(meal.getAmountFat());
+
+		double proteinInProtein = Double.valueOf(meal.getProtein().getProtein());
+		double carbsInProtein = Double.valueOf(meal.getProtein().getCarbs());
+		double fatInProtein = Double.valueOf(meal.getProtein().getFat());
+		double caloriesInprotein = Double.valueOf(meal.getProtein().getCalories());
+
+		double protein1 = (proteinInProtein * proteinAmount) / 100;
+		double carbs1 = (carbsInProtein * proteinAmount) / 100;
+		double fat1 = (fatInProtein * proteinAmount) / 100;
+		double calories1 = (caloriesInprotein * proteinAmount) / 100;
+
+		double proteinInCarbs = Double.valueOf(meal.getCarbs().getProtein());
+		double carbsInCarbs = Double.valueOf(meal.getCarbs().getCarbs());
+		double fatInCarbs = Double.valueOf(meal.getCarbs().getFat());
+		double caloriesInCarbs = Double.valueOf(meal.getCarbs().getCalories());
+
+		double protein2 = (proteinInCarbs * carbsamount) / 100;
+		double carbs2 = (carbsInCarbs * carbsamount) / 100;
+		double fat2 = (fatInCarbs * carbsamount) / 100;
+		double calories2 = (caloriesInCarbs * carbsamount) / 100;
+
+		double proteinInFat = Double.valueOf(meal.getFat().getProtein());
+		double carbsInFat = Double.valueOf(meal.getFat().getCarbs());
+		double fatInFat = Double.valueOf(meal.getFat().getFat());
+		double caloriesInFat = Double.valueOf(meal.getFat().getCalories());
+
+		double protein3 = (proteinInFat * fatamount) / 100;
+		double carbs3 = (carbsInFat * fatamount) / 100;
+		double fat3 = (fatInFat * fatamount) / 100;
+		double calories3 = (caloriesInFat * fatamount) / 100;
+
+		meal.setTotalCal(calories1 + calories2 + calories3);
+		meal.setTotalProt(protein1 + protein2 + protein3);
+		meal.setTotalCarb(carbs1 + carbs2 + carbs3);
+		meal.setTotalFat(fat1 + fat2 + fat3);
 		meal.setUser(LoginApp.getInstance().getLoggedUser());
 		MealFacade.addMeal(POJOToEntityMeal(meal));
 	}

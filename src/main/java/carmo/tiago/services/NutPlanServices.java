@@ -5,12 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
-
-import carmo.tiago.persistence.MealEntity;
-import carmo.tiago.persistence.MealFacade;
 import carmo.tiago.persistence.NutPlanEntity;
 import carmo.tiago.persistence.NutPlanFacade;
 import carmo.tiago.persistence.UserFacade;
@@ -138,10 +134,10 @@ public class NutPlanServices {
 	}
 
 	public static void deletePlan(NutPlanPOJO rowData) throws Exception {
-		NutPlanFacade.deletePlan(rowData);
+		NutPlanFacade.deletePlan(rowData.getPlanId());
 	}
 
-	public static NutPlanPOJO getPlanByName(String name) {
+	public static NutPlanPOJO getPlanByName(String name) throws Exception{
 		NutPlanEntity plan = NutPlanFacade.getPlanByName(name);
 		return entityToPOJOPlan(plan);
 	}

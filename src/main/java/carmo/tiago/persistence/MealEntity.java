@@ -41,6 +41,14 @@ public class MealEntity implements Serializable {
 	private String amountCarbs;
 	@Column
 	private String amountFat;
+	@Column
+	private double totalCal;
+	@Column
+	private double totalProt;
+	@Column
+	private double totalCarb;
+	@Column
+	private double totalFat;
 
 	public static final String FIND_ALL = "Meal.findAll";
 	public static final String FIND_SPECIFIC_NAME = "Meal.findSpecificName";
@@ -127,4 +135,36 @@ public class MealEntity implements Serializable {
 		this.amountFat = amountFat;
 	}
 
+	public double getTotalCal() {
+		return totalCal;
+	}
+
+	public void setTotalCal(double totalCal) {
+		this.totalCal = totalCal;
+	}
+
+	public double getTotalProt() {
+		return totalProt;
+	}
+
+	public void setTotalProt(double totalProt) {
+		this.totalProt = totalProt;
+	}
+
+	public double getTotalCarb() {
+		return totalCarb;
+	}
+
+	public void setTotalCarb(double totalCarb) {
+		this.totalCarb = totalCarb;
+	}
+
+	public double getTotalFat() {
+		return totalFat;
+	}
+
+	public void setTotalFat(double totalFat) {
+		this.totalFat = totalFat;
+	}
+	
 }

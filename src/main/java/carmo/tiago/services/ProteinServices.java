@@ -7,7 +7,7 @@ import carmo.tiago.persistence.ProteinFacade;
 
 public class ProteinServices {
 
-	public static List<ProteinPOJO> getAllProtein() {
+	public static List<ProteinPOJO> getAllProtein() throws Exception {
 		List<ProteinEntity> listFood = ProteinFacade.getAllProtein();
 		List<ProteinPOJO> pojoList = new ArrayList<ProteinPOJO>();
 		for (ProteinEntity protein : listFood) {
@@ -31,7 +31,7 @@ public class ProteinServices {
 		return food;
 	}
 
-	public static ProteinPOJO getProteinByName(String name) {
+	public static ProteinPOJO getProteinByName(String name) throws Exception {
 		ProteinEntity food = ProteinFacade.getProteinByName(name);
 		return entityToPOJOProtein(food);
 	}

@@ -19,6 +19,9 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
@@ -53,6 +56,10 @@ public class LoginApp extends Application {
 	private static MealPOJO meal;
 
 	public FXMLLoader fxmlLoader;
+
+	private Scene scene;
+
+	private Parent page;
 
 	@Override
 	public void init() throws Exception {
@@ -144,109 +151,282 @@ public class LoginApp extends Application {
 	}
 
 	public void goToAddUser() {
-		try {
-			replaceSceneContent("/AddUser.fxml");
-		} catch (Exception ex) {
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/AddUser.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 
 	public void gotoHomePage() {
-		try {
-			replaceSceneContent("/HomePage.fxml");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/HomePage.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 
 	public void gotoLogin() {
 		try {
-			mealStart.set(false);
-			replaceSceneContent("/Login.fxml");
+			page = FXMLLoader.load(getClass().getResource("/Login.fxml"), null, new JavaFXBuilderFactory());
+			scene = stage.getScene();
+			if (scene == null) {
+				FadeTransition ft = new FadeTransition(new Duration(3000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene = new Scene(page);
+				scene.getStylesheets().add(getClass().getResource("/demo.css").toExternalForm());
+				stage.setScene(scene);
+			} else {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
 		} catch (Exception ex) {
 			LOGGER.error("Error changing scene: " + ex);
 		}
 	}
 
 	public void gotoMyPlans() {
-		try {
-			replaceSceneContent("/MyPlans.fxml");
-		} catch (Exception ex) {
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/MyPlans.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 
 	public void gotoUpdateUserScreen() {
-		try {
-			replaceSceneContent("/UpdateDetails.fxml");
-		} catch (Exception ex) {
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/UpdateDetails.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 
 	public void gotoProteinTips() {
-		try {
-			replaceSceneContent("/ProteinTips.fxml");
-		} catch (Exception ex) {
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/ProteinTips.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 
 	public void gotoCarbsTips() {
-		try {
-			replaceSceneContent("/CarbsTips.fxml");
-		} catch (Exception ex) {
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/CarbsTips.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 
 	public void gotoFatTips() {
-		try {
-			replaceSceneContent("/FatTips.fxml");
-		} catch (Exception ex) {
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/FatTips.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 
 	public void gotoMealPrep() {
-		try {
-			replaceSceneContent("/MealPrep.fxml");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			LOGGER.error("Error changing scene: " + ex);
-		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/MealPrep.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 	
-	public void gotoAdminPage() {
-		try {
-			replaceSceneContent("/AdminPage.fxml");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			LOGGER.error("Error changing scene: " + ex);
-		}
+	public void gotoAllDays() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/DayPage.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
 	}
 
-	@SuppressWarnings("static-access")
-	private void replaceSceneContent(String fxml) throws Exception {
-		fxmlLoader = new FXMLLoader();
-		Parent page = fxmlLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
-		Scene scene = stage.getScene();
-		if (scene == null) {
-			FadeTransition ft = new FadeTransition(new Duration(3000), page);
-			ft.setFromValue(0.0);
-			ft.setToValue(1);
-			ft.play();
-			scene = new Scene(page);
-			scene.getStylesheets().add(getClass().getResource("/demo.css").toExternalForm());
-			stage.setScene(scene);
-		} else {
-			FadeTransition ft = new FadeTransition(new Duration(1000), page);
-			ft.setFromValue(0.0);
-			ft.setToValue(1);
-			ft.play();
-			stage.getScene().setRoot(page);
-		}
+	public void gotoAdminPage() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				try {
+					replaceSceneContentTest("/AdminPage.fxml");
+				} catch (Exception ex) {
+					LOGGER.error("Error changing scene: " + ex);
+				}
+				return null;
+			}
+		};
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				FadeTransition ft = new FadeTransition(new Duration(1000), page);
+				ft.setFromValue(0.0);
+				ft.setToValue(1);
+				ft.play();
+				scene.setRoot(page);
+			}
+		});
+		new Thread(task).start();
+	}
+
+	private void replaceSceneContentTest(String fxml) throws Exception {
+		page = FXMLLoader.load(getClass().getResource(fxml), null, new JavaFXBuilderFactory());
+		scene = stage.getScene();
 	}
 
 	public void setLoggedUser(UserPOJO loggedUser) {

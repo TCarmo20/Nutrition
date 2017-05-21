@@ -60,4 +60,9 @@ public class UserFacade {
 		LoginApp.getInstance().getEm().getTransaction().commit();
 	}
 
+	public static Set<DayEntity> getUserDays(long userId) {
+		UserEntity user = LoginApp.getInstance().getEm().find(UserEntity.class, userId);
+		return user.getDays();
+	}
+
 }

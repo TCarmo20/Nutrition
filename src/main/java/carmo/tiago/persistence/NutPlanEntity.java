@@ -41,7 +41,7 @@ public class NutPlanEntity implements Serializable {
 	private String objective;
 	@ManyToOne
 	private UserEntity user;
-
+	
 	public static final String FIND_ALL = "NutPlan.findAll";
 	public static final String FIND_SPECIFIC_NAME = "NutPlan.findSpecificName";
 
