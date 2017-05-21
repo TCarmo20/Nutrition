@@ -155,6 +155,8 @@ public class MealPrepController implements Initializable {
 
 	public void initializeHomePage() {
 		try {
+			drawer.toBack();
+			mealPrepGroup.toFront();
 			StackPane anchor = FXMLLoader.load(getClass().getResource("/DrawerContent.fxml"));
 			drawer.setSidePane(anchor);
 			burgerTask = new HamburgerBasicCloseTransition(hamburger);
@@ -164,8 +166,12 @@ public class MealPrepController implements Initializable {
 				burgerTask.play();
 				if (drawer.isShown()) {
 					drawer.close();
+					mealPrepGroup.toFront();
+					drawer.toBack();
 				} else {
 					drawer.open();
+					drawer.toFront();
+					mealPrepGroup.toBack();
 				}
 			});
 			listView.getItems().clear();
@@ -196,6 +202,7 @@ public class MealPrepController implements Initializable {
 					try {
 						dialog1.close();
 						MealServices.deleteMeal(meal);
+						listView.getItems().clear();
 						updateTable();
 						meal = null;
 						caloriesMeal.setText("");
